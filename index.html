@@ -1,0 +1,945 @@
+<!DOCTYPE html>
+<html lang="ko">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0, viewport-fit=cover">
+  <meta name="apple-mobile-web-app-capable" content="yes">
+  <meta name="apple-mobile-web-app-status-bar-style" content="black-translucent">
+  <title>TOEIC 850+ Study Tracker</title>
+  
+  <!-- Manifest & Web App Icon -->
+  <link rel="manifest" href="manifest.json">
+  <link rel="apple-touch-icon" href="icon-192.png">
+  
+  <!-- Fonts -->
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Outfit:wght@300;400;500;600;700;800&family=Noto+Sans+KR:wght@300;400;500;700;900&display=swap" rel="stylesheet">
+  
+  <!-- Stylesheet -->
+  <link rel="stylesheet" href="style.css">
+</head>
+<body>
+  <!-- App Shell Container -->
+  <div class="app-container">
+    
+    <!-- Left Sidebar (Desktop Only) -->
+    <aside class="sidebar">
+      <div class="sidebar-brand">
+        <span class="brand-logo">🎯</span>
+        <h1 class="brand-name">TOEIC 850+</h1>
+      </div>
+      <nav class="sidebar-menu">
+        <button class="nav-item active" data-tab="tab-home">
+          <svg class="icon" viewBox="0 0 24 24"><path d="M10 20v-6h4v6h5v-8h3L12 3 2 12h3v8z"/></svg>
+          대시보드
+        </button>
+        <button class="nav-item" data-tab="tab-plan">
+          <svg class="icon" viewBox="0 0 24 24"><path d="M19 3h-1V1h-2v2H8V1H6v2H5c-1.11 0-1.99.9-1.99 2L3 19c0 1.1.89 2 2 2h14c1.1 0 2-.9 2-2V5c0-1.1-.9-2-2-2zm0 16H5V8h14v11zM7 10h5v5H7z"/></svg>
+          학습 계획
+        </button>
+        <button class="nav-item" data-tab="tab-incorrect">
+          <svg class="icon" viewBox="0 0 24 24"><path d="M19 3H5c-1.1 0-2 .9-2 2v14c0 1.1.9 2 2 2h14c1.1 0 2-.9 2-2V5c0-1.1-.9-2-2-2zm-2 10H7v-2h10v2z"/></svg>
+          오답노트
+        </button>
+        <button class="nav-item" data-tab="tab-vocab">
+          <svg class="icon" viewBox="0 0 24 24"><path d="M18 2H6c-1.1 0-2 .9-2 2v16c0 1.1.9 2 2 2h12c1.1 0 2-.9 2-2V4c0-1.1-.9-2-2-2zM6 4h5v8l-2.5-1.5L6 12V4z"/></svg>
+          단어장
+        </button>
+        <button class="nav-item" data-tab="tab-study">
+          <svg class="icon" viewBox="0 0 24 24"><path d="M4 6H2v14c0 1.1.9 2 2 2h14v-2H4V6zm16-4H8c-1.1 0-2 .9-2 2v12c0 1.1.9 2 2 2h12c1.1 0 2-.9 2-2V4c0-1.1-.9-2-2-2zm0 14H8V4h12v12z"/></svg>
+          학습 자료실
+        </button>
+      </nav>
+      <div class="sidebar-footer">
+        <button class="settings-btn" id="open-settings-desktop">
+          <svg class="icon" viewBox="0 0 24 24"><path d="M19.14 12.94c.04-.3.06-.61.06-.94 0-.32-.02-.64-.07-.94l2.03-1.58c.18-.14.23-.41.12-.61l-1.92-3.32c-.12-.22-.37-.29-.59-.22l-2.39.96c-.5-.38-1.03-.7-1.62-.94l-.36-2.54c-.04-.24-.24-.41-.48-.41h-3.84c-.24 0-.43.17-.47.41l-.36 2.54c-.59.24-1.13.57-1.62.94l-2.39-.96c-.22-.08-.47 0-.59.22L2.74 8.87c-.12.21-.08.47.12.61l2.03 1.58c-.05.3-.09.63-.09.94s.02.64.07.94l-2.03 1.58c-.18.14-.23.41-.12.61l1.92 3.32c.12.22.37.29.59.22l2.39-.96c.5.38 1.03.7 1.62.94l.36 2.54c.05.24.24.41.48.41h3.84c.24 0 .44-.17.47-.41l.36-2.54c.59-.24 1.13-.56 1.62-.94l2.39.96c.22.08.47 0 .59-.22l1.92-3.32c.12-.22.07-.47-.12-.61l-2.01-1.58zM12 15.6c-1.98 0-3.6-1.62-3.6-3.6s1.62-3.6 3.6-3.6 3.6 1.62 3.6 3.6-1.62 3.6-3.6 3.6z"/></svg>
+          클라우드 설정
+        </button>
+      </div>
+    </aside>
+
+    <!-- Main Content Area -->
+    <main class="main-content">
+      
+      <!-- Top Navigation Header (Mobile and Desktop Top bar) -->
+      <header class="top-header">
+        <div class="header-left">
+          <span class="mobile-brand-logo">🎯</span>
+          <h2 class="page-title" id="current-tab-title">대시보드</h2>
+        </div>
+        <div class="header-right">
+          <!-- Gist Sync Status Light -->
+          <div class="sync-status-badge" id="sync-status-btn">
+            <span class="status-dot disconnected"></span>
+            <span class="status-text" id="sync-status-text">동기화 미연동</span>
+          </div>
+          <button class="icon-btn" id="open-settings-mobile" aria-label="설정">
+            <svg viewBox="0 0 24 24" class="icon"><path d="M19.14 12.94c.04-.3.06-.61.06-.94 0-.32-.02-.64-.07-.94l2.03-1.58c.18-.14.23-.41.12-.61l-1.92-3.32c-.12-.22-.37-.29-.59-.22l-2.39.96c-.5-.38-1.03-.7-1.62-.94l-.36-2.54c-.04-.24-.24-.41-.48-.41h-3.84c-.24 0-.43.17-.47.41l-.36 2.54c-.59.24-1.13.57-1.62.94l-2.39-.96c-.22-.08-.47 0-.59.22L2.74 8.87c-.12.21-.08.47.12.61l2.03 1.58c-.05.3-.09.63-.09.94s.02.64.07.94l-2.03 1.58c-.18.14-.23.41-.12.61l1.92 3.32c.12.22.37.29.59.22l2.39-.96c.5.38 1.03.7 1.62.94l.36 2.54c.05.24.24.41.48.41h3.84c.24 0 .44-.17.47-.41l.36-2.54c.59-.24 1.13-.56 1.62-.94l2.39.96c.22.08.47 0 .59-.22l1.92-3.32c.12-.22.07-.47-.12-.61l-2.01-1.58zM12 15.6c-1.98 0-3.6-1.62-3.6-3.6s1.62-3.6 3.6-3.6 3.6 1.62 3.6 3.6-1.62 3.6-3.6 3.6z"/></svg>
+          </button>
+        </div>
+      </header>
+
+      <!-- Scrollable Tab Contents -->
+      <div class="tab-viewport">
+        
+        <!-- ==================== TAB 1: HOME ==================== -->
+        <section class="tab-content active" id="tab-home">
+          <!-- KPI 카드 그리드 -->
+          <div class="kpi-grid">
+            <div class="kpi-card" id="kpi-days">
+              <div class="kpi-info">
+                <span class="kpi-label">📅 공부 진행일</span>
+                <h3 class="kpi-value"><span class="current">0</span> <span class="total">/ 180 일</span></h3>
+              </div>
+              <div class="kpi-progress-container">
+                <div class="kpi-bar" style="width: 0%"></div>
+              </div>
+              <button class="kpi-inc-btn" onclick="adjustKPI('studyDays', 1)">오늘 학습 완료 (+1)</button>
+            </div>
+            
+            <div class="kpi-card" id="kpi-vocab">
+              <div class="kpi-info">
+                <span class="kpi-label">📚 단어 암기량</span>
+                <h3 class="kpi-value"><span class="current">0</span> <span class="total">/ 5,000 개</span></h3>
+              </div>
+              <div class="kpi-progress-container">
+                <div class="kpi-bar" style="width: 0%"></div>
+              </div>
+              <div class="kpi-quick-actions">
+                <button class="kpi-mini-btn" onclick="adjustKPI('vocabCount', -40)">-40</button>
+                <button class="kpi-mini-btn" onclick="adjustKPI('vocabCount', 40)">+40</button>
+              </div>
+            </div>
+
+            <div class="kpi-card" id="kpi-exams">
+              <div class="kpi-info">
+                <span class="kpi-label">📝 실전 모의고사</span>
+                <h3 class="kpi-value"><span class="current">0</span> <span class="total">/ 30 회</span></h3>
+              </div>
+              <div class="kpi-progress-container">
+                <div class="kpi-bar" style="width: 0%"></div>
+              </div>
+              <button class="kpi-inc-btn" onclick="adjustKPI('mockExams', 1)">모의고사 1회 추가 (+1)</button>
+            </div>
+
+            <div class="kpi-card" id="kpi-shadowing">
+              <div class="kpi-info">
+                <span class="kpi-label">🎧 LC 쉐도잉 시간</span>
+                <h3 class="kpi-value"><span class="current">0</span> <span class="total">/ 120 시간</span></h3>
+              </div>
+              <div class="kpi-progress-container">
+                <div class="kpi-bar" style="width: 0%"></div>
+              </div>
+              <div class="kpi-quick-actions">
+                <button class="kpi-mini-btn" onclick="adjustKPI('shadowingHours', -1)">-1시간</button>
+                <button class="kpi-mini-btn" onclick="adjustKPI('shadowingHours', 1)">+1시간</button>
+              </div>
+            </div>
+          </div>
+
+          <!-- 오늘의 학습 (요일별 자동 배정) -->
+          <div class="card today-curriculum-card">
+            <div class="card-header">
+              <h3 class="card-title">🔥 오늘의 추천 학습 (<span id="today-day-name">요일</span>)</h3>
+              <span class="badge badge-accent" id="today-target-score">목표 점수: 700점</span>
+            </div>
+            <div class="card-body">
+              <p class="today-desc" id="today-study-desc">로딩 중...</p>
+              
+              <!-- 일일 체크리스트 -->
+              <div class="today-checklist">
+                <label class="check-item">
+                  <input type="checkbox" id="today-chk-lc">
+                  <span class="checkmark"></span>
+                  <span class="check-text">오늘의 LC 학습 완료</span>
+                </label>
+                <label class="check-item">
+                  <input type="checkbox" id="today-chk-rc">
+                  <span class="checkmark"></span>
+                  <span class="check-text">오늘의 RC 학습 완료</span>
+                </label>
+                <label class="check-item">
+                  <input type="checkbox" id="today-chk-vocab">
+                  <span class="checkmark"></span>
+                  <span class="check-text">오늘의 단어 학습 완료 (40개)</span>
+                </label>
+              </div>
+            </div>
+          </div>
+
+          <!-- 목표 점수 로드맵 그래프 (SVG 차트) -->
+          <div class="card chart-card">
+            <div class="card-header">
+              <h3 class="card-title">📈 6개월 목표 점수 성장 곡선</h3>
+            </div>
+            <div class="card-body">
+              <div class="chart-container">
+                <!-- SVG Line Chart -->
+                <svg id="score-chart" viewBox="0 0 500 220" preserveAspectRatio="none">
+                  <!-- Grid Lines -->
+                  <line x1="50" y1="30" x2="480" y2="30" stroke="rgba(255,255,255,0.05)" stroke-width="1"></line>
+                  <line x1="50" y1="80" x2="480" y2="80" stroke="rgba(255,255,255,0.05)" stroke-width="1"></line>
+                  <line x1="50" y1="130" x2="480" y2="130" stroke="rgba(255,255,255,0.05)" stroke-width="1"></line>
+                  <line x1="50" y1="180" x2="480" y2="180" stroke="rgba(255,255,255,0.1)" stroke-width="1"></line>
+                  
+                  <!-- Y Axis Labels -->
+                  <text x="15" y="35" class="chart-text">850+</text>
+                  <text x="15" y="85" class="chart-text">800</text>
+                  <text x="15" y="135" class="chart-text">750</text>
+                  <text x="15" y="185" class="chart-text">700</text>
+                  <text x="15" y="210" class="chart-text">650</text>
+
+                  <!-- X Axis Labels (Months) -->
+                  <text x="50" y="205" class="chart-text" text-anchor="middle">현재</text>
+                  <text x="120" y="205" class="chart-text" text-anchor="middle">1월</text>
+                  <text x="190" y="205" class="chart-text" text-anchor="middle">2월</text>
+                  <text x="260" y="205" class="chart-text" text-anchor="middle">3월</text>
+                  <text x="330" y="205" class="chart-text" text-anchor="middle">4월</text>
+                  <text x="400" y="205" class="chart-text" text-anchor="middle">5월</text>
+                  <text x="470" y="205" class="chart-text" text-anchor="middle">6월</text>
+
+                  <!-- Target Curve Line -->
+                  <path d="M 50 205 L 120 180 L 190 130 L 260 80 L 330 65 L 400 45 L 470 30" fill="none" stroke="var(--accent-color)" stroke-width="3" stroke-dasharray="4" opacity="0.6"></path>
+                  
+                  <!-- Actual Line -->
+                  <path id="actual-score-path" d="" fill="none" stroke="var(--primary-color)" stroke-width="4"></path>
+                  <g id="chart-dots"></g>
+                </svg>
+              </div>
+              <div class="chart-legend">
+                <span class="legend-item"><span class="legend-line target"></span>목표 점수</span>
+                <span class="legend-item"><span class="legend-line actual"></span>실제 모의고사 점수</span>
+              </div>
+              
+              <!-- 모의고사 점수 입력 -->
+              <div class="score-input-row">
+                <input type="number" id="new-score-val" placeholder="모의고사 점수 입력 (예: 720)" min="0" max="990">
+                <button class="btn btn-primary btn-sm" id="add-score-btn">점수 기록</button>
+              </div>
+            </div>
+          </div>
+        </section>
+
+
+        <!-- ==================== TAB 2: PLAN ==================== -->
+        <section class="tab-content" id="tab-plan">
+          <div class="sub-tab-bar">
+            <button class="sub-tab active" data-sub="sub-weekly">📅 주간 일정</button>
+            <button class="sub-tab" data-sub="sub-monthly">🗺️ 6개월 로드맵</button>
+          </div>
+
+          <!-- 주간 일정 서브탭 -->
+          <div class="sub-tab-content active" id="sub-weekly">
+            <!-- 요일별 세부 계획 카드들 -->
+            <div class="weekly-days-list">
+              <div class="weekly-day-card" data-day="1">
+                <div class="day-header">월요일</div>
+                <div class="day-body">
+                  <p><strong>LC:</strong> Part 2 (30문제) + 쉐도잉</p>
+                  <p><strong>RC:</strong> 품사 문법 학습</p>
+                  <p><strong>단어:</strong> 40개 암기</p>
+                </div>
+              </div>
+              <div class="weekly-day-card" data-day="2">
+                <div class="day-header">화요일</div>
+                <div class="day-body">
+                  <p><strong>LC:</strong> Part 3 학습</p>
+                  <p><strong>RC:</strong> 시제 문법 학습</p>
+                  <p><strong>단어:</strong> 40개 암기</p>
+                </div>
+              </div>
+              <div class="weekly-day-card" data-day="3">
+                <div class="day-header">수요일</div>
+                <div class="day-body">
+                  <p><strong>LC:</strong> Part 4 학습</p>
+                  <p><strong>RC:</strong> 관계사 문법 학습</p>
+                  <p><strong>단어:</strong> 지난 단어 복습</p>
+                </div>
+              </div>
+              <div class="weekly-day-card" data-day="4">
+                <div class="day-header">목요일</div>
+                <div class="day-body">
+                  <p><strong>LC:</strong> Part 2 복습</p>
+                  <p><strong>RC:</strong> 분사 문법 학습</p>
+                  <p><strong>단어:</strong> 40개 암기</p>
+                </div>
+              </div>
+              <div class="weekly-day-card" data-day="5">
+                <div class="day-header">금요일</div>
+                <div class="day-body">
+                  <p><strong>LC:</strong> Part 3 복습</p>
+                  <p><strong>RC:</strong> 전치사 문법 학습</p>
+                  <p><strong>단어:</strong> 지난 단어 복습</p>
+                </div>
+              </div>
+              <div class="weekly-day-card" data-day="6">
+                <div class="day-header highlight">토요일</div>
+                <div class="day-body">
+                  <p><strong>실전:</strong> 모의고사 1회 풀기</p>
+                  <p><strong>피드백:</strong> 오답노트 작성</p>
+                </div>
+              </div>
+              <div class="weekly-day-card" data-day="0">
+                <div class="day-header highlight">일요일</div>
+                <div class="day-body">
+                  <p><strong>종합:</strong> 이번 주 학습 총복습</p>
+                  <p><strong>분석:</strong> 취약 부분 분석</p>
+                </div>
+              </div>
+            </div>
+
+            <!-- 매주 체크리스트 -->
+            <div class="card weekly-checklist-card">
+              <div class="card-header">
+                <h3 class="card-title">✅ 매주 핵심 체크리스트</h3>
+              </div>
+              <div class="card-body">
+                <div class="checklist-progress-header">
+                  <span>달성률</span>
+                  <span id="weekly-progress-percent">0%</span>
+                </div>
+                <div class="kpi-progress-container weekly-bar-container">
+                  <div class="kpi-bar" id="weekly-progress-bar" style="width: 0%"></div>
+                </div>
+
+                <div class="weekly-check-items">
+                  <label class="check-item">
+                    <input type="checkbox" id="w-chk-lc" class="weekly-chk">
+                    <span class="checkmark"></span>
+                    <span class="check-text">LC 200문제 이상 풀기</span>
+                  </label>
+                  <label class="check-item">
+                    <input type="checkbox" id="w-chk-rc" class="weekly-chk">
+                    <span class="checkmark"></span>
+                    <span class="check-text">RC 200문제 이상 풀기</span>
+                  </label>
+                  <label class="check-item">
+                    <input type="checkbox" id="w-chk-vocab" class="weekly-chk">
+                    <span class="checkmark"></span>
+                    <span class="check-text">단어 250개 완벽 암기</span>
+                  </label>
+                  <label class="check-item">
+                    <input type="checkbox" id="w-chk-shadow" class="weekly-chk">
+                    <span class="checkmark"></span>
+                    <span class="check-text">LC 쉐도잉 2시간 이상 진행</span>
+                  </label>
+                  <label class="check-item">
+                    <input type="checkbox" id="w-chk-mock" class="weekly-chk">
+                    <span class="checkmark"></span>
+                    <span class="check-text">실전 모의고사 1회 풀기</span>
+                  </label>
+                  <label class="check-item">
+                    <input type="checkbox" id="w-chk-note" class="weekly-chk">
+                    <span class="checkmark"></span>
+                    <span class="check-text">틀린 문제 오답노트 정리</span>
+                  </label>
+                </div>
+                <button class="btn btn-secondary btn-full btn-sm" id="reset-weekly-btn" style="margin-top: 15px;">새로운 주간 시작 (체크박스 비우기)</button>
+              </div>
+            </div>
+          </div>
+
+          <!-- 6개월 로드맵 서브탭 -->
+          <div class="sub-tab-content" id="sub-monthly">
+            <div class="timeline">
+              
+              <!-- Month 1 -->
+              <div class="timeline-item">
+                <div class="timeline-badge">M1</div>
+                <div class="timeline-panel">
+                  <div class="timeline-header">
+                    <h4>Month 1: 기초 문법 완성</h4>
+                    <span class="target-badge">목표: 700점</span>
+                  </div>
+                  <div class="timeline-body">
+                    <div class="roadmap-checklist">
+                      <h5>핵심 문법 정복 여부:</h5>
+                      <div class="roadmap-grid">
+                        <label class="check-item-mini"><input type="checkbox" id="rm-m1-g1" class="roadmap-chk"> 품사</label>
+                        <label class="check-item-mini"><input type="checkbox" id="rm-m1-g2" class="roadmap-chk"> 시제</label>
+                        <label class="check-item-mini"><input type="checkbox" id="rm-m1-g3" class="roadmap-chk"> 수일치</label>
+                        <label class="check-item-mini"><input type="checkbox" id="rm-m1-g4" class="roadmap-chk"> 관계사</label>
+                        <label class="check-item-mini"><input type="checkbox" id="rm-m1-g5" class="roadmap-chk"> 분사</label>
+                        <label class="check-item-mini"><input type="checkbox" id="rm-m1-g6" class="roadmap-chk"> 전치사</label>
+                      </div>
+                      <div class="roadmap-text-list">
+                        <p>📢 <strong>LC:</strong> Part 2 집중 훈련 & 쉐도잉 버릇 들이기</p>
+                        <p>📢 <strong>RC:</strong> Part 5 집중 공략</p>
+                      </div>
+                    </div>
+                  </div>
+                </div>
+              </div>
+
+              <!-- Month 2 -->
+              <div class="timeline-item">
+                <div class="timeline-badge">M2</div>
+                <div class="timeline-panel">
+                  <div class="timeline-header">
+                    <h4>Month 2: 독해 속도 향상</h4>
+                    <span class="target-badge">목표: 750점</span>
+                  </div>
+                  <div class="timeline-body">
+                    <p>📢 <strong>LC:</strong> Part 3, Part 4 긴 지문 스키밍 기법 연마</p>
+                    <p>📢 <strong>RC:</strong> Part 6, Part 7 독해 지문 시간 단축 및 단락 구조 분석</p>
+                  </div>
+                </div>
+              </div>
+
+              <!-- Month 3 -->
+              <div class="timeline-item">
+                <div class="timeline-badge">M3</div>
+                <div class="timeline-panel">
+                  <div class="timeline-header">
+                    <h4>Month 3: 실전 적응 훈련</h4>
+                    <span class="target-badge">목표: 800점</span>
+                  </div>
+                  <div class="timeline-body">
+                    <p>📢 <strong>공통:</strong> 주 2회 실전 모의고사 풀이 및 2시간 시간 제한 연습</p>
+                    <p>📢 <strong>목표:</strong> 전반적인 문제 해결 속도 및 마인드 세팅</p>
+                  </div>
+                </div>
+              </div>
+
+              <!-- Month 4 -->
+              <div class="timeline-item">
+                <div class="timeline-badge">M4</div>
+                <div class="timeline-panel">
+                  <div class="timeline-header">
+                    <h4>Month 4: 약점 보완 집중</h4>
+                    <span class="target-badge">목표: 820점</span>
+                  </div>
+                  <div class="timeline-body">
+                    <p>📢 <strong>공통:</strong> 누적 오답노트 집중 정독 및 오답 유형 카테고리화 분석</p>
+                    <p>📢 <strong>취약 파트:</strong> 오답이 가장 많은 파트 2배 집중 양치기</p>
+                  </div>
+                </div>
+              </div>
+
+              <!-- Month 5 -->
+              <div class="timeline-item">
+                <div class="timeline-badge">M5</div>
+                <div class="timeline-panel">
+                  <div class="timeline-header">
+                    <h4>Month 5: 실수 최소화 & 시간 단축</h4>
+                    <span class="target-badge">목표: 840점</span>
+                  </div>
+                  <div class="timeline-body">
+                    <p>📢 <strong>RC:</strong> 마킹 시간 포함 Part 5, 6를 20분 내 끊는 모래주머니 효과 극대화</p>
+                    <p>📢 <strong>LC:</strong> 주변 소음 대처 및 집중력 유지 훈련</p>
+                  </div>
+                </div>
+              </div>
+
+              <!-- Month 6 -->
+              <div class="timeline-item">
+                <div class="timeline-badge">M6</div>
+                <div class="timeline-panel">
+                  <div class="timeline-header">
+                    <h4>Month 6: 850점 돌파 최종 스퍼트</h4>
+                    <span class="target-badge">목표: 850+</span>
+                  </div>
+                  <div class="timeline-body">
+                    <p>📢 <strong>공통:</strong> 매일 실전 감각 유지용 하프 모의고사 혹은 파트별 집중 실전 시험 진행</p>
+                    <p>📢 <strong>완료 기준:</strong> 안정적인 LC 450 이상, RC 400 이상 확보</p>
+                  </div>
+                </div>
+              </div>
+
+            </div>
+          </div>
+        </section>
+
+
+        <!-- ==================== TAB 3: INCORRECT NOTE ==================== -->
+        <section class="tab-content" id="tab-incorrect">
+          <!-- 통계 정보 -->
+          <div class="stats-row">
+            <div class="stats-box">
+              <span class="stats-num" id="stat-total-incorrect">0</span>
+              <span class="stats-lbl">총 등록 문항</span>
+            </div>
+            <div class="stats-box">
+              <span class="stats-num text-warning" id="stat-unsolved-incorrect">0</span>
+              <span class="stats-lbl">미해결 문항</span>
+            </div>
+          </div>
+
+          <!-- 오답노트 추가 폼 토글 카드 -->
+          <div class="card add-incorrect-card">
+            <div class="card-header" id="toggle-add-incorrect-header" style="cursor: pointer;">
+              <h3 class="card-title">➕ 새 오답 기록하기</h3>
+              <span class="toggle-icon">▼</span>
+            </div>
+            <div class="card-body" id="add-incorrect-form-wrapper" style="display: none;">
+              <form id="incorrect-form" class="form">
+                <div class="form-row">
+                  <div class="form-group">
+                    <label for="inc-date">날짜</label>
+                    <input type="date" id="inc-date" required>
+                  </div>
+                  <div class="form-group">
+                    <label for="inc-part">파트</label>
+                    <select id="inc-part" required>
+                      <option value="Part1">LC Part 1</option>
+                      <option value="Part2" selected>LC Part 2</option>
+                      <option value="Part3">LC Part 3</option>
+                      <option value="Part4">LC Part 4</option>
+                      <option value="Part5">RC Part 5</option>
+                      <option value="Part6">RC Part 6</option>
+                      <option value="Part7">RC Part 7</option>
+                    </select>
+                  </div>
+                </div>
+
+                <div class="form-group">
+                  <label for="inc-question">문제 정보 (번호 및 내용)</label>
+                  <input type="text" id="inc-question" placeholder="예: 해커스 모의고사 1회 Part 5 - 121번" required>
+                </div>
+
+                <div class="form-row">
+                  <div class="form-group">
+                    <label for="inc-reason">틀린 원인</label>
+                    <select id="inc-reason">
+                      <option value="품사/문법">품사 및 문법 오해</option>
+                      <option value="단어/어휘">단어/어휘 모름</option>
+                      <option value="해석/독해">잘못된 문장 해석</option>
+                      <option value="청해 실패">듣기 발음 놓침</option>
+                      <option value="시간 부족">시간 관리 실패</option>
+                      <option value="단순 실수">실수 및 매력적 오답</option>
+                    </select>
+                  </div>
+                  <div class="form-group">
+                    <label for="inc-topic">연관 문법 주제</label>
+                    <input type="text" id="inc-topic" placeholder="예: 분사구문, 관계대명사">
+                  </div>
+                </div>
+
+                <div class="form-group">
+                  <label for="inc-vocab">새로 안 단어</label>
+                  <input type="text" id="inc-vocab" placeholder="예: delegate (위임하다)">
+                </div>
+
+                <div class="form-group">
+                  <label for="inc-notes">상세 분석 & 오답 원인</label>
+                  <textarea id="inc-notes" rows="3" placeholder="틀린 이유 및 정답을 맞추기 위해 파악해야 했던 포인트 적기..."></textarea>
+                </div>
+
+                <div class="form-actions">
+                  <button type="submit" class="btn btn-primary">오답 저장</button>
+                  <button type="button" class="btn btn-secondary" id="cancel-incorrect-btn">취소</button>
+                </div>
+              </form>
+            </div>
+          </div>
+
+          <!-- 검색 및 필터 필드 -->
+          <div class="filter-card">
+            <div class="filter-grid">
+              <input type="text" id="filter-search" placeholder="문제 내용/메모 검색...">
+              <select id="filter-part">
+                <option value="">모든 파트</option>
+                <option value="Part1">Part 1</option>
+                <option value="Part2">Part 2</option>
+                <option value="Part3">Part 3</option>
+                <option value="Part4">Part 4</option>
+                <option value="Part5">Part 5</option>
+                <option value="Part6">Part 6</option>
+                <option value="Part7">Part 7</option>
+              </select>
+              <select id="filter-reason">
+                <option value="">모든 원인</option>
+                <option value="품사/문법">품사/문법</option>
+                <option value="단어/어휘">단어/어휘</option>
+                <option value="해석/독해">해석/독해</option>
+                <option value="청해 실패">청해 실패</option>
+                <option value="시간 부족">시간 부족</option>
+                <option value="단순 실수">단순 실수</option>
+              </select>
+              <select id="filter-solved">
+                <option value="">해결 상태 (전체)</option>
+                <option value="unsolved">미해결 (X)</option>
+                <option value="solved">해결 완료 (O)</option>
+              </select>
+            </div>
+          </div>
+
+          <!-- 오답 리스트 목록 -->
+          <div class="incorrect-list" id="incorrect-items-container">
+            <!-- Dynamic JavaScript Render -->
+          </div>
+        </section>
+
+
+        <!-- ==================== TAB 4: VOCAB NOTEBOOK ==================== -->
+        <section class="tab-content" id="tab-vocab">
+          <!-- 단어 등록 -->
+          <div class="card add-vocab-card">
+            <div class="card-header">
+              <h3 class="card-title">✍️ 새 단어 추가</h3>
+            </div>
+            <div class="card-body">
+              <form id="vocab-form" class="inline-form">
+                <input type="text" id="vocab-word" placeholder="영단어 (예: implementation)" required>
+                <input type="text" id="vocab-meaning" placeholder="뜻 (예: 구현, 실행)" required>
+                <button type="submit" class="btn btn-primary">추가</button>
+              </form>
+            </div>
+          </div>
+
+          <!-- 단어 자가 테스트 플래시 카드 위젯 -->
+          <div class="card flashcard-widget-card">
+            <div class="card-header">
+              <h3 class="card-title">🃏 플래시 카드 연습 모드</h3>
+            </div>
+            <div class="card-body flash-container">
+              <div class="flashcard" id="active-flashcard">
+                <div class="flashcard-inner">
+                  <div class="flashcard-front">
+                    <span class="flash-label">WORD</span>
+                    <h2 id="flash-word">단어를 추가해 주세요</h2>
+                  </div>
+                  <div class="flashcard-back">
+                    <span class="flash-label">MEANING</span>
+                    <h2 id="flash-meaning">뜻이 여기에 표시됩니다</h2>
+                  </div>
+                </div>
+              </div>
+              <div class="flash-controls">
+                <button class="btn btn-secondary btn-sm" id="flash-prev-btn">이전</button>
+                <span class="flash-counter" id="flash-counter">0 / 0</span>
+                <button class="btn btn-secondary btn-sm" id="flash-next-btn">다음</button>
+              </div>
+              <div class="flash-tip">💡 카드를 클릭하거나 누르면 단어 뜻이 뒤집혀 보입니다!</div>
+            </div>
+          </div>
+
+          <!-- 단어 목록 헤더 & 필터 -->
+          <div class="vocab-header-row">
+            <h4>내 단어장 (<span id="vocab-total-count">0</span>개)</h4>
+            <div class="vocab-search-wrap">
+              <input type="text" id="vocab-search" placeholder="단어/뜻 검색...">
+            </div>
+          </div>
+
+          <!-- 단어 리스트 테이블 -->
+          <div class="card vocab-table-card">
+            <div class="vocab-list-container">
+              <table class="vocab-table">
+                <thead>
+                  <tr>
+                    <th>단어</th>
+                    <th>뜻</th>
+                    <th style="width: 70px;">상태</th>
+                    <th style="width: 60px;">삭제</th>
+                  </tr>
+                </thead>
+                <tbody id="vocab-table-body">
+                  <!-- Dynamic JS Render -->
+                </tbody>
+              </table>
+            </div>
+          </div>
+        </section>
+
+
+        <!-- ==================== TAB 5: STUDY RESOURCES ==================== -->
+        <section class="tab-content" id="tab-study">
+          <div class="sub-tab-bar">
+            <button class="sub-tab active" data-sub="sub-process">🧭 학습 프로세스</button>
+            <button class="sub-tab" data-sub="sub-library">📂 교재 창고</button>
+            <button class="sub-tab" data-sub="sub-practical">💼 실무 영어</button>
+          </div>
+
+          <!-- 학습 프로세스 서브탭 -->
+          <div class="sub-tab-content active" id="sub-process">
+            <!-- LC 7단계 훈련 가이드 -->
+            <div class="card process-card">
+              <div class="card-header">
+                <h3 class="card-title">🎧 LC 학습 7단계 프로세스 가이드</h3>
+              </div>
+              <div class="card-body">
+                <div class="interactive-steps-container" id="lc-steps-container">
+                  <div class="step-guide active" data-step="1">
+                    <div class="step-badge">1단계</div>
+                    <div class="step-text">
+                      <h5>문제 듣고 풀기</h5>
+                      <p>실전 시험이라 생각하고 오디오 가이드를 집중해서 듣고 문제를 풉니다. 절대 중간에 멈추지 마세요.</p>
+                    </div>
+                  </div>
+                  
+                  <div class="step-guide" data-step="2">
+                    <div class="step-badge">2단계</div>
+                    <div class="step-text">
+                      <h5>정답 확인 및 채점</h5>
+                      <p>틀린 문제를 확인하되, 해설과 스크립트는 아직 보지 않은 상태로 오답 마킹만 해둡니다.</p>
+                    </div>
+                  </div>
+                  
+                  <div class="step-guide" data-step="3">
+                    <div class="step-badge">3단계</div>
+                    <div class="step-text">
+                      <h5>스크립트 해석 & 정독</h5>
+                      <p>스크립트 대본을 꼼꼼하게 소리 내어 읽으며 구조 분석을 진행합니다. 의미 파악에 주력합니다.</p>
+                    </div>
+                  </div>
+
+                  <div class="step-guide" data-step="4">
+                    <div class="step-badge">4단계</div>
+                    <div class="step-text">
+                      <h5>모르는 단어 정리</h5>
+                      <p>지문이나 보기 중 생소했던 핵심 어휘 및 관용구를 골라내 단어장 탭에 바로 저장합니다.</p>
+                    </div>
+                  </div>
+
+                  <div class="step-guide" data-step="5">
+                    <div class="step-badge">5단계</div>
+                    <div class="step-text">
+                      <h5>쉐도잉(입으로 따라 말하기)</h5>
+                      <p>스크립트를 보면서 오디오 속도에 맞춰 0.5초 차이로 즉시 소리 내어 따라 읽는 쉐도잉을 진행합니다.</p>
+                      
+                      <!-- 쉐도잉 타이머 서브 위젯 -->
+                      <div class="shadowing-timer-widget">
+                        <span class="timer-display" id="shadow-timer-val">00:00</span>
+                        <div class="timer-controls">
+                          <button class="btn btn-primary btn-xs" id="shadow-timer-start-btn">시작</button>
+                          <button class="btn btn-secondary btn-xs" id="shadow-timer-reset-btn">리셋</button>
+                        </div>
+                      </div>
+                    </div>
+                  </div>
+
+                  <div class="step-guide" data-step="6">
+                    <div class="step-badge">6단계</div>
+                    <div class="step-text">
+                      <h5>오디오 다시 듣기</h5>
+                      <p>눈으로 스크립트를 보고 귀로 사운드를 듣습니다. 쉐도잉에서 보완된 발음이 들리는지 확인합니다.</p>
+                    </div>
+                  </div>
+
+                  <div class="step-guide" data-step="7">
+                    <div class="step-badge">7단계</div>
+                    <div class="step-text">
+                      <h5>스크립트 안 보고 최종 듣기</h5>
+                      <p>스크립트를 덮고 순수 소리만으로 지문의 흐름과 세부 내용이 한글처럼 머리에 직관적으로 해석되는지 체감합니다.</p>
+                    </div>
+                  </div>
+                </div>
+
+                <div class="process-controls">
+                  <button class="btn btn-secondary btn-sm" id="lc-step-prev">이전 단계</button>
+                  <button class="btn btn-primary btn-sm" id="lc-step-next">다음 단계</button>
+                </div>
+              </div>
+            </div>
+
+            <!-- RC 5단계 프로세스 -->
+            <div class="card process-card">
+              <div class="card-header">
+                <h3 class="card-title">📖 RC 학습 5단계 프로세스 가이드</h3>
+              </div>
+              <div class="card-body">
+                <ol class="rc-process-list">
+                  <li>
+                    <span class="rc-num">1</span>
+                    <div>
+                      <strong>제한 시간 내 문제 풀이</strong>
+                      <p>Part 5/6은 한 문제당 20-30초, Part 7은 한 지문당 문항수*1분 이내로 빠르게 푸는 시간 훈련을 진행합니다.</p>
+                    </div>
+                  </li>
+                  <li>
+                    <span class="rc-num">2</span>
+                    <div>
+                      <strong>틀린 이유 분석 및 자가 진단</strong>
+                      <p>단순 어휘 부족인지, 구조 분석 실패인지, 성급하게 넘어가서 실수한 오답 유도 선택지인지를 판별해 오답노트에 입력합니다.</p>
+                    </div>
+                  </li>
+                  <li>
+                    <span class="rc-num">3</span>
+                    <div>
+                      <strong>문법 핵심 개념 및 해설 확인</strong>
+                      <p>RC 기본 교재를 펼쳐 틀린 파트의 핵심 문법 이론(수일치, 전치사 대 접속사 등)을 다시 정독하고 노트를 다듬습니다.</p>
+                    </div>
+                  </li>
+                  <li>
+                    <span class="rc-num">4</span>
+                    <div>
+                      <strong>문장 속 영단어 완벽 암기</strong>
+                      <p>틀린 문제와 보기 지문에 기재된 모르는 어휘를 100% 암기하고 단어장 앱에 수록합니다.</p>
+                    </div>
+                  </li>
+                  <li>
+                    <span class="rc-num">5</span>
+                    <div>
+                      <strong>동일 유형 추가 문제 풀이</strong>
+                      <p>동일한 문법 포인트를 가진 변형 유형 문제를 추가로 3-5개 더 풀어 완벽하게 오개념을 격파합니다.</p>
+                    </div>
+                  </li>
+                </ol>
+              </div>
+            </div>
+          </div>
+
+          <!-- 교재 창고 서브탭 -->
+          <div class="sub-tab-content" id="sub-library">
+            <div class="card pdf-link-info-card">
+              <div class="card-body">
+                <p>💡 <strong>클라우드 링크 등록 안내:</strong> 구글 드라이브나 Dropbox에 PDF 교재를 올린 후 <strong>공유 링크</strong>를 복사하여 아래 각 파일 항목에 등록해 두세요. 아이폰 13 미니에서도 언제 어디서든 교재를 클릭 한 번으로 볼 수 있습니다!</p>
+              </div>
+            </div>
+
+            <!-- PDF 리스트 Shelf (JS 렌더링) -->
+            <div class="pdf-shelf" id="pdf-shelf-container">
+              <!-- JS dynamic library -->
+            </div>
+          </div>
+
+          <!-- 실무 영어 서브탭 -->
+          <div class="sub-tab-content" id="sub-practical">
+            <!-- 1분 자기소개 위젯 -->
+            <div class="card intro-card">
+              <div class="card-header">
+                <h3 class="card-title">🎙️ 1분 영어 자기소개 스크립트 작성</h3>
+              </div>
+              <div class="card-body">
+                <p class="section-desc">해외 EdTech 기업 면접의 필수 관문인 1분 자기소개를 준비해 보세요.</p>
+                <textarea id="practical-intro-text" rows="5" placeholder="자기소개 템플릿:
+Hello, my name is [Name]. I am an English learner aiming to work in the global EdTech sector.
+With my background in...
+I want to contribute to..."></textarea>
+                <button class="btn btn-primary btn-sm btn-full" id="save-intro-btn" style="margin-top: 10px;">자기소개 저장</button>
+              </div>
+            </div>
+
+            <!-- 이메일 템플릿 카드 -->
+            <div class="card email-templates-card">
+              <div class="card-header">
+                <h3 class="card-title">✉️ 실무 영어 이메일 자주 쓰는 표현</h3>
+              </div>
+              <div class="card-body">
+                <div class="template-selector">
+                  <select id="email-tpl-select">
+                    <option value="asking">1. 자료 요청할 때 (Asking for Information)</option>
+                    <option value="followup">2. 후속 조치 확인할 때 (Follow-up email)</option>
+                    <option value="schedule">3. 미팅 일정 잡기 (Scheduling a meeting)</option>
+                  </select>
+                </div>
+                <div class="template-viewer">
+                  <pre id="email-tpl-content">선택해 주세요.</pre>
+                </div>
+              </div>
+            </div>
+          </div>
+        </section>
+
+      </div>
+    </main>
+
+    <!-- Bottom Navigation Bar (Mobile Portrait Only) -->
+    <nav class="bottom-nav">
+      <button class="nav-item active" data-tab="tab-home">
+        <svg class="icon" viewBox="0 0 24 24"><path d="M10 20v-6h4v6h5v-8h3L12 3 2 12h3v8z"/></svg>
+        <span>홈</span>
+      </button>
+      <button class="nav-item" data-tab="tab-plan">
+        <svg class="icon" viewBox="0 0 24 24"><path d="M19 3h-1V1h-2v2H8V1H6v2H5c-1.11 0-1.99.9-1.99 2L3 19c0 1.1.89 2 2 2h14c1.1 0 2-.9 2-2V5c0-1.1-.9-2-2-2zm0 16H5V8h14v11zM7 10h5v5H7z"/></svg>
+        <span>일정</span>
+      </button>
+      <button class="nav-item" data-tab="tab-incorrect">
+        <svg class="icon" viewBox="0 0 24 24"><path d="M19 3H5c-1.1 0-2 .9-2 2v14c0 1.1.9 2 2 2h14c1.1 0 2-.9 2-2V5c0-1.1-.9-2-2-2zm-2 10H7v-2h10v2z"/></svg>
+        <span>오답</span>
+      </button>
+      <button class="nav-item" data-tab="tab-vocab">
+        <svg class="icon" viewBox="0 0 24 24"><path d="M18 2H6c-1.1 0-2 .9-2 2v16c0 1.1.9 2 2 2h12c1.1 0 2-.9 2-2V4c0-1.1-.9-2-2-2zM6 4h5v8l-2.5-1.5L6 12V4z"/></svg>
+        <span>단어</span>
+      </button>
+      <button class="nav-item" data-tab="tab-study">
+        <svg class="icon" viewBox="0 0 24 24"><path d="M4 6H2v14c0 1.1.9 2 2 2h14v-2H4V6zm16-4H8c-1.1 0-2 .9-2 2v12c0 1.1.9 2 2 2h12c1.1 0 2-.9 2-2V4c0-1.1-.9-2-2-2zm0 14H8V4h12v12z"/></svg>
+        <span>자료실</span>
+      </button>
+    </nav>
+
+  </div>
+
+  <!-- Settings / Config Modal -->
+  <div class="modal-overlay" id="settings-modal">
+    <div class="modal-card">
+      <div class="modal-header">
+        <h3>⚙️ 설정 & 클라우드 연동</h3>
+        <button class="close-btn" id="close-settings">&times;</button>
+      </div>
+      <div class="modal-body">
+        
+        <!-- GitHub Gist Sync Section -->
+        <div class="settings-section">
+          <h4>☁️ GitHub Gist 동기화 설정 (iOS 권장)</h4>
+          <p class="settings-desc">iOS의 브라우저 저장소 만료 이슈를 차단하고 데이터를 영구 소장하기 위한 개인 클라우드 백업입니다.</p>
+          
+          <div class="form-group">
+            <label for="gist-token">GitHub Access Token (PAT)</label>
+            <input type="password" id="gist-token" placeholder="ghp_xxxxxxxxxxxx">
+          </div>
+          <div class="form-group">
+            <label for="gist-id">Gist ID</label>
+            <input type="text" id="gist-id" placeholder="생성한 Gist의 32자리 고유 ID">
+          </div>
+          
+          <div class="settings-actions">
+            <button class="btn btn-primary btn-sm" id="save-gist-btn">연동 및 첫 업로드</button>
+            <button class="btn btn-secondary btn-sm" id="load-gist-btn">Gist로부터 데이터 불러오기</button>
+          </div>
+          
+          <div class="gist-guide-box">
+            <details>
+              <summary>Gist 연동 가이드</summary>
+              <ol>
+                <li><a href="https://github.com/settings/tokens" target="_blank" rel="noopener">GitHub Token</a>에 들어가서 `gist` 권한을 선택한 뒤 Access Token을 발급받습니다.</li>
+                <li><a href="https://gist.github.com" target="_blank" rel="noopener">Gist</a>에 접속해 빈 파일명으로 `Create secret gist`를 클릭해 기스트를 생성합니다.</li>
+                <li>생성된 URL의 맨 뒷자리(/ 뒤 32자리 영문숫자 조합)가 Gist ID입니다.</li>
+                <li>토큰과 ID를 적고 '연동 및 첫 업로드'를 누르면 완료됩니다!</li>
+              </ol>
+            </details>
+          </div>
+        </div>
+
+        <hr class="modal-divider">
+
+        <!-- Manual Backup / Import Section -->
+        <div class="settings-section">
+          <h4>💾 수동 백업 및 복구</h4>
+          <p class="settings-desc">네트워크 없이도 완벽하게 수동으로 전체 진행 데이터를 파일로 내려받아 저장할 수 있습니다.</p>
+          <div class="settings-actions">
+            <button class="btn btn-secondary btn-sm" id="export-btn">데이터 백업 (.json)</button>
+            <label class="btn btn-secondary btn-sm" style="display:inline-block; text-align:center; cursor:pointer;">
+              데이터 불러오기
+              <input type="file" id="import-file" accept=".json" style="display: none;">
+            </label>
+          </div>
+        </div>
+
+        <hr class="modal-divider">
+
+        <!-- Theme and Reset Section -->
+        <div class="settings-section">
+          <h4>🎨 테마 설정 및 초기화</h4>
+          <div class="form-group">
+            <label for="theme-select">테마 선택</label>
+            <select id="theme-select">
+              <option value="violet-dark" selected>🌌 네온 바이올렛 다크 (기본)</option>
+              <option value="cyan-dark">🧪 사이버 사이언 다크</option>
+              <option value="emerald-light">🌿 에메랄드 그린 라이트</option>
+            </select>
+          </div>
+          
+          <button class="btn btn-danger btn-full btn-sm" id="reset-all-btn" style="margin-top: 15px;">⚠️ 모든 데이터 초기화</button>
+        </div>
+
+      </div>
+    </div>
+  </div>
+
+  <!-- Main JavaScript File -->
+  <script src="app.js"></script>
+</body>
+</html>

@@ -1,0 +1,10 @@
+{
+  "name": "toeic-850-planner",
+  "version": "1.0.0",
+  "description": "TOEIC 850+ Study Planner Dashboard",
+  "main": "index.html",
+  "scripts": {
+    "start": "npx -y http-server -p 8080 -c-1"
+  },
+  "dependencies": {}
+}
