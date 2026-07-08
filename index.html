@@ -82,29 +82,53 @@ p{margin:0}
 .minibtn.right{margin-left:auto}
 .minibtn.on{background:#7f1d1d; color:var(--ro-l)}
 
-/* vocab cards */
-.vgrid{display:flex; flex-direction:column; gap:12px}
-.vcard{position:relative; border:1px solid var(--border); background:var(--surface); border-radius:14px; padding:14px}
-.vcard.ring-known{border-color:rgba(4,120,87,.6)}
-.vcard.ring-fuzzy{border-color:rgba(180,83,9,.6)}
-.vcard.ring-unknown{border-color:rgba(159,18,57,.6)}
-.vnum{position:absolute; right:12px; top:12px; font-size:11px; color:var(--t4)}
-.vdot{position:absolute; left:12px; top:14px; width:8px; height:8px; border-radius:99px}
-.dot-known{background:var(--em)} .dot-fuzzy{background:var(--amber)} .dot-unknown{background:var(--ro)}
-.vface{display:block; width:100%; text-align:left; padding:6px 0 2px; min-height:96px}
-.vword{font-size:24px; font-weight:600; color:#fafaf9; line-height:1.15; padding-right:24px}
-.vpos{margin-top:4px; font-size:11px; color:var(--t3)}
-.vhint{margin-top:10px; font-size:11px; letter-spacing:.12em; text-transform:uppercase; color:rgba(245,158,11,.7)}
-.vmean{font-size:18px; font-weight:500; color:var(--amber-l)}
-.vex{margin-top:8px; font-size:14px; font-style:italic; color:var(--t2); line-height:1.45}
-.vtip{margin-top:8px; font-size:12px; color:var(--t2); background:var(--inner); border-radius:8px; padding:6px 8px}
-.marks{display:flex; gap:6px; margin-top:12px}
-.mark{flex:1; padding:9px 4px; min-height:40px; border-radius:8px; font-size:12px; background:var(--border); color:var(--t3); font-family:ui-monospace,Menlo,monospace}
-.mark.known.on{background:#064e3b; color:var(--em-l)}
-.mark.fuzzy.on{background:#78350f; color:var(--amber-l)}
-.mark.unknown.on{background:#7f1d1d; color:var(--ro-l)}
+/* vocab — 세션 진행 바 */
+.vprog{display:flex; align-items:center; gap:10px; margin-bottom:14px; font-size:12px; color:var(--t3)}
+.vprog .pbar{flex:1; height:6px; background:var(--border); border-radius:99px; overflow:hidden}
+.vprog .pfill{height:100%; background:var(--amber); border-radius:99px; transition:width .3s}
+.vprog .pn{font-family:ui-monospace,Menlo,monospace; white-space:nowrap}
 
-.empty{border:1px solid var(--border); background:var(--surface); border-radius:14px; padding:28px 16px; text-align:center; font-size:14px; color:var(--t2)}
+/* vocab — 예문 빈칸 문제 카드 */
+.vstep{border:1px solid var(--border); background:var(--surface); border-radius:14px; padding:16px 15px}
+.vtag{display:flex; align-items:center; justify-content:space-between; margin-bottom:12px}
+.vtag .lvl{font-size:11px; letter-spacing:.12em; text-transform:uppercase; font-family:ui-monospace,Menlo,monospace}
+.lvl.new{color:rgba(245,158,11,.85)}
+.lvl.learn{color:var(--amber-l)}
+.lvl.due{color:var(--ro-l)}
+.vtag .seen{font-size:11px; color:var(--t4); font-family:ui-monospace,Menlo,monospace}
+.cloze{font-size:18px; line-height:1.7; color:#e7e5e4; font-family:"Iowan Old Style",Palatino,Georgia,serif}
+.blank{display:inline-block; min-width:76px; text-align:center; border-bottom:2px solid var(--amber); color:var(--amber-l); font-weight:600; padding:0 6px; font-family:inherit}
+.blank.filled{border-bottom-color:var(--em); color:var(--em-l)}
+.blank.filled.bad{border-bottom-color:var(--ro); color:var(--ro-l)}
+.vopts{display:flex; flex-direction:column; gap:8px; margin-top:16px}
+.vopt{display:flex; align-items:center; gap:10px; width:100%; text-align:left; border:1px solid var(--border2); background:var(--border); color:var(--t1); border-radius:10px; padding:12px 13px; min-height:46px; font-size:15px; line-height:1.35}
+.vopt .ol{font-size:12px; color:var(--t3); font-family:ui-monospace,Menlo,monospace; flex:0 0 auto}
+.vopt.correct{border-color:#059669; background:var(--em-bg); color:var(--em-l)}
+.vopt.wrong{border-color:var(--ro-bd); background:var(--ro-bg); color:var(--ro-l)}
+.vopt.dim{border-color:var(--border); background:var(--surface); color:var(--t4)}
+
+/* vocab — 정답 공개(학습) 영역 */
+.vreveal{margin-top:16px; border-top:1px solid var(--border); padding-top:14px}
+.rvmean{font-size:20px; font-weight:600; color:var(--amber-l); font-family:"Iowan Old Style",Palatino,Georgia,serif}
+.rvpos{font-size:11px; color:var(--t3); font-family:ui-monospace,Menlo,monospace; margin-left:8px}
+.rvsent{margin-top:10px; font-size:14px; color:var(--t2); font-style:italic; line-height:1.55}
+.rvsent b{color:var(--em-l); font-style:normal}
+.rvtip{margin-top:10px; font-size:12px; color:var(--t2); background:var(--inner); border-radius:8px; padding:8px 10px; line-height:1.5}
+.rvtip .k{color:rgba(245,158,11,.85); font-family:ui-monospace,Menlo,monospace; margin-right:6px}
+
+/* vocab — 자가평가 */
+.srq{margin-top:16px; font-size:12px; color:var(--t3); text-align:center}
+.srate{display:flex; gap:8px; margin-top:10px}
+.srbtn{flex:1; padding:12px 6px; min-height:48px; border-radius:10px; font-size:14px; font-weight:600; border:1px solid var(--border2); background:var(--border); color:var(--t2)}
+.srbtn.know{border-color:#065f46}
+.srbtn.know:active{background:#064e3b; color:var(--em-l)}
+.srbtn.fuzzy:active{background:#78350f; color:var(--amber-l)}
+.srbtn.no{border-color:#7f1d1d}
+.srbtn.no:active{background:#7f1d1d; color:var(--ro-l)}
+.srsub{display:block; font-size:11px; font-weight:400; color:var(--t4); margin-top:2px; font-family:ui-monospace,Menlo,monospace}
+
+.empty{border:1px solid var(--border); background:var(--surface); border-radius:14px; padding:32px 18px; text-align:center; font-size:14px; color:var(--t2); line-height:1.6}
+.empty .eb{margin-top:14px; display:inline-block; padding:10px 18px; min-height:44px; border-radius:10px; background:var(--amber); color:#0c0a09; font-weight:600; font-size:14px}
 
 /* rules */
 .rules{display:flex; flex-direction:column; gap:8px; margin-bottom:22px}
@@ -472,11 +496,29 @@ const READING = [
   VOCAB_CHAPTERS.forEach(function (c) { c.words.forEach(function (v) { VOCAB_MAP[v.w] = v; }); });
   var TOTAL_VOCAB = VOCAB_CHAPTERS.reduce(function (n, c) { return n + c.words.length; }, 0);
 
-  // ===== 진도 저장 (localStorage — 직접 만든 웹사이트에서 정상 작동) =====
-  var KEY = "toeic:progress:v1";
-  function empty() { return { version: 1, vocab: {}, quiz: { total: { solved: 0, correct: 0 }, days: {} } }; }
+  // ===== 진도 저장 (localStorage — 배포된 사이트에서 정상 작동) =====
+  var KEY = "toeic:progress:v2";
+  var MAXBOX = 4; // box가 MAXBOX 이상이면 '익힘'
+  function empty() { return { version: 2, vocab: {}, quiz: { total: { solved: 0, correct: 0 }, days: {} } }; }
+  function migrate(p) {
+    var out = Object.assign(empty(), p || {});
+    out.vocab = out.vocab || {};
+    // v1 문자열(known/fuzzy/unknown) → v2 객체({box,seen,right})로 변환
+    Object.keys(out.vocab).forEach(function (w) {
+      var v = out.vocab[w];
+      if (typeof v === "string") {
+        var box = v === "known" ? MAXBOX : v === "fuzzy" ? 1 : 0;
+        out.vocab[w] = { box: box, seen: 1, right: v === "known" ? 1 : 0 };
+      }
+    });
+    out.version = 2;
+    return out;
+  }
   function loadProgress() {
-    try { var r = localStorage.getItem(KEY); if (r) return Object.assign(empty(), JSON.parse(r)); } catch (e) {}
+    try {
+      var r = localStorage.getItem(KEY) || localStorage.getItem("toeic:progress:v1");
+      if (r) return migrate(JSON.parse(r));
+    } catch (e) {}
     return empty();
   }
   function saveNow() { try { localStorage.setItem(KEY, JSON.stringify(state.progress)); } catch (e) {} }
@@ -488,9 +530,12 @@ const READING = [
     progress: loadProgress(),
     tab: "vocab",
     vc: "v1", gc: "g1",
-    vmode: "cards", review: false, seed: 0,
-    flips: {}, open: {}, answers: {},
-    vquiz: null, vquizKey: null,
+    vq: null,            // 현재 예문 문제 객체
+    vphase: "ask",       // ask(고르기) | reveal(정답·학습)
+    vpick: null,         // 고른 보기 인덱스
+    session: { done: 0, correct: 0 },
+    reviewAll: false,    // true면 '익힘' 단어까지 다시 포함
+    open: {}, answers: {},
     confirm: false,
   };
   GRAMMAR_CHAPTERS.forEach(function (c) { state.open[c.id + "-0"] = true; });
@@ -500,33 +545,101 @@ const READING = [
   function escA(s) { return esc(s).replace(/"/g, "&quot;"); }
   function shuffle(a) { a = a.slice(); for (var i = a.length - 1; i > 0; i--) { var j = Math.floor(Math.random() * (i + 1)); var t = a[i]; a[i] = a[j]; a[j] = t; } return a; }
 
-  function buildVocabQuiz(list) {
-    var n = Math.min(12, list.length);
-    return shuffle(list).slice(0, n).map(function (item) {
-      var d = shuffle(list.filter(function (x) { return x.w !== item.w; })).slice(0, 3).map(function (x) { return x.m; });
-      var opts = shuffle([item.m].concat(d));
-      return { q: item.w, o: opts, a: opts.indexOf(item.m), e: item.w + ": " + item.m + " · " + item.tip };
-    });
-  }
-  function ensureVQuiz() {
-    var k = state.vc + ":" + state.seed;
-    if (state.vquizKey !== k) {
-      state.vquizKey = k;
-      var ch = VOCAB_CHAPTERS.find(function (c) { return c.id === state.vc; });
-      state.vquiz = buildVocabQuiz(ch.words);
+  // ===== 단어 엔진: 예문 빈칸 + 간격 반복(SRS) =====
+
+  // 예문에서 목표 단어(변화형 포함)를 찾아 빈칸으로 만든다. 못 찾으면 문구의 첫 내용어를 빈칸 처리.
+  function findBlank(word, sentence) {
+    var base = word.toLowerCase();
+    // 문구형(예: "be enthusiastic about")
+    if (base.indexOf(" ") >= 0) {
+      var core = base.replace(/^be\s+/, "");
+      var lo = sentence.toLowerCase(), i = lo.indexOf(core);
+      if (i >= 0) return { b: sentence.slice(0, i), m: sentence.slice(i, i + core.length), a: sentence.slice(i + core.length) };
+      // 폴백: 문구의 첫 알파벳 단어(be/관사 제외)를 빈칸
+      var toks = core.split(/\s+/).filter(function (t) { return t && ["a", "an", "the", "to", "as", "of", "b"].indexOf(t) < 0; });
+      for (var t = 0; t < toks.length; t++) {
+        var re0 = new RegExp("\\b" + esc0(toks[t]) + "\\b");
+        var mm0 = re0.exec(lo);
+        if (mm0) return { b: sentence.slice(0, mm0.index), m: sentence.slice(mm0.index, mm0.index + toks[t].length), a: sentence.slice(mm0.index + toks[t].length) };
+      }
+      return null;
     }
-    return state.vquiz;
+    var cands = [base, base + "s", base + "es", base + "ed", base + "d", base + "ing"];
+    if (base.charAt(base.length - 1) === "e") { var st = base.slice(0, -1); cands.push(st + "ing", st + "ed"); }
+    if (base.charAt(base.length - 1) === "y") { var sy = base.slice(0, -1); cands.push(sy + "ies", sy + "ied"); }
+    cands = cands.filter(function (v, k, arr) { return arr.indexOf(v) === k; }).sort(function (a, b) { return b.length - a.length; });
+    var low = sentence.toLowerCase();
+    for (var c = 0; c < cands.length; c++) {
+      var re = new RegExp("\\b" + esc0(cands[c]) + "\\b");
+      var mm = re.exec(low);
+      if (mm) return { b: sentence.slice(0, mm.index), m: sentence.slice(mm.index, mm.index + cands[c].length), a: sentence.slice(mm.index + cands[c].length) };
+    }
+    return null;
+  }
+  function esc0(s) { return s.replace(/[.*+?^${}()|[\]\\]/g, "\\$&"); }
+  // 보기에 표시할 형태(문구는 'be ' 제거)
+  function optForm(w) { return w.indexOf(" ") >= 0 ? w.replace(/^be\s+/, "") : w; }
+
+  function boxOf(w) { var r = state.progress.vocab[w]; return r ? r.box : -1; } // -1 = 신규
+  function levelOf(w) { var b = boxOf(w); if (b < 0) return "new"; if (b <= 0) return "due"; if (b >= MAXBOX) return "known"; return "learn"; }
+
+  // 현재 챕터에서 다음에 낼 단어를 우선순위대로 뽑는다: 모름(box0) → 신규 → 학습중(box 오름차순). 익힘 제외(reviewAll이면 포함)
+  function pickNext(words, avoidWord) {
+    var pool = words.filter(function (v) {
+      var b = boxOf(v.w);
+      if (!state.reviewAll && b >= MAXBOX) return false; // 익힌 단어는 스킵
+      return true;
+    });
+    if (!pool.length) return null;
+    function rank(v) { var b = boxOf(v.w); if (b < 0) return 1; if (b === 0) return 0; return b + 1; } // 0=모름 최우선, 1=신규, 그다음 학습중
+    var minRank = Math.min.apply(null, pool.map(rank));
+    var top = pool.filter(function (v) { return rank(v) === minRank; });
+    if (top.length > 1 && avoidWord) { var f = top.filter(function (v) { return v.w !== avoidWord; }); if (f.length) top = f; }
+    return top[Math.floor(Math.random() * top.length)];
+  }
+
+  function buildQuestion(words, target) {
+    var blank = findBlank(target.w, target.ex);
+    var distract = shuffle(words.filter(function (x) { return x.w !== target.w; })).slice(0, 3);
+    var opts = shuffle([target].concat(distract));
+    return {
+      word: target.w,
+      blank: blank,                 // {b,m,a} 또는 null
+      ex: target.ex,
+      opts: opts.map(function (o) { return { w: o.w, label: optForm(o.w) }; }),
+      answer: opts.map(function (o) { return o.w; }).indexOf(target.w),
+      meaning: target.m, pos: target.p, tip: target.tip,
+    };
+  }
+
+  function nextQuestion() {
+    var ch = VOCAB_CHAPTERS.find(function (c) { return c.id === state.vc; });
+    var avoid = state.vq ? state.vq.word : null;
+    var target = pickNext(ch.words, avoid);
+    state.vq = target ? buildQuestion(ch.words, target) : null;
+    state.vphase = "ask";
+    state.vpick = null;
+  }
+
+  // 자가평가 + 정답 여부 → 박스 갱신
+  function gradeWord(word, correct, rate) {
+    var v = state.progress.vocab, cur = v[word] || { box: 0, seen: 0, right: 0 };
+    var box = cur.box;
+    if (rate === "no" || !correct) box = 0;              // 모른다 or 오답 → 최우선 복습
+    else if (rate === "fuzzy") box = Math.max(1, box);   // 애매 → 학습중 유지
+    else box = Math.min(MAXBOX, box + 1);                // 안다 & 정답 → 한 단계 승급
+    v[word] = { box: box, seen: cur.seen + 1, right: cur.right + (correct ? 1 : 0) };
+    saveNow();
   }
 
   function stats() {
     var v = state.progress.vocab;
-    var vals = Object.keys(v).map(function (k) { return v[k]; });
-    var known = vals.filter(function (s) { return s === "known"; }).length;
-    var fuzzy = vals.filter(function (s) { return s === "fuzzy"; }).length;
+    var known = 0, learning = 0;
+    Object.keys(v).forEach(function (k) { var b = v[k].box; if (b >= MAXBOX) known++; else learning++; });
     var tot = state.progress.quiz.total;
     var rate = tot.solved ? Math.round((tot.correct / tot.solved) * 100) : 0;
     var t = state.progress.quiz.days[today()] || { solved: 0, correct: 0 };
-    return { known: known, fuzzy: fuzzy, solved: tot.solved, correct: tot.correct, rate: rate, today: t };
+    return { known: known, learning: learning, seenCount: known + learning, solved: tot.solved, correct: tot.correct, rate: rate, today: t };
   }
 
   function recordAnswer(ok) {
@@ -536,17 +649,6 @@ const READING = [
     q.total = { solved: q.total.solved + 1, correct: q.total.correct + (ok ? 1 : 0) };
     saveNow();
   }
-  function mark(word, status) {
-    var v = state.progress.vocab;
-    if (v[word] === status) delete v[word]; else v[word] = status;
-    saveNow();
-  }
-
-  var STATUS = {
-    known: { label: "안다", cls: "known" },
-    fuzzy: { label: "헷갈린다", cls: "fuzzy" },
-    unknown: { label: "모른다", cls: "unknown" },
-  };
 
   // ===== 뷰 =====
   function view() { return header() + dashboard() + tabsView() + bodyView(); }
@@ -555,7 +657,7 @@ const READING = [
     return '<header class="hd">' +
       '<p class="mono eyebrow">Hackers TOEIC RC · 어휘 &amp; 문법</p>' +
       '<h1 class="serif h1">토익 단어·문법 학습기</h1>' +
-      '<p class="lead">챕터를 골라 외우고, 바로 풀어보세요. 진도는 이 기기에 자동 저장돼요.</p>' +
+      '<p class="lead">예문 빈칸에 알맞은 단어를 고르고, 아는 단어는 넘기세요. 모르는 단어만 반복해서 돌아와요.</p>' +
       '</header>';
   }
 
@@ -569,13 +671,13 @@ const READING = [
     return '<section class="card dash">' +
       '<div class="dash-top"><span class="mono eyebrow amber">학습 현황</span>' + right + '</div>' +
       '<div class="stats">' +
-        stat("외운 단어", s.known, "/ " + TOTAL_VOCAB, "em") +
+        stat("익힌 단어", s.known, "/ " + TOTAL_VOCAB, "em") +
         stat("누적 정답률", s.rate + "%", s.correct + "/" + s.solved, "amber") +
         stat("오늘 푼 문제", s.today.solved, "정답 " + s.today.correct, "t1") +
       '</div>' +
-      '<div class="bar"><div class="bar-fill" style="width:' + s.rate + '%"></div></div>' +
+      '<div class="bar"><div class="bar-fill" style="width:' + Math.round((s.known / TOTAL_VOCAB) * 100) + '%"></div></div>' +
       '<p class="mono note">' + (storageOK
-        ? "진도는 이 기기에 자동 저장돼요 · 헷갈리는 단어 " + s.fuzzy + "개"
+        ? "진도는 이 기기에 자동 저장돼요 · 복습 중 " + s.learning + "개"
         : "이 브라우저에서 저장이 막혀 있어 진도가 유지되지 않아요 (사파리 개인정보 보호 모드 등).") +
       '</p></section>';
   }
@@ -606,53 +708,97 @@ const READING = [
     return readingTab();
   }
 
-  // ---- 단어 ----
+  // ---- 단어 (예문 빈칸 + SRS 스텝) ----
   function vocabTab() {
     var ch = VOCAB_CHAPTERS.find(function (c) { return c.id === state.vc; });
     var h = chips(VOCAB_CHAPTERS, state.vc, "vchap");
-    h += '<div class="pills">' +
-      '<button class="pill' + (state.vmode === "cards" ? " active" : "") + '" data-action="vmode" data-mode="cards">카드로 외우기</button>' +
-      '<button class="pill' + (state.vmode === "quiz" ? " active" : "") + '" data-action="vmode" data-mode="quiz">뜻 맞히기 퀴즈</button>';
-    if (state.vmode === "cards") {
-      h += '<button class="minibtn right' + (state.review ? " on" : "") + '" data-action="review">' + (state.review ? "복습 큐 보는 중" : "아직 못 외운 것만") + '</button>';
-    } else {
-      h += '<button class="minibtn right" data-action="reseed">새 문제</button>';
-    }
-    h += '</div>';
 
-    if (state.vmode === "cards") {
-      var words = ch.words;
-      var cards = state.review ? words.filter(function (v) { var st = state.progress.vocab[v.w]; return st === "unknown" || st === "fuzzy" || st === undefined; }) : words;
-      if (!cards.length) {
-        h += '<div class="empty">이 챕터에서 복습할 단어가 없어요. 전부 “안다”로 표시했네요! 👍</div>';
-      } else {
-        h += '<div class="vgrid">' + cards.map(function (v) { return vcard(v, words.indexOf(v)); }).join("") + '</div>';
-      }
-    } else {
-      h += quizView("vq:" + state.vc + ":" + state.seed, ensureVQuiz(), false);
+    // 챕터 진행 요약
+    var words = ch.words;
+    var remaining = words.filter(function (v) { return state.reviewAll ? true : boxOf(v.w) < MAXBOX; }).length;
+    var mastered = words.length - words.filter(function (v) { return boxOf(v.w) < MAXBOX; }).length;
+    var pct = words.length ? Math.round((mastered / words.length) * 100) : 0;
+    h += '<div class="vprog">' +
+      '<span class="pn">' + ch.title + ' · 익힘 ' + mastered + '/' + words.length + '</span>' +
+      '<span class="pbar"><span class="pfill" style="width:' + pct + '%"></span></span>' +
+      '<button class="minibtn' + (state.reviewAll ? " on" : "") + '" data-action="reviewall">' + (state.reviewAll ? "전체 복습 중" : "모르는 것만") + '</button>' +
+      '</div>';
+
+    // 현재 문제가 없으면 새로 뽑기
+    if (!state.vq && state.vphase === "ask") nextQuestion();
+
+    if (!state.vq) {
+      h += '<div class="empty">이 챕터는 다 익혔어요. 👍<br>다른 챕터로 넘어가거나, 전체를 다시 복습할 수 있어요.' +
+        '<br><button class="eb" data-action="reviewall">이 챕터 전체 다시 복습</button></div>';
+      return '<section>' + h + '</section>';
     }
+
+    h += stepView(state.vq);
     return '<section>' + h + '</section>';
   }
 
-  function vcard(v, idx) {
-    var st = state.progress.vocab[v.w];
-    var meta = st ? STATUS[st] : null;
-    var flipped = !!state.flips[v.w];
-    var face = flipped
-      ? '<p class="vmean">' + esc(v.m) + '</p>' +
-        '<p class="vex">“' + esc(v.ex) + '”</p>' +
-        '<p class="vtip mono">출제 포인트 · ' + esc(v.tip) + '</p>'
-      : '<p class="serif vword">' + esc(v.w) + '</p>' +
-        '<p class="vpos mono">' + esc(v.p) + '</p>' +
-        '<p class="vhint mono">눌러서 뜻 보기</p>';
-    var marks = ["known", "fuzzy", "unknown"].map(function (k) {
-      return '<button class="mark ' + STATUS[k].cls + (st === k ? " on" : "") + '" data-action="mark" data-word="' + escA(v.w) + '" data-status="' + k + '">' + STATUS[k].label + '</button>';
-    }).join("");
-    return '<div class="vcard' + (meta ? " ring-" + meta.cls : "") + '">' +
-      '<span class="vnum mono">' + String(idx + 1).padStart(2, "0") + '</span>' +
-      (meta ? '<span class="vdot dot-' + meta.cls + '"></span>' : "") +
-      '<button class="vface" data-action="flip" data-word="' + escA(v.w) + '">' + face + '</button>' +
-      '<div class="marks">' + marks + '</div></div>';
+  function stepView(q) {
+    var lvl = levelOf(q.word);
+    var lvlLabel = { "new": "처음 보는 단어", "learn": "학습 중", "due": "복습", "known": "익힘" }[lvl];
+    var lvlCls = lvl === "new" ? "new" : lvl === "due" ? "due" : "learn";
+    var rec = state.progress.vocab[q.word];
+    var seen = rec ? "· " + rec.seen + "회 봄" : "";
+
+    // 빈칸 문장
+    var b = q.blank;
+    var blankFilled = state.vphase === "reveal";
+    var picked = state.vpick;
+    var correct = picked === q.answer;
+    var blankHtml;
+    if (b) {
+      var inner = "______";
+      if (blankFilled) inner = correct ? esc(b.m) : (picked != null ? esc(q.opts[picked].label) : "______");
+      blankHtml = esc(b.b) + '<span class="blank' + (blankFilled ? " filled" + (correct ? "" : " bad") : "") + '">' + inner + '</span>' + esc(b.a);
+    } else {
+      blankHtml = esc(q.ex); // 이론상 도달 안 함
+    }
+
+    var h = '<div class="vstep">' +
+      '<div class="vtag"><span class="lvl ' + lvlCls + '">' + lvlLabel + '</span><span class="seen">' + seen + '</span></div>' +
+      '<p class="cloze">' + blankHtml + '</p>';
+
+    // 보기
+    h += '<div class="vopts">';
+    q.opts.forEach(function (o, oi) {
+      var cls = "vopt";
+      if (state.vphase === "reveal") {
+        if (oi === q.answer) cls += " correct";
+        else if (oi === picked) cls += " wrong";
+        else cls += " dim";
+      }
+      h += '<button class="' + cls + '"' + (state.vphase === "reveal" ? " disabled" : "") +
+        ' data-action="vanswer" data-oi="' + oi + '">' +
+        '<span class="ol">' + String.fromCharCode(65 + oi) + '</span>' + esc(o.label) + '</button>';
+    });
+    h += '</div>';
+
+    // 정답 공개 + 학습 + 자가평가
+    if (state.vphase === "reveal") {
+      h += '<div class="vreveal">' +
+        '<p><span class="rvmean">' + esc(q.word) + '</span><span class="rvpos">' + esc(q.pos) + ' · ' + esc(q.meaning) + '</span></p>' +
+        '<p class="rvsent">“' + sentenceWithBold(q) + '”</p>' +
+        '<p class="rvtip"><span class="k">출제 포인트</span>' + esc(q.tip) + '</p>' +
+        '<p class="srq">이 단어, 얼마나 확실했나요?</p>' +
+        '<div class="srate">' +
+          '<button class="srbtn no" data-action="vrate" data-rate="no">모른다<span class="srsub">자주 복습</span></button>' +
+          '<button class="srbtn fuzzy" data-action="vrate" data-rate="fuzzy">애매<span class="srsub">유지</span></button>' +
+          '<button class="srbtn know" data-action="vrate" data-rate="know">안다<span class="srsub">승급</span></button>' +
+        '</div></div>';
+    }
+
+    h += '</div>';
+    return h;
+  }
+
+  // 원래 예문에서 정답 단어를 굵게 표시
+  function sentenceWithBold(q) {
+    if (!q.blank) return esc(q.ex);
+    return esc(q.blank.b) + "<b>" + esc(q.blank.m) + "</b>" + esc(q.blank.a);
   }
 
   // ---- 문법 ----
@@ -742,13 +888,22 @@ const READING = [
     if (!el) return;
     var a = el.dataset.action;
     if (a === "tab") state.tab = el.dataset.tab;
-    else if (a === "vchap") { state.vc = el.dataset.id; state.review = false; }
+    else if (a === "vchap") { state.vc = el.dataset.id; state.vq = null; state.vphase = "ask"; state.vpick = null; }
     else if (a === "gchap") state.gc = el.dataset.id;
-    else if (a === "vmode") state.vmode = el.dataset.mode;
-    else if (a === "review") state.review = !state.review;
-    else if (a === "reseed") state.seed++;
-    else if (a === "flip") { var w = el.dataset.word; state.flips[w] = !state.flips[w]; }
-    else if (a === "mark") mark(el.dataset.word, el.dataset.status);
+    else if (a === "reviewall") { state.reviewAll = !state.reviewAll; state.vq = null; state.vphase = "ask"; state.vpick = null; }
+    else if (a === "vanswer") {
+      if (state.vphase === "reveal" || !state.vq) return;
+      state.vpick = +el.dataset.oi;
+      state.vphase = "reveal";
+      recordAnswer(state.vpick === state.vq.answer);
+    }
+    else if (a === "vrate") {
+      if (state.vphase !== "reveal" || !state.vq) return;
+      var ok = state.vpick === state.vq.answer;
+      gradeWord(state.vq.word, ok, el.dataset.rate);
+      state.session = { done: state.session.done + 1, correct: state.session.correct + (ok ? 1 : 0) };
+      nextQuestion();
+    }
     else if (a === "rule") { var k = el.dataset.key; state.open[k] = !state.open[k]; }
     else if (a === "answer") {
       var key = el.dataset.quiz + ":" + el.dataset.qi;
@@ -758,7 +913,7 @@ const READING = [
     }
     else if (a === "reset-ask") state.confirm = true;
     else if (a === "reset-no") state.confirm = false;
-    else if (a === "reset-yes") { state.progress = empty(); state.answers = {}; state.flips = {}; saveNow(); state.confirm = false; }
+    else if (a === "reset-yes") { state.progress = empty(); state.answers = {}; state.vq = null; state.vphase = "ask"; state.vpick = null; state.session = { done: 0, correct: 0 }; saveNow(); state.confirm = false; }
     render();
   });
 
