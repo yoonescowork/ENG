@@ -1,945 +1,770 @@
-<!DOCTYPE html>
+<!doctype html>
 <html lang="ko">
 <head>
-  <meta charset="UTF-8">
-  <meta name="viewport" content="width=device-width, initial-scale=1.0, viewport-fit=cover">
-  <meta name="apple-mobile-web-app-capable" content="yes">
-  <meta name="apple-mobile-web-app-status-bar-style" content="black-translucent">
-  <title>TOEIC 850+ Study Tracker</title>
-  
-  <!-- Manifest & Web App Icon -->
-  <link rel="manifest" href="manifest.json">
-  <link rel="apple-touch-icon" href="icon-192.png">
-  
-  <!-- Fonts -->
-  <link rel="preconnect" href="https://fonts.googleapis.com">
-  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
-  <link href="https://fonts.googleapis.com/css2?family=Outfit:wght@300;400;500;600;700;800&family=Noto+Sans+KR:wght@300;400;500;700;900&display=swap" rel="stylesheet">
-  
-  <!-- Stylesheet -->
-  <link rel="stylesheet" href="style.css">
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover">
+<meta name="theme-color" content="#0c0a09">
+<meta name="apple-mobile-web-app-capable" content="yes">
+<meta name="apple-mobile-web-app-status-bar-style" content="black-translucent">
+<meta name="apple-mobile-web-app-title" content="토익 학습기">
+<meta name="format-detection" content="telephone=no">
+<title>토익 단어·문법 학습기</title>
+<style>
+:root{
+  --bg:#0c0a09; --surface:#1c1917; --inner:#0c0a09; --border:#292524; --border2:#44403c;
+  --t1:#f5f5f4; --t2:#a8a29e; --t3:#78716c; --t4:#57534e;
+  --amber:#f59e0b; --amber-l:#fcd34d;
+  --em:#34d399; --em-l:#6ee7b7; --em-bg:rgba(6,78,59,.5); --em-bd:#065f46;
+  --ro:#fb7185; --ro-l:#fda4af; --ro-bg:rgba(76,5,25,.5); --ro-bd:#9f1239;
+}
+*{box-sizing:border-box;-webkit-tap-highlight-color:transparent}
+html{-webkit-text-size-adjust:100%}
+body{
+  margin:0; background:var(--bg); color:var(--t1);
+  font-family:-apple-system,BlinkMacSystemFont,system-ui,"Segoe UI",Roboto,sans-serif;
+  font-size:16px; line-height:1.55; overflow-wrap:break-word;
+  padding:env(safe-area-inset-top) env(safe-area-inset-right) env(safe-area-inset-bottom) env(safe-area-inset-left);
+}
+.wrap{max-width:480px; margin:0 auto; padding:18px 16px 48px}
+.serif{font-family:"Iowan Old Style","Palatino Linotype",Palatino,Georgia,serif}
+.mono{font-family:ui-monospace,"SF Mono",SFMono-Regular,Menlo,Consolas,monospace}
+button{font-family:inherit; color:inherit; background:none; border:none; cursor:pointer; touch-action:manipulation; font-size:16px}
+p{margin:0}
+
+.amber{color:var(--amber-l)} .em{color:var(--em-l)} .t1{color:var(--t1)}
+.eyebrow{font-size:11px; letter-spacing:.14em; text-transform:uppercase; color:var(--t3)}
+.eyebrow.amber{color:rgba(245,158,11,.85)}
+
+/* header */
+.hd{margin-bottom:16px}
+.h1{margin:4px 0 0; font-size:26px; font-weight:700; color:#fafaf9}
+.lead{margin-top:8px; font-size:14px; color:var(--t2)}
+
+/* card */
+.card{border:1px solid var(--border); background:var(--surface); border-radius:14px}
+
+/* dashboard */
+.dash{padding:14px; margin-bottom:18px}
+.dash-top{display:flex; align-items:center; justify-content:space-between; margin-bottom:12px}
+.reset{font-size:11px; color:var(--t4)}
+.reset:active{color:var(--t2)}
+.confirm{display:flex; align-items:center; gap:8px; font-size:11px}
+.cq{color:var(--t2)}
+.cbtn{font-size:11px; padding:3px 9px; border-radius:6px}
+.cbtn.yes{background:#7f1d1d; color:var(--ro-l)}
+.cbtn.no{background:var(--border); color:var(--t2)}
+.stats{display:grid; grid-template-columns:1fr 1fr 1fr; gap:8px}
+.stat{background:var(--inner); border-radius:10px; padding:10px 8px}
+.lbl{font-size:11px; color:var(--t3)}
+.big{margin-top:3px; font-size:22px; font-weight:700; line-height:1.1}
+.sub{margin-top:2px; font-size:11px; color:var(--t4)}
+.bar{margin-top:12px; height:6px; width:100%; background:var(--border); border-radius:99px; overflow:hidden}
+.bar-fill{height:100%; background:var(--amber); border-radius:99px; transition:width .3s}
+.note{margin-top:12px; font-size:11px; color:var(--t4)}
+
+/* tabs */
+.tabs{display:flex; gap:8px; margin-bottom:14px}
+.tab{flex:0 0 auto; padding:8px 14px; min-height:40px; border-radius:10px; font-size:14px; font-weight:600; background:var(--surface); color:var(--t2)}
+.tab.active{background:#f5f5f4; color:#0c0a09}
+
+/* chips (가로 스크롤) */
+.chips{display:flex; gap:8px; overflow-x:auto; padding-bottom:6px; margin-bottom:14px; -webkit-overflow-scrolling:touch; scrollbar-width:none}
+.chips::-webkit-scrollbar{display:none}
+.chip{flex:0 0 auto; display:flex; align-items:center; gap:6px; padding:8px 12px; min-height:40px; border:1px solid var(--border); background:var(--surface); border-radius:10px; color:var(--t2); font-size:14px; font-weight:500; white-space:nowrap}
+.chip.active{border-color:#b45309; background:rgba(245,158,11,.1); color:var(--amber-l)}
+.chip-l{font-size:11px; color:var(--t3)}
+
+/* pills */
+.pills{display:flex; align-items:center; gap:8px; margin-bottom:14px; flex-wrap:wrap}
+.pill{padding:8px 12px; min-height:38px; border-radius:8px; font-size:14px; font-weight:500; background:var(--border); color:var(--t2)}
+.pill.active{background:var(--amber); color:#0c0a09}
+.minibtn{padding:7px 12px; min-height:36px; border-radius:8px; font-size:12px; background:var(--border); color:var(--t3); font-family:ui-monospace,Menlo,monospace}
+.minibtn.right{margin-left:auto}
+.minibtn.on{background:#7f1d1d; color:var(--ro-l)}
+
+/* vocab cards */
+.vgrid{display:flex; flex-direction:column; gap:12px}
+.vcard{position:relative; border:1px solid var(--border); background:var(--surface); border-radius:14px; padding:14px}
+.vcard.ring-known{border-color:rgba(4,120,87,.6)}
+.vcard.ring-fuzzy{border-color:rgba(180,83,9,.6)}
+.vcard.ring-unknown{border-color:rgba(159,18,57,.6)}
+.vnum{position:absolute; right:12px; top:12px; font-size:11px; color:var(--t4)}
+.vdot{position:absolute; left:12px; top:14px; width:8px; height:8px; border-radius:99px}
+.dot-known{background:var(--em)} .dot-fuzzy{background:var(--amber)} .dot-unknown{background:var(--ro)}
+.vface{display:block; width:100%; text-align:left; padding:6px 0 2px; min-height:96px}
+.vword{font-size:24px; font-weight:600; color:#fafaf9; line-height:1.15; padding-right:24px}
+.vpos{margin-top:4px; font-size:11px; color:var(--t3)}
+.vhint{margin-top:10px; font-size:11px; letter-spacing:.12em; text-transform:uppercase; color:rgba(245,158,11,.7)}
+.vmean{font-size:18px; font-weight:500; color:var(--amber-l)}
+.vex{margin-top:8px; font-size:14px; font-style:italic; color:var(--t2); line-height:1.45}
+.vtip{margin-top:8px; font-size:12px; color:var(--t2); background:var(--inner); border-radius:8px; padding:6px 8px}
+.marks{display:flex; gap:6px; margin-top:12px}
+.mark{flex:1; padding:9px 4px; min-height:40px; border-radius:8px; font-size:12px; background:var(--border); color:var(--t3); font-family:ui-monospace,Menlo,monospace}
+.mark.known.on{background:#064e3b; color:var(--em-l)}
+.mark.fuzzy.on{background:#78350f; color:var(--amber-l)}
+.mark.unknown.on{background:#7f1d1d; color:var(--ro-l)}
+
+.empty{border:1px solid var(--border); background:var(--surface); border-radius:14px; padding:28px 16px; text-align:center; font-size:14px; color:var(--t2)}
+
+/* rules */
+.rules{display:flex; flex-direction:column; gap:8px; margin-bottom:22px}
+.rule{border:1px solid var(--border); background:var(--surface); border-radius:14px; overflow:hidden}
+.rule-h{display:flex; align-items:center; gap:12px; width:100%; text-align:left; padding:12px 14px; min-height:52px}
+.rnum{flex:0 0 auto; width:28px; height:28px; display:flex; align-items:center; justify-content:center; border-radius:8px; background:var(--amber); color:#0c0a09; font-size:14px; font-weight:700}
+.rt{flex:1; font-size:14px; font-weight:500}
+.rtoggle{color:var(--t3); font-size:16px}
+.rule-b{border-top:1px solid var(--border); padding:12px 14px}
+.rb{font-size:14px; color:var(--t2); line-height:1.55}
+.rex{margin-top:8px; font-size:12px; color:rgba(253,230,138,.9); background:var(--inner); border-radius:8px; padding:8px 10px; line-height:1.5}
+.h3{margin:0 0 12px; font-size:18px; font-weight:600}
+
+/* quiz */
+.qmeta{display:flex; justify-content:space-between; font-size:12px; color:var(--t3); margin-bottom:12px}
+.qlist{display:flex; flex-direction:column; gap:12px}
+.qcard{border:1px solid var(--border); background:var(--surface); border-radius:14px; padding:14px}
+.qtext{font-size:15px; font-weight:500; line-height:1.55; color:var(--t1)}
+.qn{margin-right:8px; font-size:12px; color:var(--t3)}
+.opts{display:flex; flex-direction:column; gap:8px; margin-top:12px}
+.opt{display:block; width:100%; text-align:left; border:1px solid var(--border2); background:var(--border); color:var(--t1); border-radius:10px; padding:11px 12px; min-height:44px; font-size:14px; line-height:1.4}
+.opt .ol{margin-right:8px; font-size:12px; color:var(--t3)}
+.opt.correct{border-color:#059669; background:var(--em-bg); color:var(--em-l)}
+.opt.wrong{border-color:var(--ro-bd); background:var(--ro-bg); color:var(--ro-l)}
+.opt.dim{border-color:var(--border); background:var(--surface); color:var(--t4)}
+.expl{margin-top:12px; border:1px solid var(--border); background:var(--inner); border-radius:10px; padding:10px 12px; font-size:14px; line-height:1.55; color:var(--t2)}
+.vchips{display:flex; flex-wrap:wrap; gap:8px; margin-top:10px}
+.vchip{background:var(--border); border-radius:8px; padding:6px 8px; font-size:12px; color:rgba(253,230,138,.9)}
+
+/* reading */
+.reading{display:flex; flex-direction:column; gap:26px}
+.note-card{padding:14px}
+.tip-title{font-size:14px; font-weight:500; color:var(--amber-l)}
+.tip-body{margin-top:8px; font-size:14px; color:var(--t2); line-height:1.55}
+.passage .ptext{padding:14px; font-size:14px; line-height:1.6; color:#e7e5e4; margin-bottom:14px}
+.passage .ptext p{margin-bottom:8px}
+.passage .ptext p:last-child{margin-bottom:0}
+
+footer{margin-top:36px; text-align:center; font-size:11px; color:var(--t4); font-family:ui-monospace,Menlo,monospace}
+</style>
 </head>
 <body>
-  <!-- App Shell Container -->
-  <div class="app-container">
-    
-    <!-- Left Sidebar (Desktop Only) -->
-    <aside class="sidebar">
-      <div class="sidebar-brand">
-        <span class="brand-logo">🎯</span>
-        <h1 class="brand-name">TOEIC 850+</h1>
-      </div>
-      <nav class="sidebar-menu">
-        <button class="nav-item active" data-tab="tab-home">
-          <svg class="icon" viewBox="0 0 24 24"><path d="M10 20v-6h4v6h5v-8h3L12 3 2 12h3v8z"/></svg>
-          대시보드
-        </button>
-        <button class="nav-item" data-tab="tab-plan">
-          <svg class="icon" viewBox="0 0 24 24"><path d="M19 3h-1V1h-2v2H8V1H6v2H5c-1.11 0-1.99.9-1.99 2L3 19c0 1.1.89 2 2 2h14c1.1 0 2-.9 2-2V5c0-1.1-.9-2-2-2zm0 16H5V8h14v11zM7 10h5v5H7z"/></svg>
-          학습 계획
-        </button>
-        <button class="nav-item" data-tab="tab-incorrect">
-          <svg class="icon" viewBox="0 0 24 24"><path d="M19 3H5c-1.1 0-2 .9-2 2v14c0 1.1.9 2 2 2h14c1.1 0 2-.9 2-2V5c0-1.1-.9-2-2-2zm-2 10H7v-2h10v2z"/></svg>
-          오답노트
-        </button>
-        <button class="nav-item" data-tab="tab-vocab">
-          <svg class="icon" viewBox="0 0 24 24"><path d="M18 2H6c-1.1 0-2 .9-2 2v16c0 1.1.9 2 2 2h12c1.1 0 2-.9 2-2V4c0-1.1-.9-2-2-2zM6 4h5v8l-2.5-1.5L6 12V4z"/></svg>
-          단어장
-        </button>
-        <button class="nav-item" data-tab="tab-study">
-          <svg class="icon" viewBox="0 0 24 24"><path d="M4 6H2v14c0 1.1.9 2 2 2h14v-2H4V6zm16-4H8c-1.1 0-2 .9-2 2v12c0 1.1.9 2 2 2h12c1.1 0 2-.9 2-2V4c0-1.1-.9-2-2-2zm0 14H8V4h12v12z"/></svg>
-          학습 자료실
-        </button>
-      </nav>
-      <div class="sidebar-footer">
-        <button class="settings-btn" id="open-settings-desktop">
-          <svg class="icon" viewBox="0 0 24 24"><path d="M19.14 12.94c.04-.3.06-.61.06-.94 0-.32-.02-.64-.07-.94l2.03-1.58c.18-.14.23-.41.12-.61l-1.92-3.32c-.12-.22-.37-.29-.59-.22l-2.39.96c-.5-.38-1.03-.7-1.62-.94l-.36-2.54c-.04-.24-.24-.41-.48-.41h-3.84c-.24 0-.43.17-.47.41l-.36 2.54c-.59.24-1.13.57-1.62.94l-2.39-.96c-.22-.08-.47 0-.59.22L2.74 8.87c-.12.21-.08.47.12.61l2.03 1.58c-.05.3-.09.63-.09.94s.02.64.07.94l-2.03 1.58c-.18.14-.23.41-.12.61l1.92 3.32c.12.22.37.29.59.22l2.39-.96c.5.38 1.03.7 1.62.94l.36 2.54c.05.24.24.41.48.41h3.84c.24 0 .44-.17.47-.41l.36-2.54c.59-.24 1.13-.56 1.62-.94l2.39.96c.22.08.47 0 .59-.22l1.92-3.32c.12-.22.07-.47-.12-.61l-2.01-1.58zM12 15.6c-1.98 0-3.6-1.62-3.6-3.6s1.62-3.6 3.6-3.6 3.6 1.62 3.6 3.6-1.62 3.6-3.6 3.6z"/></svg>
-          클라우드 설정
-        </button>
-      </div>
-    </aside>
+<div class="wrap">
+  <div id="app"></div>
+  <footer>업로드한 교재를 바탕으로 재구성한 개인 학습용 콘텐츠</footer>
+</div>
+<script>
+const VOCAB_V1 = [
+  { w: "determine", p: "동사", m: "알아내다, 결정하다", ex: "A survey can help the company determine customer needs.", tip: "decide와 의미가 비슷" },
+  { w: "withdraw", p: "동사", m: "물러나다, 인출하다", ex: "She had to withdraw from the negotiation due to illness.", tip: "withdraw from: ~에서 빠지다" },
+  { w: "anticipate", p: "동사", m: "예상하다, 기대하다", ex: "Managers anticipate strong demand next quarter.", tip: "expect와 의미가 같음" },
+  { w: "monitor", p: "동사", m: "관찰하다, 감시하다", ex: "The team monitors social media trends closely.", tip: "'감시 장치'라는 명사로도 쓰임" },
+  { w: "analyze", p: "동사", m: "분석하다", ex: "Analysts carefully analyzed the quarterly sales data.", tip: "명사 analysis, 사람 analyst" },
+  { w: "surpass", p: "동사", m: "뛰어넘다, 능가하다", ex: "Sales surpassed the annual goal this year.", tip: "exceed와 의미가 비슷" },
+  { w: "explore", p: "동사", m: "탐구하다, 알아보다", ex: "The board will explore new market options.", tip: "명사 exploration" },
+  { w: "name", p: "동사", m: "임명하다, 지명하다", ex: "The CEO will name a successor next week.", tip: "appoint와 유사 / name A (as) B" },
+  { w: "redeem", p: "동사", m: "(상품·현금으로) 교환하다", ex: "Points can be redeemed for store products.", tip: "be redeemed for A" },
+  { w: "excel", p: "동사", m: "뛰어나다, 잘하다", ex: "She excels at analyzing research data.", tip: "excel at/in A" },
+  { w: "optimize", p: "동사", m: "최적화하다", ex: "The update optimizes the security system.", tip: "형용사 optimal" },
+  { w: "differ", p: "동사", m: "다르다", ex: "The new model differs from earlier versions.", tip: "differ from: ~과 다르다" },
+  { w: "conform", p: "동사", m: "(규정에) 따르다, 일치하다", ex: "The café renovated its patio to conform to new rules.", tip: "conform to/with A" },
+  { w: "resolve", p: "동사", m: "(문제를) 해결하다", ex: "The technician resolved the printer issue quickly.", tip: "명사 resolution" },
+  { w: "suspend", p: "동사", m: "중단하다, 정지하다", ex: "The project was suspended until funding is secured.", tip: "명사 suspension" },
+  { w: "resume", p: "동사", m: "재개하다, 다시 시작하다", ex: "The seminar will resume after a short break.", tip: "cf. résumé(이력서)와 철자 유사" },
+  { w: "extend", p: "동사", m: "연장하다, 늘이다", ex: "The manager extended the deadline by a week.", tip: "extend an invitation: 초대하다 / 명사 extension" },
+  { w: "commence", p: "동사", m: "시작되다, 개시하다", ex: "The board meeting commenced with a sales review.", tip: "initiate와 의미가 같음" },
+  { w: "specify", p: "동사", m: "구체적으로 명시하다", ex: "Please specify your payment method on the form.", tip: "형용사 specific" },
+  { w: "commend", p: "동사", m: "칭찬하다, 추천하다", ex: "Her supervisor commended her on the presentation.", tip: "commend A on/for B" },
+  { w: "consult", p: "동사", m: "상담하다, 참조하다", ex: "Operators may consult the technicians for tips.", tip: "consult + 사람 / consult + 자료" },
+  { w: "reserve", p: "동사", m: "예약하다, 보유하다", ex: "Attendees must reserve their own accommodations.", tip: "명사 reservation" },
+  { w: "deliberate", p: "동사", m: "심사숙고하다, 심의하다", ex: "The board deliberated over the merger all afternoon.", tip: "'신중한'이라는 형용사로도 쓰임" },
+  { w: "exceed", p: "동사", m: "(수·양)을 넘다, 초과하다", ex: "Carry-on baggage must not exceed 10 kilograms.", tip: "명사 excess" },
+  { w: "address", p: "동사", m: "다루다, 제기하다", ex: "Officials will address the recent benefit changes.", tip: "address issues / '주소, 연설'의 명사로도 쓰임" },
+  { w: "represent", p: "동사", m: "나타내다, 의미하다", ex: "These figures represent a rise in profits.", tip: "명사 representative(대표)" },
+  { w: "retain", p: "동사", m: "유지하다, 보관하다", ex: "Developers must retain the historic features.", tip: "maintain과 의미가 같음" },
+  { w: "hesitate", p: "동사", m: "주저하다", ex: "Do not hesitate to contact our staff for help.", tip: "do not hesitate to + 동사원형" },
+  { w: "relocate", p: "동사", m: "(회사·주민 등이) 이전하다", ex: "The firm announced plans to relocate its office.", tip: "move와 유사 / 명사 relocation" },
+  { w: "accommodate", p: "동사", m: "수용하다, 부응하다", ex: "The rooms can accommodate up to seven guests.", tip: "accommodate guests / demand" },
+  { w: "implement", p: "동사", m: "시행하다, 이행하다", ex: "The company implemented an updated policy.", tip: "carry out과 의미가 같음" },
+  { w: "indicate", p: "동사", m: "보여주다, 나타내다", ex: "Research indicates a link between performance and satisfaction.", tip: "명사 indication" },
+  { w: "undergo", p: "동사", m: "겪다, 받다", ex: "The firm will undergo structural changes.", tip: "undergo transitions: 변화를 겪다" },
+  { w: "assure", p: "동사", m: "~라고 확실히 말하다, 보장하다", ex: "The chair assured investors the value would hold.", tip: "assure A that / 명사 assurance" },
+  { w: "waive", p: "동사", m: "적용하지 않다, 면제하다", ex: "The bank will waive fees for premium account holders.", tip: "명사 waiver" },
+];
+const VOCAB_V2 = [
+  { w: "objective", p: "명사", m: "목표, 목적", ex: "The main objective this quarter is to expand overseas.", tip: "형용사 '객관적인'으로도 / object(물건)와 구별" },
+  { w: "precaution", p: "명사", m: "조심, 예방 조치", ex: "Workers must take precautions when handling chemicals.", tip: "take precautions: 예방 조치를 취하다" },
+  { w: "output", p: "명사", m: "생산(량)", ex: "The factory doubled its output after upgrading machines.", tip: "input(투입)의 반대 개념" },
+  { w: "dimension", p: "명사", m: "치수, 크기", ex: "Please check the dimensions of the box before shipping.", tip: "'차원'이라는 의미로도 쓰임" },
+  { w: "conflict", p: "명사", m: "갈등, 충돌", ex: "A scheduling conflict forced them to postpone the meeting.", tip: "a conflict between A and B" },
+  { w: "influx", p: "명사", m: "쇄도, 유입", ex: "The city saw a huge influx of tourists during the festival.", tip: "an influx of: (사람·물건)의 쇄도" },
+  { w: "presence", p: "명사", m: "존재(감), 영향력", ex: "The brand has a strong presence in the Asian market.", tip: "반의어 absence / '참석'의 뜻도" },
+  { w: "reduction", p: "명사", m: "인하, 감소", ex: "The store announced a price reduction on winter items.", tip: "동사 reduce: 감소시키다" },
+  { w: "access", p: "명사", m: "접근(권), 이용 권한", ex: "Only authorized staff have access to the server room.", tip: "access to A: A로의 접근" },
+  { w: "proximity", p: "명사", m: "근접함, 가까움", ex: "The hotel's proximity to the airport makes it convenient.", tip: "proximity to: ~에 가까움" },
+  { w: "authority", p: "명사", m: "권위자, 권한", ex: "She is a leading authority on international trade law.", tip: "복수형 authorities: 당국 / authorization과 구별" },
+  { w: "dedication", p: "명사", m: "전념, 헌신", ex: "His dedication to service earned him a promotion.", tip: "dedication to: ~에 대한 전념" },
+  { w: "adjustment", p: "명사", m: "조정, 수정", ex: "A few minor adjustments to the schedule solved it.", tip: "make adjustments to: ~을 조정하다" },
+  { w: "distribution", p: "명사", m: "배포, 분배, 유통", ex: "The firm handles the distribution of goods nationwide.", tip: "동사 distribute: 유통시키다" },
+  { w: "shift", p: "명사", m: "전환, 이동, 교대 근무", ex: "There has been a noticeable shift toward remote work.", tip: "'교대 근무(시간)'로도 쓰임" },
+  { w: "priority", p: "명사", m: "우선 사항, 우선권", ex: "Improving safety is the company's top priority.", tip: "top priority: 최우선 사항" },
+  { w: "estimate", p: "명사", m: "견적, 추정", ex: "The contractor provided an estimate for the renovation.", tip: "make an estimate / 동사로도 쓰임" },
+  { w: "recognition", p: "명사", m: "인정, 표창", ex: "The award was given in recognition of her research.", tip: "in recognition of: ~을 인정하여" },
+  { w: "disclosure", p: "명사", m: "공개, 폭로", ex: "Full disclosure of financial data builds investor trust.", tip: "동사 disclose: 공개하다" },
+  { w: "permission", p: "명사", m: "허가, 허락, 승인", ex: "You need written permission to enter the laboratory.", tip: "permit(허가증)과 구별" },
+  { w: "persistence", p: "명사", m: "끈기, 고집", ex: "Her persistence eventually won over the difficult client.", tip: "형용사 persistent: 끈질긴" },
+  { w: "departure", p: "명사", m: "벗어남, 출발", ex: "The new album is a departure from her earlier style.", tip: "departure from: ~에서 벗어남 / 동사 depart" },
+  { w: "initiative", p: "명사", m: "계획, 발안, 결단력", ex: "The city launched a new recycling initiative this year.", tip: "take initiative: 주도권을 잡다" },
+  { w: "challenge", p: "명사", m: "과제, 문제, 도전", ex: "Meeting the deadline was the team's biggest challenge.", tip: "'요구하다'라는 동사로도 쓰임" },
+  { w: "method", p: "명사", m: "방법, 방식", ex: "Customers can choose their preferred payment method.", tip: "method of payment: 지불 방법" },
+  { w: "alternative", p: "명사", m: "대안", ex: "Solar power is a clean alternative to fossil fuels.", tip: "alternative to: ~에 대한 대안" },
+  { w: "shortage", p: "명사", m: "부족, 결핍", ex: "A labor shortage delayed the construction project.", tip: "cf. lack / 형용사 short" },
+  { w: "receipt", p: "명사", m: "수령, 받음, 영수증", ex: "Please keep your receipt in case you need a refund.", tip: "upon receipt of: ~을 수령하는 즉시" },
+  { w: "effort", p: "명사", m: "노력", ex: "The team made every effort to satisfy the client.", tip: "in an effort to + 동사원형" },
+  { w: "advantage", p: "명사", m: "이점, 유리한 점", ex: "Speaking two languages is a real advantage here.", tip: "profit(금전적 이익)과 구별" },
+  { w: "profit", p: "명사", m: "수익, 이윤", ex: "The firm reported a record profit this year.", tip: "net profit: 순이익 / 형용사 profitable" },
+  { w: "issue", p: "명사", m: "(간행물의) 호, 문제", ex: "The latest issue of the magazine features new startups.", tip: "'발표하다'라는 동사로도 쓰임" },
+  { w: "expertise", p: "명사", m: "전문 지식", ex: "Her expertise in marketing made the campaign succeed.", tip: "expertise in: ~에 대한 전문 지식" },
+  { w: "negotiation", p: "명사", m: "협상, 교섭", ex: "The contract negotiations lasted several weeks.", tip: "형용사 negotiable: 협상 여지가 있는" },
+  { w: "subscriber", p: "명사", m: "구독자", ex: "The magazine has millions of subscribers worldwide.", tip: "명사 subscription: 구독(료)" },
+  { w: "asset", p: "명사", m: "자산, 이점, 재산", ex: "Experienced staff are the company's greatest asset.", tip: "be a valuable asset to: ~에 귀중한 자산이다" },
+];
+const VOCAB_V3 = [
+  { w: "ongoing", p: "형용사", m: "진행 중인", ex: "The two firms are in ongoing merger discussions.", tip: "계속되고 있는 상태를 나타냄" },
+  { w: "acting", p: "형용사", m: "직무 대행의, 임시의", ex: "She served as acting director while the manager was away.", tip: "cf. temporary, interim" },
+  { w: "budget", p: "형용사", m: "저가의, 예산이 한정된", ex: "The chain is known for its budget hotels near stations.", tip: "'예산(액)'이라는 명사로도 쓰임" },
+  { w: "faulty", p: "형용사", m: "결함이 있는, 불완전한", ex: "The recall was caused by a faulty part in the engine.", tip: "cf. defective / 명사 fault" },
+  { w: "mandatory", p: "형용사", m: "의무적인", ex: "Attendance at the safety training is mandatory.", tip: "반의어 optional: 선택적인" },
+  { w: "immense", p: "형용사", m: "거대한, 엄청난", ex: "The project required an immense amount of funding.", tip: "cf. huge, enormous, massive" },
+  { w: "attentive", p: "형용사", m: "주의를 기울이는", ex: "Good salespeople are attentive to customer needs.", tip: "be attentive to: ~에 주의를 기울이는" },
+  { w: "impending", p: "형용사", m: "곧 닥칠, 임박한", ex: "The impending storm forced the airport to close.", tip: "주로 나쁜 일이 곧 일어날 때" },
+  { w: "compelling", p: "형용사", m: "흥미진진한, 설득력 있는", ex: "The report made a compelling case for the new policy.", tip: "동사 compel: 강요하다" },
+  { w: "primary", p: "형용사", m: "주된, 주요한", ex: "The primary goal of the survey is to gather feedback.", tip: "부사 primarily: 주로" },
+  { w: "adequate", p: "형용사", m: "(목적에) 충분한, 적절한", ex: "The budget is not adequate for a project this large.", tip: "adequate for + 명사" },
+  { w: "thorough", p: "형용사", m: "면밀한, 철저한", ex: "The auditor conducted a thorough review of the accounts.", tip: "부사 thoroughly: 철저히" },
+  { w: "excessive", p: "형용사", m: "과도한, 지나친", ex: "Customers complained about the excessive shipping fees.", tip: "동사 exceed: 초과하다" },
+  { w: "selective", p: "형용사", m: "까다로운, 선별적인", ex: "The agency is highly selective about its clients.", tip: "selective about: ~에 대해 까다로운" },
+  { w: "valid", p: "형용사", m: "유효한, 정당한", ex: "Your ticket is valid for one year from purchase.", tip: "be valid for 기간: ~동안 유효하다" },
+  { w: "elaborate", p: "형용사", m: "공들인, 정교한", ex: "The designer created an elaborate display for the launch.", tip: "'정교하게 설명하다'라는 동사로도" },
+  { w: "appropriate", p: "형용사", m: "적절한, 알맞은", ex: "Please wear appropriate attire for the interview.", tip: "appropriate for: ~에 적절한" },
+  { w: "upcoming", p: "형용사", m: "곧 있을, 다가오는", ex: "The team is preparing for the upcoming trade fair.", tip: "cf. forthcoming" },
+  { w: "established", p: "형용사", m: "인정받는, 확립된", ex: "They chose an established firm with a solid reputation.", tip: "동사 establish: 설립하다" },
+  { w: "practical", p: "형용사", m: "실용적인, 타당한", ex: "The workshop offers practical tips for saving energy.", tip: "practicing(활동 중인)과 구별" },
+  { w: "limited", p: "형용사", m: "한정된, 제한된", ex: "Only a limited number of seats are available.", tip: "a limited time: 한정된 시간" },
+  { w: "detailed", p: "형용사", m: "상세한, 세부에 걸친", ex: "The manual gives detailed instructions for each step.", tip: "detailed descriptions: 상세한 설명" },
+  { w: "promising", p: "형용사", m: "유망한, 촉망되는", ex: "The startup showed promising signs of rapid growth.", tip: "a promising youth: 전도유망한 청년" },
+  { w: "tentative", p: "형용사", m: "잠정적인, 임시의", ex: "The launch date is still tentative and may change.", tip: "cf. provisional" },
+  { w: "defective", p: "형용사", m: "결함이 있는", ex: "The customer returned the defective product for a refund.", tip: "명사 defect: 결함" },
+  { w: "exceptional", p: "형용사", m: "뛰어난, 예외적인", ex: "The convention center offers exceptional facilities.", tip: "부사 exceptionally: 유난히" },
+  { w: "affordable", p: "형용사", m: "가격이 알맞은", ex: "The store sells quality furniture at affordable prices.", tip: "명사 affordability" },
+  { w: "available", p: "형용사", m: "이용할 수 있는", ex: "The new offer is available only to existing members.", tip: "available to: ~가 이용 가능한" },
+  { w: "consecutive", p: "형용사", m: "연속적인, 계속되는", ex: "Sales have risen for the fifth consecutive year.", tip: "for the + 서수 + consecutive year" },
+  { w: "latest", p: "형용사", m: "최신의, 최근의", ex: "Marco reprinted its latest catalog after finding errors.", tip: "cf. up-to-date" },
+  { w: "substantial", p: "형용사", m: "(양·크기가) 상당한", ex: "The firm invested a substantial portion of its budget.", tip: "양이 상당함을 나타냄" },
+  { w: "confidential", p: "형용사", m: "기밀의", ex: "Keep all confidential documents in a locked cabinet.", tip: "cf. secret" },
+  { w: "temporary", p: "형용사", m: "임시의", ex: "A temporary entrance is open during the renovations.", tip: "a temporary office: 임시 영업소" },
+  { w: "subsequent", p: "형용사", m: "다음의, 그 후의", ex: "Sales were slow at first but rose in subsequent months.", tip: "subsequent to: ~ 후에" },
+  { w: "eligible", p: "형용사", m: "(사람이) 자격이 있는", ex: "Employees are eligible for compensation after one year.", tip: "be eligible for + 명사 / to + 동사원형" },
+  { w: "additional", p: "형용사", m: "추가의, 부가적인", ex: "The accountant found additional ways to cut costs.", tip: "additional charge: 추가 요금 / 명사 addition" },
+];
+const VOCAB_V4 = [
+  { w: "punctually", p: "부사", m: "시간을 엄수하여, 정각에", ex: "Applicants are asked to arrive punctually for interviews.", tip: "cf. on time" },
+  { w: "independently", p: "부사", m: "따로, 독립하여", ex: "Each department operates independently of the others.", tip: "independently of: ~과 별개로" },
+  { w: "approximately", p: "부사", m: "대략, 거의", ex: "The project will take approximately three months.", tip: "cf. nearly, about" },
+  { w: "anonymously", p: "부사", m: "익명으로", ex: "Employees can submit feedback anonymously.", tip: "형용사 anonymous: 익명의" },
+  { w: "rapidly", p: "부사", m: "급속히, 빠르게", ex: "The company's user base is growing rapidly.", tip: "cf. swiftly, quickly" },
+  { w: "previously", p: "부사", m: "이전에", ex: "The site had previously been used as a warehouse.", tip: "형용사 previous: 이전의" },
+  { w: "generally", p: "부사", m: "일반적으로, 보통", ex: "International shipping generally takes one to two weeks.", tip: "형용사 general: 일반적인" },
+  { w: "precisely", p: "부사", m: "정확하게, 바로", ex: "The manual explains precisely how to install the unit.", tip: "cf. accurately, correctly" },
+  { w: "incrementally", p: "부사", m: "점진적으로, 꾸준하게", ex: "Prices have risen incrementally over the past year.", tip: "조금씩 꾸준히 변하는 것을 나타냄" },
+  { w: "closely", p: "부사", m: "면밀히, 긴밀히", ex: "Investors watched the stock price closely all week.", tip: "work closely with: ~와 긴밀히 협력하다" },
+  { w: "typically", p: "부사", m: "일반적으로, 전형적으로", ex: "New hires typically complete a three-week course.", tip: "형용사 typical: 전형적인" },
+  { w: "necessarily", p: "부사", m: "반드시, 필연적으로", ex: "A high price does not necessarily mean high quality.", tip: "not necessarily: 반드시 ~은 아닌" },
+  { w: "steadily", p: "부사", m: "꾸준히, 견실하게", ex: "The firm has grown steadily since it was founded.", tip: "형용사 steady: 꾸준한" },
+  { w: "regularly", p: "부사", m: "정기적으로", ex: "Employees should review the safety rules regularly.", tip: "형용사 regular: 정기적인" },
+  { w: "relatively", p: "부사", m: "상대적으로, 비교적", ex: "Attendance was relatively low compared to last year.", tip: "동일 종류를 비교할 때 사용" },
+  { w: "mutually", p: "부사", m: "상호 간에, 서로", ex: "The two firms formed a mutually beneficial partnership.", tip: "mutually exclusive: 상호 배타적인" },
+  { w: "consistently", p: "부사", m: "일관되게, 시종일관", ex: "The team has consistently met its monthly targets.", tip: "항상 동일한 방식·성과를 나타낼 때" },
+  { w: "momentarily", p: "부사", m: "순간적으로, 잠깐", ex: "The screen went dark momentarily during the outage.", tip: "짧은 순간을 나타냄" },
+  { w: "significantly", p: "부사", m: "상당히", ex: "Government grants for students have increased significantly.", tip: "cf. considerably, remarkably" },
+  { w: "currently", p: "부사", m: "현재", ex: "The gallery's new exhibit is currently open to the public.", tip: "형용사 current: 현재의" },
+  { w: "immediately", p: "부사", m: "즉시", ex: "Please report any errors to the IT team immediately.", tip: "immediately after + 절: ~하자마자" },
+  { w: "exclusively", p: "부사", m: "독점적으로, 전적으로", ex: "The discount is available exclusively to members.", tip: "cf. solely: 오로지" },
+  { w: "occasionally", p: "부사", m: "때때로, 가끔", ex: "The CEO occasionally visits the regional branches.", tip: "cf. sometimes / 명사 occasion" },
+  { w: "promptly", p: "부사", m: "즉시, 정각에", ex: "The presentation began promptly at nine o'clock.", tip: "형용사 prompt: 즉각적인" },
+];
+const VOCAB_V5 = [
+  { w: "be enthusiastic about", p: "어구", m: "~에 대해 열광하다", ex: "The staff are enthusiastic about the new project.", tip: "about 대신 over도 가능" },
+  { w: "be skeptical of", p: "어구", m: "~에 회의적이다", ex: "Analysts remain skeptical of the company's forecast.", tip: "of 대신 about도 가능" },
+  { w: "be ideal for", p: "어구", m: "~에 이상적이다", ex: "This apartment is ideal for a single commuter.", tip: "for 뒤에 대상·목적이 온다" },
+  { w: "be eligible for", p: "어구", m: "~의 자격이 있다", ex: "Full-time employees are eligible for the annual bonus.", tip: "be eligible to + 동사원형" },
+  { w: "be exempt from", p: "어구", m: "~이 면제되다", ex: "Members are exempt from the registration fee.", tip: "~을 하지 않아도 된다" },
+  { w: "be proficient in", p: "어구", m: "~에 능통하다", ex: "The candidate is proficient in three languages.", tip: "어떤 일에 능숙함을 의미" },
+  { w: "be devoted to", p: "어구", m: "~에 헌신하다", ex: "The clinic is devoted to treating rare diseases.", tip: "to는 전치사, 뒤에 명사나 -ing" },
+  { w: "be encouraged to", p: "어구", m: "~하도록 권장되다", ex: "Visitors are encouraged to wear safety gear.", tip: "뒤에 동사원형이 온다" },
+  { w: "be known to A as B", p: "어구", m: "A에게 B로 알려지다", ex: "He is known to the staff as a fair manager.", tip: "to 뒤 대상, as 뒤 신분·직책" },
+  { w: "be superior to", p: "어구", m: "~보다 뛰어나다", ex: "The new model is superior to last year's version.", tip: "to 자리에 than을 쓸 수 없다" },
+  { w: "be likely to", p: "어구", m: "~할 것 같다", ex: "Prices are likely to rise before the holidays.", tip: "뒤에 동사원형이 온다" },
+  { w: "be reliant on", p: "어구", m: "~에 의존하다", ex: "The firm is heavily reliant on overseas suppliers.", tip: "rely on과 의미가 같다" },
+  { w: "be familiar with", p: "어구", m: "~에 익숙하다", ex: "The guide is familiar with the city's history.", tip: "~에 대해 잘 알다" },
+  { w: "be reflective of", p: "어구", m: "~을 반영하다", ex: "The results are reflective of current market trends.", tip: "특정 상황을 반영한다는 의미" },
+  { w: "be comparable to", p: "어구", m: "~에 필적하다", ex: "The city's size is comparable to that of Boston.", tip: "to 뒤에 비교 대상이 온다" },
+  { w: "be responsive to", p: "어구", m: "~에 빠르게 대응하다", ex: "The staff are responsive to customer requests.", tip: "to 뒤에 명사가 온다" },
+  { w: "be compatible with", p: "어구", m: "~과 호환되다", ex: "The cable is compatible with most devices.", tip: "work well together와 의미가 같다" },
+  { w: "be honored for", p: "어구", m: "~으로 상을 받다", ex: "She was honored for her contribution to research.", tip: "for 뒤에 업적이 온다" },
+  { w: "be uncertain about", p: "어구", m: "~에 대해 확신하지 못하다", ex: "The board is uncertain about the merger's outcome.", tip: "about 대신 of도 가능" },
+  { w: "be concerned about", p: "어구", m: "~에 대해 걱정하다", ex: "Organizers are concerned about the seating capacity.", tip: "be worried about과 의미가 같다" },
+  { w: "be suitable for", p: "어구", m: "~에 적절하다, 알맞다", ex: "These films are suitable for viewers of all ages.", tip: "for 뒤에 대상·목적이 온다" },
+  { w: "be concerned with", p: "어구", m: "~과 관련되다", ex: "The report is concerned with product safety.", tip: "about과 달리 '관련'의 의미" },
+  { w: "be responsible for", p: "어구", m: "~에 대해 책임이 있다", ex: "The manager is responsible for hiring decisions.", tip: "be in charge of와 의미가 같다" },
+  { w: "be subject to", p: "어구", m: "~의 영향을 받다, 받아야 한다", ex: "All prices are subject to change without notice.", tip: "to 뒤에 명사가 온다" },
+];
+const GRAMMAR_G1 = {
+  rules: [
+    { t: "주어 자리에는 명사 역할을 하는 것만 온다", b: "명사구·대명사·동명사구·to부정사구·명사절이 주어가 될 수 있다. 동사나 형용사는 주어 자리에 올 수 없다.", ex: "The (stability / stable) of the country is in doubt. → 명사 stability" },
+    { t: "가짜 주어 it / there", b: "긴 주어(to부정사구·that절)를 대신할 때 it을 앞에 쓰고 진짜 주어를 뒤로 보낸다. '~이 있다'는 「there + be동사 + 명사구」로 쓴다.", ex: "It is important to review the feedback. / There are many cars in the lot." },
+    { t: "동사 자리에는 (조동사 +) 동사만 온다", b: "준동사(-ing, to+동사원형), 명사, 형용사는 동사 자리에 올 수 없다. 동사는 수·태·시제가 맞아야 한다.", ex: "The manager (reviews / reviewing) the report. → 동사 reviews" },
+    { t: "명령문은 주어 없이 동사원형으로 시작한다", b: "3인칭 단수형·과거형·준동사·명사는 명령문의 동사 자리에 올 수 없다. When절 / If절 뒤의 명령문 동사가 자주 출제된다.", ex: "When operating machinery, (follow / following) the rules. → 동사원형 follow" },
+  ],
+  q: [
+    { q: "The ------ of the new safety policy reduced workplace accidents significantly.", o: ["implement", "implementation", "implemented", "implementing"], a: 1, e: "주어 자리에는 명사가 와야 하므로 implementation.", words: ["implement"] },
+    { q: "------ is essential to relocate the headquarters to a larger city.", o: ["That", "This", "It", "What"], a: 2, e: "긴 주어(to relocate ~) 대신 가짜 주어 It을 앞에 쓴다.", words: ["relocate"] },
+    { q: "There ------ several suppliers that can accommodate our increased demand.", o: ["is", "are", "being", "to be"], a: 1, e: "「there + 동사 + 진짜 주어」에서 진짜 주어 several suppliers가 복수이므로 are.", words: ["accommodate"] },
+    { q: "When contacting the vendor, ------ the exact delivery date on the order form.", o: ["specify", "specifies", "specifying", "to specify"], a: 0, e: "명령문의 동사 자리에는 동사원형 specify가 온다.", words: ["specify"] },
+    { q: "The board ------ every major merger proposal before making a decision.", o: ["deliberate", "deliberates", "deliberating", "to deliberate"], a: 1, e: "동사 자리 + 단수 주어(The board)와 수일치하는 deliberates.", words: ["deliberate"] },
+    { q: "Administrative fees ------ for premium account holders last year.", o: ["waived", "were waived", "waiving", "to waive"], a: 1, e: "수수료가 '면제된' 수동의 의미이므로 수동태 were waived.", words: ["waive"] },
+    { q: "Please ------ any safety concerns directly to the site manager.", o: ["addresses", "addressing", "address", "to address"], a: 2, e: "명령문이므로 동사원형 address.", words: ["address"] },
+    { q: "Recent research ------ that flexible working hours improve productivity.", o: ["indicate", "indicates", "indicating", "to indicate"], a: 1, e: "동사 자리 + 단수 주어(research)와 수일치하는 indicates.", words: ["indicate"] },
+    { q: "Quarterly sales ------ the company's annual goal last month.", o: ["surpass", "surpassing", "to surpass", "surpassed"], a: 3, e: "과거를 나타내는 last month가 있으므로 과거시제 surpassed.", words: ["surpass"] },
+    { q: "------ is expected that the firm will undergo major restructuring next year.", o: ["That", "There", "It", "This"], a: 2, e: "가짜 주어 It 자리에 다른 단어는 올 수 없다.", words: ["undergo"] },
+  ],
+};
+const GRAMMAR_G2 = {
+  rules: [
+    { t: "목적어 자리에는 명사 역할을 하는 것만 온다", b: "타동사 뒤 목적어 자리에는 명사구·대명사·동명사구·to부정사구·명사절이 온다. 동사나 형용사는 올 수 없다.", ex: "The accountant calculated the (expensive / expense). → 명사 expense" },
+    { t: "가목적어 it 구문 (make it + 형용사 + to ~)", b: "목적격 보어가 있는 문장에서 진목적어인 to부정사구·that절은 뒤로 보내고, 그 자리에 가목적어 it을 쓴다. 보어 자리엔 형용사가 온다.", ex: "The update will make it possible to increase output." },
+    { t: "보어 자리에는 명사 또는 형용사가 온다", b: "주격·목적격 보어 자리에는 명사(구)나 형용사(분사 포함)가 온다. 동사나 부사는 보어 자리에 올 수 없다.", ex: "Students were (appreciate / appreciative) of the program. → 형용사 appreciative" },
+    { t: "수식어 거품 '구'와 '절'을 이끄는 것은 다르다", b: "수식어 거품 안에 동사가 없으면 구를 이끄는 전치사·to부정사·분사가, 동사가 있으면 절을 이끄는 관계사·부사절 접속사가 온다.", ex: "(Despite / Although) the delay, the launch went ahead. → 뒤에 명사구만 → 전치사 Despite" },
+  ],
+  q: [
+    { q: "The manager praised the team's ------ to finishing the project on time.", o: ["dedicated", "dedicate", "dedication", "dedicates"], a: 2, e: "소유격(team's) 뒤 목적어 자리에는 명사가 오므로 dedication.", words: ["dedication"] },
+    { q: "New regulations made it ------ for all staff to complete safety training.", o: ["mandatory", "mandate", "mandatorily", "mandating"], a: 0, e: "가목적어 it 구문의 보어 자리에는 형용사 mandatory.", words: ["mandatory"] },
+    { q: "The auditor's review of the accounts was extremely ------.", o: ["thoroughly", "thorough", "thoroughness", "thoroughen"], a: 1, e: "주격 보어 자리에는 형용사가 오므로 thorough.", words: ["thorough"] },
+    { q: "The company regards experienced staff as a valuable ------.", o: ["asset", "assets", "assess", "assist"], a: 0, e: "목적격 보어 자리에 명사가 오며 a 뒤 단수 명사 asset.", words: ["asset"] },
+    { q: "------ the high demand, the store extended its opening hours.", o: ["Although", "Because of", "However", "While"], a: 1, e: "뒤에 명사구(the high demand)만 있으므로 구를 이끄는 전치사 Because of.", words: [] },
+    { q: "Renovations will make it ------ to accommodate more guests in the lobby.", o: ["possible", "possibly", "possibility", "possibleness"], a: 0, e: "make it + 형용사 + to부정사 구문이므로 형용사 possible.", words: ["accommodate"] },
+    { q: "The new policy provides employees with ------ to online training materials.", o: ["accessible", "access", "accessing", "accessed"], a: 1, e: "전치사(with) 뒤 목적어 자리에는 명사가 오므로 access.", words: ["access"] },
+    { q: "------ the manager was on leave, the assistant handled all decisions.", o: ["Despite", "During", "While", "Because of"], a: 2, e: "뒤에 주어+동사(the manager was)가 있으므로 절을 이끄는 접속사 While.", words: [] },
+    { q: "The firm found it ------ to relocate its headquarters closer to clients.", o: ["benefit", "beneficial", "benefited", "benefiting"], a: 1, e: "가목적어 it 구문의 보어 자리에는 형용사 beneficial.", words: ["relocate"] },
+    { q: "Customers appreciated the store's wide ------ of affordable products.", o: ["select", "selective", "selection", "selectively"], a: 2, e: "형용사(wide) 뒤 명사 자리이므로 selection.", words: [] },
+  ],
+};
+const GRAMMAR_G3 = {
+  rules: [
+    { t: "조동사 뒤에는 동사원형이 온다", b: "will, can, must, should 등 조동사 다음에는 반드시 동사원형이 온다. to부정사·-ing·명사·3인칭 단수형은 올 수 없다.", ex: "The plan will (proceeds / proceed) as scheduled. → 동사원형 proceed" },
+    { t: "be동사 뒤 -ing/p.p., have동사 뒤 p.p.", b: "be + -ing는 진행형, be + p.p.는 수동형, have + p.p.는 완료형을 만든다. be·have동사 뒤에 동사원형은 올 수 없다.", ex: "The forms must be (distribute / distributed) by Friday. → p.p. distributed" },
+    { t: "자동사와 타동사를 구별한다", b: "자동사는 목적어를 가지려면 전치사가 필요하지만, 타동사(explain, mention, discuss, address, answer 등)는 전치사 없이 바로 목적어를 가진다.", ex: "Please (reply / answer) the question. → 타동사 answer (전치사 없이 목적어)" },
+    { t: "제안·요청·의무의 that절엔 동사원형이 온다", b: "suggest, request, require, recommend 등 제안·요청·의무 동사나 essential/important 등이 주절에 오면, that절에는 (should +) 동사원형이 온다.", ex: "The manager requested that the report (is / be) submitted early. → 동사원형 be" },
+  ],
+  q: [
+    { q: "The corporation's expansion plan will ------ once it receives board approval.", o: ["proceeds", "proceed", "proceeding", "to proceed"], a: 1, e: "조동사 will 뒤에는 동사원형 proceed.", words: [] },
+    { q: "All application forms must ------ by the end of the week.", o: ["submit", "be submitted", "submitting", "submission"], a: 1, e: "'제출되다'라는 수동 의미이므로 be + p.p. 형태인 be submitted.", words: [] },
+    { q: "The board recommends that the factory ------ its waste disposal equipment.", o: ["upgrades", "upgrade", "upgraded", "upgrading"], a: 1, e: "제안 동사(recommend) 뒤 that절에는 동사원형 upgrade.", words: [] },
+    { q: "During the meeting, the director will ------ the recent changes to the policy.", o: ["reply", "respond", "address", "object"], a: 2, e: "전치사 없이 바로 목적어를 가지는 타동사 address.", words: ["address"] },
+    { q: "The technician could not ------ the files because the drive was damaged.", o: ["retrieval", "retrieve", "retrieving", "retrieved"], a: 1, e: "조동사(could) 뒤에는 동사원형 retrieve.", words: [] },
+    { q: "It is essential that every visitor ------ a security badge at all times.", o: ["wears", "wear", "wearing", "worn"], a: 1, e: "의무 형용사(essential) 뒤 that절에는 동사원형 wear.", words: [] },
+    { q: "The research findings are going to ------ by Dr. Kim next month.", o: ["present", "be presented", "presenting", "presentation"], a: 1, e: "뒤에 목적어가 없고 '공개되다'라는 수동 의미이므로 be presented.", words: [] },
+    { q: "The union representative attempted to ------ the dispute between the two sides.", o: ["reply", "respond", "object", "resolve"], a: 3, e: "전치사 없이 목적어를 가지는 타동사 resolve.", words: ["resolve"] },
+    { q: "The company requests that employees ------ progress reports every month.", o: ["submits", "submit", "submitted", "submitting"], a: 1, e: "요청 동사(request) 뒤 that절에는 동사원형 submit.", words: [] },
+    { q: "The consultant's report has ------ several ways to reduce operating costs.", o: ["indicate", "indicated", "indicating", "indication"], a: 1, e: "have동사 뒤에는 p.p.가 오므로 완료형 indicated.", words: ["indicate"] },
+  ],
+};
+const GRAMMAR_G4 = {
+  rules: [
+    { t: "단수 주어엔 단수 동사, 복수 주어엔 복수 동사", b: "단수 가산·불가산 명사 주어에는 단수 동사, 복수 가산 명사 주어에는 복수 동사를 쓴다. 동명사구·명사절 주어는 단수 취급한다.", ex: "The apartment units (has / have) a stove. → 복수 주어 → have" },
+    { t: "수량·부분/전체 표현의 수일치", b: "one of/every/each는 단수, many/several/a number of는 복수 취급한다. all/most/half/부분 of + 명사는 of 뒤 명사에 동사를 일치시킨다.", ex: "Half of the workforce (take / takes) the subway. → workforce(단수) → takes" },
+    { t: "접속사로 연결된 주어의 수일치", b: "and로 연결된 주어는 복수 동사를 쓴다. or, either A or B, not only A but (also) B로 연결된 주어는 B에 동사를 일치시킨다.", ex: "Two vans or a bus (are / is) needed. → B(a bus)에 일치 → is" },
+    { t: "주격 관계절 동사는 선행사와 수일치", b: "주격 관계사(who/which/that) 뒤 동사는 선행사의 수에 일치시킨다. 관계사 앞 수식어 거품 속 명사를 선행사와 혼동하지 않는다.", ex: "Applicants who (speaks / speak) two languages have an edge. → Applicants(복수) → speak" },
+  ],
+  q: [
+    { q: "Details regarding the company picnic ------ e-mailed to all staff yesterday.", o: ["was", "were", "is", "has been"], a: 1, e: "복수 주어(Details)에 맞는 복수 동사 were.", words: [] },
+    { q: "A number of refund requests ------ when a product is recalled.", o: ["occurs", "occur", "is occurring", "has occurred"], a: 1, e: "'a number of + 복수 명사'는 복수 취급하므로 occur.", words: [] },
+    { q: "Every employee ------ to review the updated code of conduct.", o: ["need", "needs", "are needing", "have needed"], a: 1, e: "'every + 명사' 주어는 단수 취급하므로 needs.", words: [] },
+    { q: "The facilities at the health center ------ a spa and a lounge.", o: ["includes", "include", "is including", "has included"], a: 1, e: "주어 The facilities(복수), 수식어 거품(at the health center)은 수일치에 영향 없음 → include.", words: [] },
+    { q: "Files that ------ at the main office have been moved to the archive.", o: ["was stored", "were stored", "is stored", "stores"], a: 1, e: "주격 관계절 동사는 선행사(Files, 복수)에 수일치 → were stored.", words: [] },
+    { q: "Half of the budget ------ already been spent on marketing.", o: ["have", "has", "are", "were"], a: 1, e: "'half of + 단수 명사(the budget)'이므로 단수 동사 has.", words: [] },
+    { q: "The manager and her assistant ------ attending the conference together.", o: ["is", "are", "was", "has been"], a: 1, e: "and로 연결된 주어는 복수 동사 are.", words: [] },
+    { q: "Either the suppliers or the distributor ------ responsible for the delay.", o: ["are", "is", "were", "have been"], a: 1, e: "'either A or B'는 B(the distributor, 단수)에 동사를 일치 → is.", words: [] },
+    { q: "The report signed by the auditors ------ several errors in the accounts.", o: ["identify", "identifies", "are identifying", "have identified"], a: 1, e: "주어 The report(단수), 수식어 거품(signed by the auditors)은 영향 없음 → identifies.", words: [] },
+    { q: "Reducing costs through automation ------ a common strategy for firms.", o: ["are", "is", "were", "have been"], a: 1, e: "동명사구 주어(Reducing costs ~)는 단수 취급하므로 is.", words: [] },
+  ],
+};
+const GRAMMAR_G5 = {
+  rules: [
+    { t: "능동태와 수동태의 구별", b: "타동사 뒤에 목적어가 있으면 능동태, 목적어가 없으면 수동태(be + p.p.)를 쓴다. to부정사·관계절 동사도 목적어 유무로 태를 결정한다.", ex: "A billing statement will (provide / be provided). → 뒤에 목적어 없음 → be provided" },
+    { t: "4형식·5형식 동사의 수동태", b: "4형식 동사가 수동태가 되면 목적어 하나가 동사 뒤에 남고, 5형식 동사가 수동태가 되면 목적격 보어가 동사 뒤에 남는다.", ex: "The project is considered a success. → 5형식 수동태, 보어(a success)가 뒤에 남음" },
+    { t: "감정동사의 능동태/수동태 구별", b: "감정을 나타내는 타동사는 주어가 감정의 원인이면 능동태(-ing), 주어가 감정을 느끼면 수동태(p.p.)를 쓴다.", ex: "Mike was (pleasing / pleased) to hear the news. → 감정을 느낌 → pleased" },
+    { t: "수동태 동사 숙어", b: "be required to, be equipped with, be related to처럼 수동태로 굳어진 표현들이 있다. 뒤에 오는 전치사·to부정사에 유의한다.", ex: "All guests are required to check in at the desk." },
+  ],
+  q: [
+    { q: "A large sum of money has just been ------ from the account for the new facility.", o: ["withdrew", "withdrawn", "withdraw", "withdrawal"], a: 1, e: "have been 뒤에는 p.p.가 오므로 withdrawn (수동·완료).", words: ["withdraw"] },
+    { q: "First-class seats ------ with internet connections for passengers' convenience.", o: ["equip", "are equipped", "equipping", "equipment"], a: 1, e: "'be equipped with(~을 갖추고 있다)' 수동태 숙어 → are equipped.", words: [] },
+    { q: "The manager was ------ to learn that sales had doubled this quarter.", o: ["pleasing", "pleased", "please", "pleasure"], a: 1, e: "주어(The manager)가 기쁨을 느끼므로 수동태 감정동사 pleased.", words: [] },
+    { q: "The committee ------ delaying the event until next month.", o: ["is considered", "is considering", "considers being", "was considered"], a: 1, e: "뒤에 목적어(delaying ~)가 있으므로 능동태 is considering ('고려하다').", words: [] },
+    { q: "All newly hired staff ------ to complete an orientation program.", o: ["require", "are required", "requiring", "requirement"], a: 1, e: "'be required to(~하도록 요구받다)' 수동태 숙어 → are required.", words: [] },
+    { q: "The documentary ------ on the national network next Tuesday.", o: ["will broadcast", "will be broadcast", "broadcasting", "has broadcast"], a: 1, e: "뒤에 목적어가 없고 '방송되다'라는 수동 의미이므로 will be broadcast.", words: [] },
+    { q: "Employees were ------ by the sudden announcement of the merger.", o: ["surprising", "surprised", "surprise", "surprisingly"], a: 1, e: "주어(Employees)가 놀람을 느끼므로 수동태 감정동사 surprised.", words: [] },
+    { q: "Consumer demand is closely ------ to seasonal weather patterns.", o: ["relate", "related", "relating", "relation"], a: 1, e: "'be related to(~와 관련되다)' 수동태 숙어 → related.", words: [] },
+    { q: "The research team ------ to make backup copies of all their data.", o: ["reminded", "was reminded", "reminding", "reminder"], a: 1, e: "'be reminded to(~하라는 말을 듣다)' 수동태 숙어 → was reminded.", words: [] },
+    { q: "The new safety measures ------ by the inspectors last week.", o: ["approve", "were approved", "approving", "approval"], a: 1, e: "'승인되다'라는 수동 의미이며 뒤에 목적어 없음 → were approved.", words: [] },
+  ],
+};
+const READING = [
+  {
+    title: "사내 공지 (Notice)",
+    lines: [
+      "To all staff,",
+      "The office network will ①______ a major system upgrade this weekend.",
+      "During this time, e-mail access may be limited. ②______, please save any important files before Friday evening.",
+      "③______ you experience any issues on Monday morning, contact the IT team right away.",
+    ],
+    q: [
+      { q: "① 빈칸", o: ["undergo", "exceed", "commend", "waive"], a: 0, e: "'대규모 시스템 업그레이드를 겪다/받다'는 흐름이므로 undergo." },
+      { q: "② 빈칸", o: ["However", "Therefore", "For example", "Nevertheless"], a: 1, e: "'접근이 제한된다 → 그러니 미리 저장하라'는 결과 관계이므로 Therefore." },
+      { q: "③ 빈칸", o: ["Although", "Despite", "If", "Because"], a: 2, e: "'문제가 생기면 연락하라'는 조건이므로 If." },
+    ],
+  },
+  {
+    title: "등록 확인 이메일 (E-mail)",
+    lines: [
+      "Dear Mr. Lee,",
+      "Thank you for your interest in our conference. Your registration ①______ this morning.",
+      "The event will ②______ at 9 A.M. on May 3 in the main hall.",
+      "③______",
+      "We look forward to seeing you there.",
+    ],
+    q: [
+      { q: "① 빈칸", o: ["confirms", "was confirmed", "confirming", "to confirm"], a: 1, e: "등록이 '확인된' 수동·과거의 의미이므로 was confirmed." },
+      { q: "② 빈칸", o: ["commence", "exceed", "retain", "resolve"], a: 0, e: "행사가 '시작되다'는 의미이므로 commence." },
+      { q: "③ 빈칸", o: ["Please arrive at least 15 minutes early to check in.", "The refund will be processed within five days.", "We regret that the event has been canceled.", "Your payment method could not be verified."], a: 0, e: "행사 안내 흐름에 자연스러운 문장은 '일찍 도착해 체크인하라'는 (A)." },
+    ],
+  },
+];
+</script>
+<script>
+(function () {
+  "use strict";
 
-    <!-- Main Content Area -->
-    <main class="main-content">
-      
-      <!-- Top Navigation Header (Mobile and Desktop Top bar) -->
-      <header class="top-header">
-        <div class="header-left">
-          <span class="mobile-brand-logo">🎯</span>
-          <h2 class="page-title" id="current-tab-title">대시보드</h2>
-        </div>
-        <div class="header-right">
-          <!-- Gist Sync Status Light -->
-          <div class="sync-status-badge" id="sync-status-btn">
-            <span class="status-dot disconnected"></span>
-            <span class="status-text" id="sync-status-text">동기화 미연동</span>
-          </div>
-          <button class="icon-btn" id="open-settings-mobile" aria-label="설정">
-            <svg viewBox="0 0 24 24" class="icon"><path d="M19.14 12.94c.04-.3.06-.61.06-.94 0-.32-.02-.64-.07-.94l2.03-1.58c.18-.14.23-.41.12-.61l-1.92-3.32c-.12-.22-.37-.29-.59-.22l-2.39.96c-.5-.38-1.03-.7-1.62-.94l-.36-2.54c-.04-.24-.24-.41-.48-.41h-3.84c-.24 0-.43.17-.47.41l-.36 2.54c-.59.24-1.13.57-1.62.94l-2.39-.96c-.22-.08-.47 0-.59.22L2.74 8.87c-.12.21-.08.47.12.61l2.03 1.58c-.05.3-.09.63-.09.94s.02.64.07.94l-2.03 1.58c-.18.14-.23.41-.12.61l1.92 3.32c.12.22.37.29.59.22l2.39-.96c.5.38 1.03.7 1.62.94l.36 2.54c.05.24.24.41.48.41h3.84c.24 0 .44-.17.47-.41l.36-2.54c.59-.24 1.13-.56 1.62-.94l2.39.96c.22.08.47 0 .59-.22l1.92-3.32c.12-.22.07-.47-.12-.61l-2.01-1.58zM12 15.6c-1.98 0-3.6-1.62-3.6-3.6s1.62-3.6 3.6-3.6 3.6 1.62 3.6 3.6-1.62 3.6-3.6 3.6z"/></svg>
-          </button>
-        </div>
-      </header>
+  // ===== 챕터 구성 (데이터는 index.html 상단 <script>에서 주입됨) =====
+  var VOCAB_CHAPTERS = [
+    { id: "v1", title: "동사", label: "V1", words: VOCAB_V1 },
+    { id: "v2", title: "명사", label: "V2", words: VOCAB_V2 },
+    { id: "v3", title: "형용사", label: "V3", words: VOCAB_V3 },
+    { id: "v4", title: "부사", label: "V4", words: VOCAB_V4 },
+    { id: "v5", title: "형용사 어구", label: "V5", words: VOCAB_V5 },
+  ];
+  var GRAMMAR_CHAPTERS = [
+    { id: "g1", title: "주어·동사", label: "G1", data: GRAMMAR_G1 },
+    { id: "g2", title: "목적어·보어·수식어", label: "G2", data: GRAMMAR_G2 },
+    { id: "g3", title: "동사의 형태와 종류", label: "G3", data: GRAMMAR_G3 },
+    { id: "g4", title: "주어와의 수일치", label: "G4", data: GRAMMAR_G4 },
+    { id: "g5", title: "능동태·수동태", label: "G5", data: GRAMMAR_G5 },
+  ];
+  var VOCAB_MAP = {};
+  VOCAB_CHAPTERS.forEach(function (c) { c.words.forEach(function (v) { VOCAB_MAP[v.w] = v; }); });
+  var TOTAL_VOCAB = VOCAB_CHAPTERS.reduce(function (n, c) { return n + c.words.length; }, 0);
 
-      <!-- Scrollable Tab Contents -->
-      <div class="tab-viewport">
-        
-        <!-- ==================== TAB 1: HOME ==================== -->
-        <section class="tab-content active" id="tab-home">
-          <!-- KPI 카드 그리드 -->
-          <div class="kpi-grid">
-            <div class="kpi-card" id="kpi-days">
-              <div class="kpi-info">
-                <span class="kpi-label">📅 공부 진행일</span>
-                <h3 class="kpi-value"><span class="current">0</span> <span class="total">/ 180 일</span></h3>
-              </div>
-              <div class="kpi-progress-container">
-                <div class="kpi-bar" style="width: 0%"></div>
-              </div>
-              <button class="kpi-inc-btn" onclick="adjustKPI('studyDays', 1)">오늘 학습 완료 (+1)</button>
-            </div>
-            
-            <div class="kpi-card" id="kpi-vocab">
-              <div class="kpi-info">
-                <span class="kpi-label">📚 단어 암기량</span>
-                <h3 class="kpi-value"><span class="current">0</span> <span class="total">/ 5,000 개</span></h3>
-              </div>
-              <div class="kpi-progress-container">
-                <div class="kpi-bar" style="width: 0%"></div>
-              </div>
-              <div class="kpi-quick-actions">
-                <button class="kpi-mini-btn" onclick="adjustKPI('vocabCount', -40)">-40</button>
-                <button class="kpi-mini-btn" onclick="adjustKPI('vocabCount', 40)">+40</button>
-              </div>
-            </div>
+  // ===== 진도 저장 (localStorage — 직접 만든 웹사이트에서 정상 작동) =====
+  var KEY = "toeic:progress:v1";
+  function empty() { return { version: 1, vocab: {}, quiz: { total: { solved: 0, correct: 0 }, days: {} } }; }
+  function loadProgress() {
+    try { var r = localStorage.getItem(KEY); if (r) return Object.assign(empty(), JSON.parse(r)); } catch (e) {}
+    return empty();
+  }
+  function saveNow() { try { localStorage.setItem(KEY, JSON.stringify(state.progress)); } catch (e) {} }
+  function today() { return new Date().toISOString().slice(0, 10); }
+  var storageOK = (function () { try { localStorage.setItem("__t", "1"); localStorage.removeItem("__t"); return true; } catch (e) { return false; } })();
 
-            <div class="kpi-card" id="kpi-exams">
-              <div class="kpi-info">
-                <span class="kpi-label">📝 실전 모의고사</span>
-                <h3 class="kpi-value"><span class="current">0</span> <span class="total">/ 30 회</span></h3>
-              </div>
-              <div class="kpi-progress-container">
-                <div class="kpi-bar" style="width: 0%"></div>
-              </div>
-              <button class="kpi-inc-btn" onclick="adjustKPI('mockExams', 1)">모의고사 1회 추가 (+1)</button>
-            </div>
+  // ===== 상태 =====
+  var state = {
+    progress: loadProgress(),
+    tab: "vocab",
+    vc: "v1", gc: "g1",
+    vmode: "cards", review: false, seed: 0,
+    flips: {}, open: {}, answers: {},
+    vquiz: null, vquizKey: null,
+    confirm: false,
+  };
+  GRAMMAR_CHAPTERS.forEach(function (c) { state.open[c.id + "-0"] = true; });
 
-            <div class="kpi-card" id="kpi-shadowing">
-              <div class="kpi-info">
-                <span class="kpi-label">🎧 LC 쉐도잉 시간</span>
-                <h3 class="kpi-value"><span class="current">0</span> <span class="total">/ 120 시간</span></h3>
-              </div>
-              <div class="kpi-progress-container">
-                <div class="kpi-bar" style="width: 0%"></div>
-              </div>
-              <div class="kpi-quick-actions">
-                <button class="kpi-mini-btn" onclick="adjustKPI('shadowingHours', -1)">-1시간</button>
-                <button class="kpi-mini-btn" onclick="adjustKPI('shadowingHours', 1)">+1시간</button>
-              </div>
-            </div>
-          </div>
+  // ===== 유틸 =====
+  function esc(s) { return String(s).replace(/&/g, "&amp;").replace(/</g, "&lt;").replace(/>/g, "&gt;"); }
+  function escA(s) { return esc(s).replace(/"/g, "&quot;"); }
+  function shuffle(a) { a = a.slice(); for (var i = a.length - 1; i > 0; i--) { var j = Math.floor(Math.random() * (i + 1)); var t = a[i]; a[i] = a[j]; a[j] = t; } return a; }
 
-          <!-- 오늘의 학습 (요일별 자동 배정) -->
-          <div class="card today-curriculum-card">
-            <div class="card-header">
-              <h3 class="card-title">🔥 오늘의 추천 학습 (<span id="today-day-name">요일</span>)</h3>
-              <span class="badge badge-accent" id="today-target-score">목표 점수: 700점</span>
-            </div>
-            <div class="card-body">
-              <p class="today-desc" id="today-study-desc">로딩 중...</p>
-              
-              <!-- 일일 체크리스트 -->
-              <div class="today-checklist">
-                <label class="check-item">
-                  <input type="checkbox" id="today-chk-lc">
-                  <span class="checkmark"></span>
-                  <span class="check-text">오늘의 LC 학습 완료</span>
-                </label>
-                <label class="check-item">
-                  <input type="checkbox" id="today-chk-rc">
-                  <span class="checkmark"></span>
-                  <span class="check-text">오늘의 RC 학습 완료</span>
-                </label>
-                <label class="check-item">
-                  <input type="checkbox" id="today-chk-vocab">
-                  <span class="checkmark"></span>
-                  <span class="check-text">오늘의 단어 학습 완료 (40개)</span>
-                </label>
-              </div>
-            </div>
-          </div>
+  function buildVocabQuiz(list) {
+    var n = Math.min(12, list.length);
+    return shuffle(list).slice(0, n).map(function (item) {
+      var d = shuffle(list.filter(function (x) { return x.w !== item.w; })).slice(0, 3).map(function (x) { return x.m; });
+      var opts = shuffle([item.m].concat(d));
+      return { q: item.w, o: opts, a: opts.indexOf(item.m), e: item.w + ": " + item.m + " · " + item.tip };
+    });
+  }
+  function ensureVQuiz() {
+    var k = state.vc + ":" + state.seed;
+    if (state.vquizKey !== k) {
+      state.vquizKey = k;
+      var ch = VOCAB_CHAPTERS.find(function (c) { return c.id === state.vc; });
+      state.vquiz = buildVocabQuiz(ch.words);
+    }
+    return state.vquiz;
+  }
 
-          <!-- 목표 점수 로드맵 그래프 (SVG 차트) -->
-          <div class="card chart-card">
-            <div class="card-header">
-              <h3 class="card-title">📈 6개월 목표 점수 성장 곡선</h3>
-            </div>
-            <div class="card-body">
-              <div class="chart-container">
-                <!-- SVG Line Chart -->
-                <svg id="score-chart" viewBox="0 0 500 220" preserveAspectRatio="none">
-                  <!-- Grid Lines -->
-                  <line x1="50" y1="30" x2="480" y2="30" stroke="rgba(255,255,255,0.05)" stroke-width="1"></line>
-                  <line x1="50" y1="80" x2="480" y2="80" stroke="rgba(255,255,255,0.05)" stroke-width="1"></line>
-                  <line x1="50" y1="130" x2="480" y2="130" stroke="rgba(255,255,255,0.05)" stroke-width="1"></line>
-                  <line x1="50" y1="180" x2="480" y2="180" stroke="rgba(255,255,255,0.1)" stroke-width="1"></line>
-                  
-                  <!-- Y Axis Labels -->
-                  <text x="15" y="35" class="chart-text">850+</text>
-                  <text x="15" y="85" class="chart-text">800</text>
-                  <text x="15" y="135" class="chart-text">750</text>
-                  <text x="15" y="185" class="chart-text">700</text>
-                  <text x="15" y="210" class="chart-text">650</text>
+  function stats() {
+    var v = state.progress.vocab;
+    var vals = Object.keys(v).map(function (k) { return v[k]; });
+    var known = vals.filter(function (s) { return s === "known"; }).length;
+    var fuzzy = vals.filter(function (s) { return s === "fuzzy"; }).length;
+    var tot = state.progress.quiz.total;
+    var rate = tot.solved ? Math.round((tot.correct / tot.solved) * 100) : 0;
+    var t = state.progress.quiz.days[today()] || { solved: 0, correct: 0 };
+    return { known: known, fuzzy: fuzzy, solved: tot.solved, correct: tot.correct, rate: rate, today: t };
+  }
 
-                  <!-- X Axis Labels (Months) -->
-                  <text x="50" y="205" class="chart-text" text-anchor="middle">현재</text>
-                  <text x="120" y="205" class="chart-text" text-anchor="middle">1월</text>
-                  <text x="190" y="205" class="chart-text" text-anchor="middle">2월</text>
-                  <text x="260" y="205" class="chart-text" text-anchor="middle">3월</text>
-                  <text x="330" y="205" class="chart-text" text-anchor="middle">4월</text>
-                  <text x="400" y="205" class="chart-text" text-anchor="middle">5월</text>
-                  <text x="470" y="205" class="chart-text" text-anchor="middle">6월</text>
+  function recordAnswer(ok) {
+    var q = state.progress.quiz, d = today();
+    var day = q.days[d] || { solved: 0, correct: 0 };
+    q.days[d] = { solved: day.solved + 1, correct: day.correct + (ok ? 1 : 0) };
+    q.total = { solved: q.total.solved + 1, correct: q.total.correct + (ok ? 1 : 0) };
+    saveNow();
+  }
+  function mark(word, status) {
+    var v = state.progress.vocab;
+    if (v[word] === status) delete v[word]; else v[word] = status;
+    saveNow();
+  }
 
-                  <!-- Target Curve Line -->
-                  <path d="M 50 205 L 120 180 L 190 130 L 260 80 L 330 65 L 400 45 L 470 30" fill="none" stroke="var(--accent-color)" stroke-width="3" stroke-dasharray="4" opacity="0.6"></path>
-                  
-                  <!-- Actual Line -->
-                  <path id="actual-score-path" d="" fill="none" stroke="var(--primary-color)" stroke-width="4"></path>
-                  <g id="chart-dots"></g>
-                </svg>
-              </div>
-              <div class="chart-legend">
-                <span class="legend-item"><span class="legend-line target"></span>목표 점수</span>
-                <span class="legend-item"><span class="legend-line actual"></span>실제 모의고사 점수</span>
-              </div>
-              
-              <!-- 모의고사 점수 입력 -->
-              <div class="score-input-row">
-                <input type="number" id="new-score-val" placeholder="모의고사 점수 입력 (예: 720)" min="0" max="990">
-                <button class="btn btn-primary btn-sm" id="add-score-btn">점수 기록</button>
-              </div>
-            </div>
-          </div>
-        </section>
+  var STATUS = {
+    known: { label: "안다", cls: "known" },
+    fuzzy: { label: "헷갈린다", cls: "fuzzy" },
+    unknown: { label: "모른다", cls: "unknown" },
+  };
 
+  // ===== 뷰 =====
+  function view() { return header() + dashboard() + tabsView() + bodyView(); }
 
-        <!-- ==================== TAB 2: PLAN ==================== -->
-        <section class="tab-content" id="tab-plan">
-          <div class="sub-tab-bar">
-            <button class="sub-tab active" data-sub="sub-weekly">📅 주간 일정</button>
-            <button class="sub-tab" data-sub="sub-monthly">🗺️ 6개월 로드맵</button>
-          </div>
+  function header() {
+    return '<header class="hd">' +
+      '<p class="mono eyebrow">Hackers TOEIC RC · 어휘 &amp; 문법</p>' +
+      '<h1 class="serif h1">토익 단어·문법 학습기</h1>' +
+      '<p class="lead">챕터를 골라 외우고, 바로 풀어보세요. 진도는 이 기기에 자동 저장돼요.</p>' +
+      '</header>';
+  }
 
-          <!-- 주간 일정 서브탭 -->
-          <div class="sub-tab-content active" id="sub-weekly">
-            <!-- 요일별 세부 계획 카드들 -->
-            <div class="weekly-days-list">
-              <div class="weekly-day-card" data-day="1">
-                <div class="day-header">월요일</div>
-                <div class="day-body">
-                  <p><strong>LC:</strong> Part 2 (30문제) + 쉐도잉</p>
-                  <p><strong>RC:</strong> 품사 문법 학습</p>
-                  <p><strong>단어:</strong> 40개 암기</p>
-                </div>
-              </div>
-              <div class="weekly-day-card" data-day="2">
-                <div class="day-header">화요일</div>
-                <div class="day-body">
-                  <p><strong>LC:</strong> Part 3 학습</p>
-                  <p><strong>RC:</strong> 시제 문법 학습</p>
-                  <p><strong>단어:</strong> 40개 암기</p>
-                </div>
-              </div>
-              <div class="weekly-day-card" data-day="3">
-                <div class="day-header">수요일</div>
-                <div class="day-body">
-                  <p><strong>LC:</strong> Part 4 학습</p>
-                  <p><strong>RC:</strong> 관계사 문법 학습</p>
-                  <p><strong>단어:</strong> 지난 단어 복습</p>
-                </div>
-              </div>
-              <div class="weekly-day-card" data-day="4">
-                <div class="day-header">목요일</div>
-                <div class="day-body">
-                  <p><strong>LC:</strong> Part 2 복습</p>
-                  <p><strong>RC:</strong> 분사 문법 학습</p>
-                  <p><strong>단어:</strong> 40개 암기</p>
-                </div>
-              </div>
-              <div class="weekly-day-card" data-day="5">
-                <div class="day-header">금요일</div>
-                <div class="day-body">
-                  <p><strong>LC:</strong> Part 3 복습</p>
-                  <p><strong>RC:</strong> 전치사 문법 학습</p>
-                  <p><strong>단어:</strong> 지난 단어 복습</p>
-                </div>
-              </div>
-              <div class="weekly-day-card" data-day="6">
-                <div class="day-header highlight">토요일</div>
-                <div class="day-body">
-                  <p><strong>실전:</strong> 모의고사 1회 풀기</p>
-                  <p><strong>피드백:</strong> 오답노트 작성</p>
-                </div>
-              </div>
-              <div class="weekly-day-card" data-day="0">
-                <div class="day-header highlight">일요일</div>
-                <div class="day-body">
-                  <p><strong>종합:</strong> 이번 주 학습 총복습</p>
-                  <p><strong>분석:</strong> 취약 부분 분석</p>
-                </div>
-              </div>
-            </div>
+  function dashboard() {
+    var s = stats();
+    var right = state.confirm
+      ? '<span class="confirm mono"><span class="cq">초기화할까요?</span>' +
+        '<button class="cbtn yes" data-action="reset-yes">예</button>' +
+        '<button class="cbtn no" data-action="reset-no">아니요</button></span>'
+      : '<button class="reset mono" data-action="reset-ask">진도 초기화</button>';
+    return '<section class="card dash">' +
+      '<div class="dash-top"><span class="mono eyebrow amber">학습 현황</span>' + right + '</div>' +
+      '<div class="stats">' +
+        stat("외운 단어", s.known, "/ " + TOTAL_VOCAB, "em") +
+        stat("누적 정답률", s.rate + "%", s.correct + "/" + s.solved, "amber") +
+        stat("오늘 푼 문제", s.today.solved, "정답 " + s.today.correct, "t1") +
+      '</div>' +
+      '<div class="bar"><div class="bar-fill" style="width:' + s.rate + '%"></div></div>' +
+      '<p class="mono note">' + (storageOK
+        ? "진도는 이 기기에 자동 저장돼요 · 헷갈리는 단어 " + s.fuzzy + "개"
+        : "이 브라우저에서 저장이 막혀 있어 진도가 유지되지 않아요 (사파리 개인정보 보호 모드 등).") +
+      '</p></section>';
+  }
+  function stat(label, value, sub, accent) {
+    return '<div class="stat"><p class="mono lbl">' + esc(label) + '</p>' +
+      '<p class="serif big ' + accent + '">' + esc(value) + '</p>' +
+      '<p class="mono sub">' + esc(sub) + '</p></div>';
+  }
 
-            <!-- 매주 체크리스트 -->
-            <div class="card weekly-checklist-card">
-              <div class="card-header">
-                <h3 class="card-title">✅ 매주 핵심 체크리스트</h3>
-              </div>
-              <div class="card-body">
-                <div class="checklist-progress-header">
-                  <span>달성률</span>
-                  <span id="weekly-progress-percent">0%</span>
-                </div>
-                <div class="kpi-progress-container weekly-bar-container">
-                  <div class="kpi-bar" id="weekly-progress-bar" style="width: 0%"></div>
-                </div>
+  function tabsView() {
+    var t = [["vocab", "단어 · " + TOTAL_VOCAB], ["grammar", "문법 · " + GRAMMAR_CHAPTERS.length], ["reading", "독해 · Part 6"]];
+    return '<div class="tabs">' + t.map(function (x) {
+      return '<button class="tab' + (state.tab === x[0] ? " active" : "") + '" data-action="tab" data-tab="' + x[0] + '">' + esc(x[1]) + '</button>';
+    }).join("") + '</div>';
+  }
 
-                <div class="weekly-check-items">
-                  <label class="check-item">
-                    <input type="checkbox" id="w-chk-lc" class="weekly-chk">
-                    <span class="checkmark"></span>
-                    <span class="check-text">LC 200문제 이상 풀기</span>
-                  </label>
-                  <label class="check-item">
-                    <input type="checkbox" id="w-chk-rc" class="weekly-chk">
-                    <span class="checkmark"></span>
-                    <span class="check-text">RC 200문제 이상 풀기</span>
-                  </label>
-                  <label class="check-item">
-                    <input type="checkbox" id="w-chk-vocab" class="weekly-chk">
-                    <span class="checkmark"></span>
-                    <span class="check-text">단어 250개 완벽 암기</span>
-                  </label>
-                  <label class="check-item">
-                    <input type="checkbox" id="w-chk-shadow" class="weekly-chk">
-                    <span class="checkmark"></span>
-                    <span class="check-text">LC 쉐도잉 2시간 이상 진행</span>
-                  </label>
-                  <label class="check-item">
-                    <input type="checkbox" id="w-chk-mock" class="weekly-chk">
-                    <span class="checkmark"></span>
-                    <span class="check-text">실전 모의고사 1회 풀기</span>
-                  </label>
-                  <label class="check-item">
-                    <input type="checkbox" id="w-chk-note" class="weekly-chk">
-                    <span class="checkmark"></span>
-                    <span class="check-text">틀린 문제 오답노트 정리</span>
-                  </label>
-                </div>
-                <button class="btn btn-secondary btn-full btn-sm" id="reset-weekly-btn" style="margin-top: 15px;">새로운 주간 시작 (체크박스 비우기)</button>
-              </div>
-            </div>
-          </div>
+  function chips(list, currentId, action) {
+    return '<div class="chips">' + list.map(function (c) {
+      var on = c.id === currentId;
+      return '<button class="chip' + (on ? " active" : "") + '" data-action="' + action + '" data-id="' + c.id + '">' +
+        '<span class="chip-l mono">' + esc(c.label) + '</span> ' + esc(c.title) + '</button>';
+    }).join("") + '</div>';
+  }
 
-          <!-- 6개월 로드맵 서브탭 -->
-          <div class="sub-tab-content" id="sub-monthly">
-            <div class="timeline">
-              
-              <!-- Month 1 -->
-              <div class="timeline-item">
-                <div class="timeline-badge">M1</div>
-                <div class="timeline-panel">
-                  <div class="timeline-header">
-                    <h4>Month 1: 기초 문법 완성</h4>
-                    <span class="target-badge">목표: 700점</span>
-                  </div>
-                  <div class="timeline-body">
-                    <div class="roadmap-checklist">
-                      <h5>핵심 문법 정복 여부:</h5>
-                      <div class="roadmap-grid">
-                        <label class="check-item-mini"><input type="checkbox" id="rm-m1-g1" class="roadmap-chk"> 품사</label>
-                        <label class="check-item-mini"><input type="checkbox" id="rm-m1-g2" class="roadmap-chk"> 시제</label>
-                        <label class="check-item-mini"><input type="checkbox" id="rm-m1-g3" class="roadmap-chk"> 수일치</label>
-                        <label class="check-item-mini"><input type="checkbox" id="rm-m1-g4" class="roadmap-chk"> 관계사</label>
-                        <label class="check-item-mini"><input type="checkbox" id="rm-m1-g5" class="roadmap-chk"> 분사</label>
-                        <label class="check-item-mini"><input type="checkbox" id="rm-m1-g6" class="roadmap-chk"> 전치사</label>
-                      </div>
-                      <div class="roadmap-text-list">
-                        <p>📢 <strong>LC:</strong> Part 2 집중 훈련 & 쉐도잉 버릇 들이기</p>
-                        <p>📢 <strong>RC:</strong> Part 5 집중 공략</p>
-                      </div>
-                    </div>
-                  </div>
-                </div>
-              </div>
+  function bodyView() {
+    if (state.tab === "vocab") return vocabTab();
+    if (state.tab === "grammar") return grammarTab();
+    return readingTab();
+  }
 
-              <!-- Month 2 -->
-              <div class="timeline-item">
-                <div class="timeline-badge">M2</div>
-                <div class="timeline-panel">
-                  <div class="timeline-header">
-                    <h4>Month 2: 독해 속도 향상</h4>
-                    <span class="target-badge">목표: 750점</span>
-                  </div>
-                  <div class="timeline-body">
-                    <p>📢 <strong>LC:</strong> Part 3, Part 4 긴 지문 스키밍 기법 연마</p>
-                    <p>📢 <strong>RC:</strong> Part 6, Part 7 독해 지문 시간 단축 및 단락 구조 분석</p>
-                  </div>
-                </div>
-              </div>
+  // ---- 단어 ----
+  function vocabTab() {
+    var ch = VOCAB_CHAPTERS.find(function (c) { return c.id === state.vc; });
+    var h = chips(VOCAB_CHAPTERS, state.vc, "vchap");
+    h += '<div class="pills">' +
+      '<button class="pill' + (state.vmode === "cards" ? " active" : "") + '" data-action="vmode" data-mode="cards">카드로 외우기</button>' +
+      '<button class="pill' + (state.vmode === "quiz" ? " active" : "") + '" data-action="vmode" data-mode="quiz">뜻 맞히기 퀴즈</button>';
+    if (state.vmode === "cards") {
+      h += '<button class="minibtn right' + (state.review ? " on" : "") + '" data-action="review">' + (state.review ? "복습 큐 보는 중" : "아직 못 외운 것만") + '</button>';
+    } else {
+      h += '<button class="minibtn right" data-action="reseed">새 문제</button>';
+    }
+    h += '</div>';
 
-              <!-- Month 3 -->
-              <div class="timeline-item">
-                <div class="timeline-badge">M3</div>
-                <div class="timeline-panel">
-                  <div class="timeline-header">
-                    <h4>Month 3: 실전 적응 훈련</h4>
-                    <span class="target-badge">목표: 800점</span>
-                  </div>
-                  <div class="timeline-body">
-                    <p>📢 <strong>공통:</strong> 주 2회 실전 모의고사 풀이 및 2시간 시간 제한 연습</p>
-                    <p>📢 <strong>목표:</strong> 전반적인 문제 해결 속도 및 마인드 세팅</p>
-                  </div>
-                </div>
-              </div>
+    if (state.vmode === "cards") {
+      var words = ch.words;
+      var cards = state.review ? words.filter(function (v) { var st = state.progress.vocab[v.w]; return st === "unknown" || st === "fuzzy" || st === undefined; }) : words;
+      if (!cards.length) {
+        h += '<div class="empty">이 챕터에서 복습할 단어가 없어요. 전부 “안다”로 표시했네요! 👍</div>';
+      } else {
+        h += '<div class="vgrid">' + cards.map(function (v) { return vcard(v, words.indexOf(v)); }).join("") + '</div>';
+      }
+    } else {
+      h += quizView("vq:" + state.vc + ":" + state.seed, ensureVQuiz(), false);
+    }
+    return '<section>' + h + '</section>';
+  }
 
-              <!-- Month 4 -->
-              <div class="timeline-item">
-                <div class="timeline-badge">M4</div>
-                <div class="timeline-panel">
-                  <div class="timeline-header">
-                    <h4>Month 4: 약점 보완 집중</h4>
-                    <span class="target-badge">목표: 820점</span>
-                  </div>
-                  <div class="timeline-body">
-                    <p>📢 <strong>공통:</strong> 누적 오답노트 집중 정독 및 오답 유형 카테고리화 분석</p>
-                    <p>📢 <strong>취약 파트:</strong> 오답이 가장 많은 파트 2배 집중 양치기</p>
-                  </div>
-                </div>
-              </div>
+  function vcard(v, idx) {
+    var st = state.progress.vocab[v.w];
+    var meta = st ? STATUS[st] : null;
+    var flipped = !!state.flips[v.w];
+    var face = flipped
+      ? '<p class="vmean">' + esc(v.m) + '</p>' +
+        '<p class="vex">“' + esc(v.ex) + '”</p>' +
+        '<p class="vtip mono">출제 포인트 · ' + esc(v.tip) + '</p>'
+      : '<p class="serif vword">' + esc(v.w) + '</p>' +
+        '<p class="vpos mono">' + esc(v.p) + '</p>' +
+        '<p class="vhint mono">눌러서 뜻 보기</p>';
+    var marks = ["known", "fuzzy", "unknown"].map(function (k) {
+      return '<button class="mark ' + STATUS[k].cls + (st === k ? " on" : "") + '" data-action="mark" data-word="' + escA(v.w) + '" data-status="' + k + '">' + STATUS[k].label + '</button>';
+    }).join("");
+    return '<div class="vcard' + (meta ? " ring-" + meta.cls : "") + '">' +
+      '<span class="vnum mono">' + String(idx + 1).padStart(2, "0") + '</span>' +
+      (meta ? '<span class="vdot dot-' + meta.cls + '"></span>' : "") +
+      '<button class="vface" data-action="flip" data-word="' + escA(v.w) + '">' + face + '</button>' +
+      '<div class="marks">' + marks + '</div></div>';
+  }
 
-              <!-- Month 5 -->
-              <div class="timeline-item">
-                <div class="timeline-badge">M5</div>
-                <div class="timeline-panel">
-                  <div class="timeline-header">
-                    <h4>Month 5: 실수 최소화 & 시간 단축</h4>
-                    <span class="target-badge">목표: 840점</span>
-                  </div>
-                  <div class="timeline-body">
-                    <p>📢 <strong>RC:</strong> 마킹 시간 포함 Part 5, 6를 20분 내 끊는 모래주머니 효과 극대화</p>
-                    <p>📢 <strong>LC:</strong> 주변 소음 대처 및 집중력 유지 훈련</p>
-                  </div>
-                </div>
-              </div>
+  // ---- 문법 ----
+  function grammarTab() {
+    var ch = GRAMMAR_CHAPTERS.find(function (c) { return c.id === state.gc; });
+    var d = ch.data;
+    var h = chips(GRAMMAR_CHAPTERS, state.gc, "gchap");
+    h += '<div class="rules">' + d.rules.map(function (r, i) {
+      var key = ch.id + "-" + i;
+      var open = !!state.open[key];
+      return '<div class="rule">' +
+        '<button class="rule-h" data-action="rule" data-key="' + key + '">' +
+          '<span class="rnum mono">' + (i + 1) + '</span>' +
+          '<span class="rt">' + esc(r.t) + '</span>' +
+          '<span class="rtoggle mono">' + (open ? "−" : "+") + '</span></button>' +
+        (open ? '<div class="rule-b"><p class="rb">' + esc(r.b) + '</p><p class="rex mono">' + esc(r.ex) + '</p></div>' : "") +
+        '</div>';
+    }).join("") + '</div>';
+    h += '<h3 class="serif h3">실전 문제</h3>';
+    h += quizView("gq:" + ch.id, d.q, true);
+    return '<section>' + h + '</section>';
+  }
 
-              <!-- Month 6 -->
-              <div class="timeline-item">
-                <div class="timeline-badge">M6</div>
-                <div class="timeline-panel">
-                  <div class="timeline-header">
-                    <h4>Month 6: 850점 돌파 최종 스퍼트</h4>
-                    <span class="target-badge">목표: 850+</span>
-                  </div>
-                  <div class="timeline-body">
-                    <p>📢 <strong>공통:</strong> 매일 실전 감각 유지용 하프 모의고사 혹은 파트별 집중 실전 시험 진행</p>
-                    <p>📢 <strong>완료 기준:</strong> 안정적인 LC 450 이상, RC 400 이상 확보</p>
-                  </div>
-                </div>
-              </div>
+  // ---- 독해 ----
+  function readingTab() {
+    var h = '<div class="card note-card"><p class="tip-title">Part 6 단어 고르기 전략</p>' +
+      '<p class="tip-body">빈칸 문장만으로 답이 안 나오면 주변 문맥에서 단서를 찾으세요. 시제는 앞뒤 동사·날짜로, 대명사는 앞 문장이 가리키는 대상으로, 접속부사는 앞뒤 문장의 의미 관계로, 어휘는 빈칸 주변 단어로 판단합니다.</p></div>';
+    READING.forEach(function (psg, i) {
+      h += '<div class="passage"><h3 class="serif h3">' + esc(psg.title) + '</h3>' +
+        '<div class="card ptext">' + psg.lines.map(function (l) { return '<p>' + esc(l) + '</p>'; }).join("") + '</div>' +
+        quizView("rq:" + i, psg.q, false) + '</div>';
+    });
+    return '<section class="reading">' + h + '</section>';
+  }
 
-            </div>
-          </div>
-        </section>
+  // ---- 공용 퀴즈 ----
+  function quizView(quizId, questions, showVocab) {
+    var solved = 0, correct = 0;
+    questions.forEach(function (q, qi) {
+      var p = state.answers[quizId + ":" + qi];
+      if (p !== undefined) { solved++; if (p === q.a) correct++; }
+    });
+    var h = '<div class="qmeta mono"><span>' + solved + " / " + questions.length + ' 풀이 (이번 세트)</span><span class="amber">정답 ' + correct + "</span></div>";
+    h += '<div class="qlist">';
+    questions.forEach(function (q, qi) {
+      var key = quizId + ":" + qi;
+      var picked = state.answers[key];
+      var done = picked !== undefined;
+      h += '<div class="qcard"><p class="qtext"><span class="mono qn">Q' + (qi + 1) + "</span> " + esc(q.q) + "</p>";
+      h += '<div class="opts">';
+      q.o.forEach(function (opt, oi) {
+        var cls = "opt";
+        if (done) { if (oi === q.a) cls += " correct"; else if (oi === picked) cls += " wrong"; else cls += " dim"; }
+        h += '<button class="' + cls + '"' + (done ? " disabled" : "") +
+          ' data-action="answer" data-quiz="' + escA(quizId) + '" data-qi="' + qi + '" data-oi="' + oi + '" data-correct="' + q.a + '">' +
+          '<span class="ol mono">' + String.fromCharCode(65 + oi) + "</span> " + esc(opt) + "</button>";
+      });
+      h += "</div>";
+      if (done) { h += '<p class="expl">' + (picked === q.a ? "정답! " : "오답 · ") + esc(q.e) + "</p>"; }
+      if (showVocab && done && Array.isArray(q.words)) {
+        var linked = q.words.map(function (w) { return VOCAB_MAP[w]; }).filter(Boolean);
+        if (linked.length) {
+          h += '<div class="vchips">' + linked.map(function (v) { return '<span class="vchip mono">' + esc(v.w) + " · " + esc(v.m) + "</span>"; }).join("") + "</div>";
+        }
+      }
+      h += "</div>";
+    });
+    h += "</div>";
+    return h;
+  }
 
+  // ===== 렌더 + 스크롤 유지 =====
+  var app = document.getElementById("app");
+  function render() {
+    var y = window.scrollY;
+    var oldChips = app.querySelector(".chips");
+    var cx = oldChips ? oldChips.scrollLeft : 0;
+    app.innerHTML = view();
+    var newChips = app.querySelector(".chips");
+    if (newChips) newChips.scrollLeft = cx;
+    window.scrollTo(0, y);
+  }
 
-        <!-- ==================== TAB 3: INCORRECT NOTE ==================== -->
-        <section class="tab-content" id="tab-incorrect">
-          <!-- 통계 정보 -->
-          <div class="stats-row">
-            <div class="stats-box">
-              <span class="stats-num" id="stat-total-incorrect">0</span>
-              <span class="stats-lbl">총 등록 문항</span>
-            </div>
-            <div class="stats-box">
-              <span class="stats-num text-warning" id="stat-unsolved-incorrect">0</span>
-              <span class="stats-lbl">미해결 문항</span>
-            </div>
-          </div>
+  // ===== 이벤트 위임 =====
+  app.addEventListener("click", function (e) {
+    var el = e.target.closest("[data-action]");
+    if (!el) return;
+    var a = el.dataset.action;
+    if (a === "tab") state.tab = el.dataset.tab;
+    else if (a === "vchap") { state.vc = el.dataset.id; state.review = false; }
+    else if (a === "gchap") state.gc = el.dataset.id;
+    else if (a === "vmode") state.vmode = el.dataset.mode;
+    else if (a === "review") state.review = !state.review;
+    else if (a === "reseed") state.seed++;
+    else if (a === "flip") { var w = el.dataset.word; state.flips[w] = !state.flips[w]; }
+    else if (a === "mark") mark(el.dataset.word, el.dataset.status);
+    else if (a === "rule") { var k = el.dataset.key; state.open[k] = !state.open[k]; }
+    else if (a === "answer") {
+      var key = el.dataset.quiz + ":" + el.dataset.qi;
+      if (state.answers[key] !== undefined) return;
+      state.answers[key] = +el.dataset.oi;
+      recordAnswer(+el.dataset.oi === +el.dataset.correct);
+    }
+    else if (a === "reset-ask") state.confirm = true;
+    else if (a === "reset-no") state.confirm = false;
+    else if (a === "reset-yes") { state.progress = empty(); state.answers = {}; state.flips = {}; saveNow(); state.confirm = false; }
+    render();
+  });
 
-          <!-- 오답노트 추가 폼 토글 카드 -->
-          <div class="card add-incorrect-card">
-            <div class="card-header" id="toggle-add-incorrect-header" style="cursor: pointer;">
-              <h3 class="card-title">➕ 새 오답 기록하기</h3>
-              <span class="toggle-icon">▼</span>
-            </div>
-            <div class="card-body" id="add-incorrect-form-wrapper" style="display: none;">
-              <form id="incorrect-form" class="form">
-                <div class="form-row">
-                  <div class="form-group">
-                    <label for="inc-date">날짜</label>
-                    <input type="date" id="inc-date" required>
-                  </div>
-                  <div class="form-group">
-                    <label for="inc-part">파트</label>
-                    <select id="inc-part" required>
-                      <option value="Part1">LC Part 1</option>
-                      <option value="Part2" selected>LC Part 2</option>
-                      <option value="Part3">LC Part 3</option>
-                      <option value="Part4">LC Part 4</option>
-                      <option value="Part5">RC Part 5</option>
-                      <option value="Part6">RC Part 6</option>
-                      <option value="Part7">RC Part 7</option>
-                    </select>
-                  </div>
-                </div>
+  render();
+})();
 
-                <div class="form-group">
-                  <label for="inc-question">문제 정보 (번호 및 내용)</label>
-                  <input type="text" id="inc-question" placeholder="예: 해커스 모의고사 1회 Part 5 - 121번" required>
-                </div>
-
-                <div class="form-row">
-                  <div class="form-group">
-                    <label for="inc-reason">틀린 원인</label>
-                    <select id="inc-reason">
-                      <option value="품사/문법">품사 및 문법 오해</option>
-                      <option value="단어/어휘">단어/어휘 모름</option>
-                      <option value="해석/독해">잘못된 문장 해석</option>
-                      <option value="청해 실패">듣기 발음 놓침</option>
-                      <option value="시간 부족">시간 관리 실패</option>
-                      <option value="단순 실수">실수 및 매력적 오답</option>
-                    </select>
-                  </div>
-                  <div class="form-group">
-                    <label for="inc-topic">연관 문법 주제</label>
-                    <input type="text" id="inc-topic" placeholder="예: 분사구문, 관계대명사">
-                  </div>
-                </div>
-
-                <div class="form-group">
-                  <label for="inc-vocab">새로 안 단어</label>
-                  <input type="text" id="inc-vocab" placeholder="예: delegate (위임하다)">
-                </div>
-
-                <div class="form-group">
-                  <label for="inc-notes">상세 분석 & 오답 원인</label>
-                  <textarea id="inc-notes" rows="3" placeholder="틀린 이유 및 정답을 맞추기 위해 파악해야 했던 포인트 적기..."></textarea>
-                </div>
-
-                <div class="form-actions">
-                  <button type="submit" class="btn btn-primary">오답 저장</button>
-                  <button type="button" class="btn btn-secondary" id="cancel-incorrect-btn">취소</button>
-                </div>
-              </form>
-            </div>
-          </div>
-
-          <!-- 검색 및 필터 필드 -->
-          <div class="filter-card">
-            <div class="filter-grid">
-              <input type="text" id="filter-search" placeholder="문제 내용/메모 검색...">
-              <select id="filter-part">
-                <option value="">모든 파트</option>
-                <option value="Part1">Part 1</option>
-                <option value="Part2">Part 2</option>
-                <option value="Part3">Part 3</option>
-                <option value="Part4">Part 4</option>
-                <option value="Part5">Part 5</option>
-                <option value="Part6">Part 6</option>
-                <option value="Part7">Part 7</option>
-              </select>
-              <select id="filter-reason">
-                <option value="">모든 원인</option>
-                <option value="품사/문법">품사/문법</option>
-                <option value="단어/어휘">단어/어휘</option>
-                <option value="해석/독해">해석/독해</option>
-                <option value="청해 실패">청해 실패</option>
-                <option value="시간 부족">시간 부족</option>
-                <option value="단순 실수">단순 실수</option>
-              </select>
-              <select id="filter-solved">
-                <option value="">해결 상태 (전체)</option>
-                <option value="unsolved">미해결 (X)</option>
-                <option value="solved">해결 완료 (O)</option>
-              </select>
-            </div>
-          </div>
-
-          <!-- 오답 리스트 목록 -->
-          <div class="incorrect-list" id="incorrect-items-container">
-            <!-- Dynamic JavaScript Render -->
-          </div>
-        </section>
-
-
-        <!-- ==================== TAB 4: VOCAB NOTEBOOK ==================== -->
-        <section class="tab-content" id="tab-vocab">
-          <!-- 단어 등록 -->
-          <div class="card add-vocab-card">
-            <div class="card-header">
-              <h3 class="card-title">✍️ 새 단어 추가</h3>
-            </div>
-            <div class="card-body">
-              <form id="vocab-form" class="inline-form">
-                <input type="text" id="vocab-word" placeholder="영단어 (예: implementation)" required>
-                <input type="text" id="vocab-meaning" placeholder="뜻 (예: 구현, 실행)" required>
-                <button type="submit" class="btn btn-primary">추가</button>
-              </form>
-            </div>
-          </div>
-
-          <!-- 단어 자가 테스트 플래시 카드 위젯 -->
-          <div class="card flashcard-widget-card">
-            <div class="card-header">
-              <h3 class="card-title">🃏 플래시 카드 연습 모드</h3>
-            </div>
-            <div class="card-body flash-container">
-              <div class="flashcard" id="active-flashcard">
-                <div class="flashcard-inner">
-                  <div class="flashcard-front">
-                    <span class="flash-label">WORD</span>
-                    <h2 id="flash-word">단어를 추가해 주세요</h2>
-                  </div>
-                  <div class="flashcard-back">
-                    <span class="flash-label">MEANING</span>
-                    <h2 id="flash-meaning">뜻이 여기에 표시됩니다</h2>
-                  </div>
-                </div>
-              </div>
-              <div class="flash-controls">
-                <button class="btn btn-secondary btn-sm" id="flash-prev-btn">이전</button>
-                <span class="flash-counter" id="flash-counter">0 / 0</span>
-                <button class="btn btn-secondary btn-sm" id="flash-next-btn">다음</button>
-              </div>
-              <div class="flash-tip">💡 카드를 클릭하거나 누르면 단어 뜻이 뒤집혀 보입니다!</div>
-            </div>
-          </div>
-
-          <!-- 단어 목록 헤더 & 필터 -->
-          <div class="vocab-header-row">
-            <h4>내 단어장 (<span id="vocab-total-count">0</span>개)</h4>
-            <div class="vocab-search-wrap">
-              <input type="text" id="vocab-search" placeholder="단어/뜻 검색...">
-            </div>
-          </div>
-
-          <!-- 단어 리스트 테이블 -->
-          <div class="card vocab-table-card">
-            <div class="vocab-list-container">
-              <table class="vocab-table">
-                <thead>
-                  <tr>
-                    <th>단어</th>
-                    <th>뜻</th>
-                    <th style="width: 70px;">상태</th>
-                    <th style="width: 60px;">삭제</th>
-                  </tr>
-                </thead>
-                <tbody id="vocab-table-body">
-                  <!-- Dynamic JS Render -->
-                </tbody>
-              </table>
-            </div>
-          </div>
-        </section>
-
-
-        <!-- ==================== TAB 5: STUDY RESOURCES ==================== -->
-        <section class="tab-content" id="tab-study">
-          <div class="sub-tab-bar">
-            <button class="sub-tab active" data-sub="sub-process">🧭 학습 프로세스</button>
-            <button class="sub-tab" data-sub="sub-library">📂 교재 창고</button>
-            <button class="sub-tab" data-sub="sub-practical">💼 실무 영어</button>
-          </div>
-
-          <!-- 학습 프로세스 서브탭 -->
-          <div class="sub-tab-content active" id="sub-process">
-            <!-- LC 7단계 훈련 가이드 -->
-            <div class="card process-card">
-              <div class="card-header">
-                <h3 class="card-title">🎧 LC 학습 7단계 프로세스 가이드</h3>
-              </div>
-              <div class="card-body">
-                <div class="interactive-steps-container" id="lc-steps-container">
-                  <div class="step-guide active" data-step="1">
-                    <div class="step-badge">1단계</div>
-                    <div class="step-text">
-                      <h5>문제 듣고 풀기</h5>
-                      <p>실전 시험이라 생각하고 오디오 가이드를 집중해서 듣고 문제를 풉니다. 절대 중간에 멈추지 마세요.</p>
-                    </div>
-                  </div>
-                  
-                  <div class="step-guide" data-step="2">
-                    <div class="step-badge">2단계</div>
-                    <div class="step-text">
-                      <h5>정답 확인 및 채점</h5>
-                      <p>틀린 문제를 확인하되, 해설과 스크립트는 아직 보지 않은 상태로 오답 마킹만 해둡니다.</p>
-                    </div>
-                  </div>
-                  
-                  <div class="step-guide" data-step="3">
-                    <div class="step-badge">3단계</div>
-                    <div class="step-text">
-                      <h5>스크립트 해석 & 정독</h5>
-                      <p>스크립트 대본을 꼼꼼하게 소리 내어 읽으며 구조 분석을 진행합니다. 의미 파악에 주력합니다.</p>
-                    </div>
-                  </div>
-
-                  <div class="step-guide" data-step="4">
-                    <div class="step-badge">4단계</div>
-                    <div class="step-text">
-                      <h5>모르는 단어 정리</h5>
-                      <p>지문이나 보기 중 생소했던 핵심 어휘 및 관용구를 골라내 단어장 탭에 바로 저장합니다.</p>
-                    </div>
-                  </div>
-
-                  <div class="step-guide" data-step="5">
-                    <div class="step-badge">5단계</div>
-                    <div class="step-text">
-                      <h5>쉐도잉(입으로 따라 말하기)</h5>
-                      <p>스크립트를 보면서 오디오 속도에 맞춰 0.5초 차이로 즉시 소리 내어 따라 읽는 쉐도잉을 진행합니다.</p>
-                      
-                      <!-- 쉐도잉 타이머 서브 위젯 -->
-                      <div class="shadowing-timer-widget">
-                        <span class="timer-display" id="shadow-timer-val">00:00</span>
-                        <div class="timer-controls">
-                          <button class="btn btn-primary btn-xs" id="shadow-timer-start-btn">시작</button>
-                          <button class="btn btn-secondary btn-xs" id="shadow-timer-reset-btn">리셋</button>
-                        </div>
-                      </div>
-                    </div>
-                  </div>
-
-                  <div class="step-guide" data-step="6">
-                    <div class="step-badge">6단계</div>
-                    <div class="step-text">
-                      <h5>오디오 다시 듣기</h5>
-                      <p>눈으로 스크립트를 보고 귀로 사운드를 듣습니다. 쉐도잉에서 보완된 발음이 들리는지 확인합니다.</p>
-                    </div>
-                  </div>
-
-                  <div class="step-guide" data-step="7">
-                    <div class="step-badge">7단계</div>
-                    <div class="step-text">
-                      <h5>스크립트 안 보고 최종 듣기</h5>
-                      <p>스크립트를 덮고 순수 소리만으로 지문의 흐름과 세부 내용이 한글처럼 머리에 직관적으로 해석되는지 체감합니다.</p>
-                    </div>
-                  </div>
-                </div>
-
-                <div class="process-controls">
-                  <button class="btn btn-secondary btn-sm" id="lc-step-prev">이전 단계</button>
-                  <button class="btn btn-primary btn-sm" id="lc-step-next">다음 단계</button>
-                </div>
-              </div>
-            </div>
-
-            <!-- RC 5단계 프로세스 -->
-            <div class="card process-card">
-              <div class="card-header">
-                <h3 class="card-title">📖 RC 학습 5단계 프로세스 가이드</h3>
-              </div>
-              <div class="card-body">
-                <ol class="rc-process-list">
-                  <li>
-                    <span class="rc-num">1</span>
-                    <div>
-                      <strong>제한 시간 내 문제 풀이</strong>
-                      <p>Part 5/6은 한 문제당 20-30초, Part 7은 한 지문당 문항수*1분 이내로 빠르게 푸는 시간 훈련을 진행합니다.</p>
-                    </div>
-                  </li>
-                  <li>
-                    <span class="rc-num">2</span>
-                    <div>
-                      <strong>틀린 이유 분석 및 자가 진단</strong>
-                      <p>단순 어휘 부족인지, 구조 분석 실패인지, 성급하게 넘어가서 실수한 오답 유도 선택지인지를 판별해 오답노트에 입력합니다.</p>
-                    </div>
-                  </li>
-                  <li>
-                    <span class="rc-num">3</span>
-                    <div>
-                      <strong>문법 핵심 개념 및 해설 확인</strong>
-                      <p>RC 기본 교재를 펼쳐 틀린 파트의 핵심 문법 이론(수일치, 전치사 대 접속사 등)을 다시 정독하고 노트를 다듬습니다.</p>
-                    </div>
-                  </li>
-                  <li>
-                    <span class="rc-num">4</span>
-                    <div>
-                      <strong>문장 속 영단어 완벽 암기</strong>
-                      <p>틀린 문제와 보기 지문에 기재된 모르는 어휘를 100% 암기하고 단어장 앱에 수록합니다.</p>
-                    </div>
-                  </li>
-                  <li>
-                    <span class="rc-num">5</span>
-                    <div>
-                      <strong>동일 유형 추가 문제 풀이</strong>
-                      <p>동일한 문법 포인트를 가진 변형 유형 문제를 추가로 3-5개 더 풀어 완벽하게 오개념을 격파합니다.</p>
-                    </div>
-                  </li>
-                </ol>
-              </div>
-            </div>
-          </div>
-
-          <!-- 교재 창고 서브탭 -->
-          <div class="sub-tab-content" id="sub-library">
-            <div class="card pdf-link-info-card">
-              <div class="card-body">
-                <p>💡 <strong>클라우드 링크 등록 안내:</strong> 구글 드라이브나 Dropbox에 PDF 교재를 올린 후 <strong>공유 링크</strong>를 복사하여 아래 각 파일 항목에 등록해 두세요. 아이폰 13 미니에서도 언제 어디서든 교재를 클릭 한 번으로 볼 수 있습니다!</p>
-              </div>
-            </div>
-
-            <!-- PDF 리스트 Shelf (JS 렌더링) -->
-            <div class="pdf-shelf" id="pdf-shelf-container">
-              <!-- JS dynamic library -->
-            </div>
-          </div>
-
-          <!-- 실무 영어 서브탭 -->
-          <div class="sub-tab-content" id="sub-practical">
-            <!-- 1분 자기소개 위젯 -->
-            <div class="card intro-card">
-              <div class="card-header">
-                <h3 class="card-title">🎙️ 1분 영어 자기소개 스크립트 작성</h3>
-              </div>
-              <div class="card-body">
-                <p class="section-desc">해외 EdTech 기업 면접의 필수 관문인 1분 자기소개를 준비해 보세요.</p>
-                <textarea id="practical-intro-text" rows="5" placeholder="자기소개 템플릿:
-Hello, my name is [Name]. I am an English learner aiming to work in the global EdTech sector.
-With my background in...
-I want to contribute to..."></textarea>
-                <button class="btn btn-primary btn-sm btn-full" id="save-intro-btn" style="margin-top: 10px;">자기소개 저장</button>
-              </div>
-            </div>
-
-            <!-- 이메일 템플릿 카드 -->
-            <div class="card email-templates-card">
-              <div class="card-header">
-                <h3 class="card-title">✉️ 실무 영어 이메일 자주 쓰는 표현</h3>
-              </div>
-              <div class="card-body">
-                <div class="template-selector">
-                  <select id="email-tpl-select">
-                    <option value="asking">1. 자료 요청할 때 (Asking for Information)</option>
-                    <option value="followup">2. 후속 조치 확인할 때 (Follow-up email)</option>
-                    <option value="schedule">3. 미팅 일정 잡기 (Scheduling a meeting)</option>
-                  </select>
-                </div>
-                <div class="template-viewer">
-                  <pre id="email-tpl-content">선택해 주세요.</pre>
-                </div>
-              </div>
-            </div>
-          </div>
-        </section>
-
-      </div>
-    </main>
-
-    <!-- Bottom Navigation Bar (Mobile Portrait Only) -->
-    <nav class="bottom-nav">
-      <button class="nav-item active" data-tab="tab-home">
-        <svg class="icon" viewBox="0 0 24 24"><path d="M10 20v-6h4v6h5v-8h3L12 3 2 12h3v8z"/></svg>
-        <span>홈</span>
-      </button>
-      <button class="nav-item" data-tab="tab-plan">
-        <svg class="icon" viewBox="0 0 24 24"><path d="M19 3h-1V1h-2v2H8V1H6v2H5c-1.11 0-1.99.9-1.99 2L3 19c0 1.1.89 2 2 2h14c1.1 0 2-.9 2-2V5c0-1.1-.9-2-2-2zm0 16H5V8h14v11zM7 10h5v5H7z"/></svg>
-        <span>일정</span>
-      </button>
-      <button class="nav-item" data-tab="tab-incorrect">
-        <svg class="icon" viewBox="0 0 24 24"><path d="M19 3H5c-1.1 0-2 .9-2 2v14c0 1.1.9 2 2 2h14c1.1 0 2-.9 2-2V5c0-1.1-.9-2-2-2zm-2 10H7v-2h10v2z"/></svg>
-        <span>오답</span>
-      </button>
-      <button class="nav-item" data-tab="tab-vocab">
-        <svg class="icon" viewBox="0 0 24 24"><path d="M18 2H6c-1.1 0-2 .9-2 2v16c0 1.1.9 2 2 2h12c1.1 0 2-.9 2-2V4c0-1.1-.9-2-2-2zM6 4h5v8l-2.5-1.5L6 12V4z"/></svg>
-        <span>단어</span>
-      </button>
-      <button class="nav-item" data-tab="tab-study">
-        <svg class="icon" viewBox="0 0 24 24"><path d="M4 6H2v14c0 1.1.9 2 2 2h14v-2H4V6zm16-4H8c-1.1 0-2 .9-2 2v12c0 1.1.9 2 2 2h12c1.1 0 2-.9 2-2V4c0-1.1-.9-2-2-2zm0 14H8V4h12v12z"/></svg>
-        <span>자료실</span>
-      </button>
-    </nav>
-
-  </div>
-
-  <!-- Settings / Config Modal -->
-  <div class="modal-overlay" id="settings-modal">
-    <div class="modal-card">
-      <div class="modal-header">
-        <h3>⚙️ 설정 & 클라우드 연동</h3>
-        <button class="close-btn" id="close-settings">&times;</button>
-      </div>
-      <div class="modal-body">
-        
-        <!-- GitHub Gist Sync Section -->
-        <div class="settings-section">
-          <h4>☁️ GitHub Gist 동기화 설정 (iOS 권장)</h4>
-          <p class="settings-desc">iOS의 브라우저 저장소 만료 이슈를 차단하고 데이터를 영구 소장하기 위한 개인 클라우드 백업입니다.</p>
-          
-          <div class="form-group">
-            <label for="gist-token">GitHub Access Token (PAT)</label>
-            <input type="password" id="gist-token" placeholder="ghp_xxxxxxxxxxxx">
-          </div>
-          <div class="form-group">
-            <label for="gist-id">Gist ID</label>
-            <input type="text" id="gist-id" placeholder="생성한 Gist의 32자리 고유 ID">
-          </div>
-          
-          <div class="settings-actions">
-            <button class="btn btn-primary btn-sm" id="save-gist-btn">연동 및 첫 업로드</button>
-            <button class="btn btn-secondary btn-sm" id="load-gist-btn">Gist로부터 데이터 불러오기</button>
-          </div>
-          
-          <div class="gist-guide-box">
-            <details>
-              <summary>Gist 연동 가이드</summary>
-              <ol>
-                <li><a href="https://github.com/settings/tokens" target="_blank" rel="noopener">GitHub Token</a>에 들어가서 `gist` 권한을 선택한 뒤 Access Token을 발급받습니다.</li>
-                <li><a href="https://gist.github.com" target="_blank" rel="noopener">Gist</a>에 접속해 빈 파일명으로 `Create secret gist`를 클릭해 기스트를 생성합니다.</li>
-                <li>생성된 URL의 맨 뒷자리(/ 뒤 32자리 영문숫자 조합)가 Gist ID입니다.</li>
-                <li>토큰과 ID를 적고 '연동 및 첫 업로드'를 누르면 완료됩니다!</li>
-              </ol>
-            </details>
-          </div>
-        </div>
-
-        <hr class="modal-divider">
-
-        <!-- Manual Backup / Import Section -->
-        <div class="settings-section">
-          <h4>💾 수동 백업 및 복구</h4>
-          <p class="settings-desc">네트워크 없이도 완벽하게 수동으로 전체 진행 데이터를 파일로 내려받아 저장할 수 있습니다.</p>
-          <div class="settings-actions">
-            <button class="btn btn-secondary btn-sm" id="export-btn">데이터 백업 (.json)</button>
-            <label class="btn btn-secondary btn-sm" style="display:inline-block; text-align:center; cursor:pointer;">
-              데이터 불러오기
-              <input type="file" id="import-file" accept=".json" style="display: none;">
-            </label>
-          </div>
-        </div>
-
-        <hr class="modal-divider">
-
-        <!-- Theme and Reset Section -->
-        <div class="settings-section">
-          <h4>🎨 테마 설정 및 초기화</h4>
-          <div class="form-group">
-            <label for="theme-select">테마 선택</label>
-            <select id="theme-select">
-              <option value="violet-dark" selected>🌌 네온 바이올렛 다크 (기본)</option>
-              <option value="cyan-dark">🧪 사이버 사이언 다크</option>
-              <option value="emerald-light">🌿 에메랄드 그린 라이트</option>
-            </select>
-          </div>
-          
-          <button class="btn btn-danger btn-full btn-sm" id="reset-all-btn" style="margin-top: 15px;">⚠️ 모든 데이터 초기화</button>
-        </div>
-
-      </div>
-    </div>
-  </div>
-
-  <!-- Main JavaScript File -->
-  <script src="app.js"></script>
+</script>
 </body>
 </html>
