@@ -130,6 +130,17 @@ p{margin:0}
 .empty{border:1px solid var(--border); background:var(--surface); border-radius:14px; padding:32px 18px; text-align:center; font-size:14px; color:var(--t2); line-height:1.6}
 .empty .eb{margin-top:14px; display:inline-block; padding:10px 18px; min-height:44px; border-radius:10px; background:var(--amber); color:#0c0a09; font-weight:600; font-size:14px}
 
+/* 해석 보기 */
+.trbtn{margin-top:8px; display:inline-block; padding:6px 12px; min-height:34px; border-radius:8px; font-size:12px; border:1px solid var(--border2); background:var(--border); color:var(--amber-l); font-family:ui-monospace,Menlo,monospace}
+.rvtr{margin-top:8px; font-size:14px; color:#d6d3d1; line-height:1.6; background:var(--inner); border-left:2px solid var(--amber); border-radius:0 8px 8px 0; padding:8px 12px}
+
+/* 오답노트 목록 */
+.nblist{display:flex; flex-direction:column; gap:8px}
+.nbrow{display:flex; align-items:baseline; gap:10px; border:1px solid var(--border); background:var(--surface); border-radius:10px; padding:11px 13px}
+.nbw{font-size:17px; font-weight:600; color:#fafaf9; flex:0 0 auto}
+.nbm{font-size:13px; color:var(--t2); flex:1; line-height:1.4}
+.nbc{font-size:11px; color:var(--t4); flex:0 0 auto}
+
 /* rules */
 .rules{display:flex; flex-direction:column; gap:8px; margin-bottom:22px}
 .rule{border:1px solid var(--border); background:var(--surface); border-radius:14px; overflow:hidden}
@@ -177,169 +188,169 @@ footer{margin-top:36px; text-align:center; font-size:11px; color:var(--t4); font
 </div>
 <script>
 const VOCAB_V1 = [
-  { w: "determine", p: "동사", m: "알아내다, 결정하다", ex: "A survey can help the company determine customer needs.", tip: "decide와 의미가 비슷" },
-  { w: "withdraw", p: "동사", m: "물러나다, 인출하다", ex: "She had to withdraw from the negotiation due to illness.", tip: "withdraw from: ~에서 빠지다" },
-  { w: "anticipate", p: "동사", m: "예상하다, 기대하다", ex: "Managers anticipate strong demand next quarter.", tip: "expect와 의미가 같음" },
-  { w: "monitor", p: "동사", m: "관찰하다, 감시하다", ex: "The team monitors social media trends closely.", tip: "'감시 장치'라는 명사로도 쓰임" },
-  { w: "analyze", p: "동사", m: "분석하다", ex: "Analysts carefully analyzed the quarterly sales data.", tip: "명사 analysis, 사람 analyst" },
-  { w: "surpass", p: "동사", m: "뛰어넘다, 능가하다", ex: "Sales surpassed the annual goal this year.", tip: "exceed와 의미가 비슷" },
-  { w: "explore", p: "동사", m: "탐구하다, 알아보다", ex: "The board will explore new market options.", tip: "명사 exploration" },
-  { w: "name", p: "동사", m: "임명하다, 지명하다", ex: "The CEO will name a successor next week.", tip: "appoint와 유사 / name A (as) B" },
-  { w: "redeem", p: "동사", m: "(상품·현금으로) 교환하다", ex: "Points can be redeemed for store products.", tip: "be redeemed for A" },
-  { w: "excel", p: "동사", m: "뛰어나다, 잘하다", ex: "She excels at analyzing research data.", tip: "excel at/in A" },
-  { w: "optimize", p: "동사", m: "최적화하다", ex: "The update optimizes the security system.", tip: "형용사 optimal" },
-  { w: "differ", p: "동사", m: "다르다", ex: "The new model differs from earlier versions.", tip: "differ from: ~과 다르다" },
-  { w: "conform", p: "동사", m: "(규정에) 따르다, 일치하다", ex: "The café renovated its patio to conform to new rules.", tip: "conform to/with A" },
-  { w: "resolve", p: "동사", m: "(문제를) 해결하다", ex: "The technician resolved the printer issue quickly.", tip: "명사 resolution" },
-  { w: "suspend", p: "동사", m: "중단하다, 정지하다", ex: "The project was suspended until funding is secured.", tip: "명사 suspension" },
-  { w: "resume", p: "동사", m: "재개하다, 다시 시작하다", ex: "The seminar will resume after a short break.", tip: "cf. résumé(이력서)와 철자 유사" },
-  { w: "extend", p: "동사", m: "연장하다, 늘이다", ex: "The manager extended the deadline by a week.", tip: "extend an invitation: 초대하다 / 명사 extension" },
-  { w: "commence", p: "동사", m: "시작되다, 개시하다", ex: "The board meeting commenced with a sales review.", tip: "initiate와 의미가 같음" },
-  { w: "specify", p: "동사", m: "구체적으로 명시하다", ex: "Please specify your payment method on the form.", tip: "형용사 specific" },
-  { w: "commend", p: "동사", m: "칭찬하다, 추천하다", ex: "Her supervisor commended her on the presentation.", tip: "commend A on/for B" },
-  { w: "consult", p: "동사", m: "상담하다, 참조하다", ex: "Operators may consult the technicians for tips.", tip: "consult + 사람 / consult + 자료" },
-  { w: "reserve", p: "동사", m: "예약하다, 보유하다", ex: "Attendees must reserve their own accommodations.", tip: "명사 reservation" },
-  { w: "deliberate", p: "동사", m: "심사숙고하다, 심의하다", ex: "The board deliberated over the merger all afternoon.", tip: "'신중한'이라는 형용사로도 쓰임" },
-  { w: "exceed", p: "동사", m: "(수·양)을 넘다, 초과하다", ex: "Carry-on baggage must not exceed 10 kilograms.", tip: "명사 excess" },
-  { w: "address", p: "동사", m: "다루다, 제기하다", ex: "Officials will address the recent benefit changes.", tip: "address issues / '주소, 연설'의 명사로도 쓰임" },
-  { w: "represent", p: "동사", m: "나타내다, 의미하다", ex: "These figures represent a rise in profits.", tip: "명사 representative(대표)" },
-  { w: "retain", p: "동사", m: "유지하다, 보관하다", ex: "Developers must retain the historic features.", tip: "maintain과 의미가 같음" },
-  { w: "hesitate", p: "동사", m: "주저하다", ex: "Do not hesitate to contact our staff for help.", tip: "do not hesitate to + 동사원형" },
-  { w: "relocate", p: "동사", m: "(회사·주민 등이) 이전하다", ex: "The firm announced plans to relocate its office.", tip: "move와 유사 / 명사 relocation" },
-  { w: "accommodate", p: "동사", m: "수용하다, 부응하다", ex: "The rooms can accommodate up to seven guests.", tip: "accommodate guests / demand" },
-  { w: "implement", p: "동사", m: "시행하다, 이행하다", ex: "The company implemented an updated policy.", tip: "carry out과 의미가 같음" },
-  { w: "indicate", p: "동사", m: "보여주다, 나타내다", ex: "Research indicates a link between performance and satisfaction.", tip: "명사 indication" },
-  { w: "undergo", p: "동사", m: "겪다, 받다", ex: "The firm will undergo structural changes.", tip: "undergo transitions: 변화를 겪다" },
-  { w: "assure", p: "동사", m: "~라고 확실히 말하다, 보장하다", ex: "The chair assured investors the value would hold.", tip: "assure A that / 명사 assurance" },
-  { w: "waive", p: "동사", m: "적용하지 않다, 면제하다", ex: "The bank will waive fees for premium account holders.", tip: "명사 waiver" },
+  { w: "determine", p: "동사", m: "알아내다, 결정하다", ex: "A survey can help the company determine customer needs.", tr: "설문조사는 회사가 고객의 요구를 파악하는 데 도움이 될 수 있다.", tip: "decide와 의미가 비슷" },
+  { w: "withdraw", p: "동사", m: "물러나다, 인출하다", ex: "She had to withdraw from the negotiation due to illness.", tr: "그녀는 병 때문에 협상에서 빠져야 했다.", tip: "withdraw from: ~에서 빠지다" },
+  { w: "anticipate", p: "동사", m: "예상하다, 기대하다", ex: "Managers anticipate strong demand next quarter.", tr: "관리자들은 다음 분기에 강한 수요를 예상한다.", tip: "expect와 의미가 같음" },
+  { w: "monitor", p: "동사", m: "관찰하다, 감시하다", ex: "The team monitors social media trends closely.", tr: "그 팀은 소셜 미디어 동향을 면밀히 관찰한다.", tip: "'감시 장치'라는 명사로도 쓰임" },
+  { w: "analyze", p: "동사", m: "분석하다", ex: "Analysts carefully analyzed the quarterly sales data.", tr: "분석가들은 분기 매출 데이터를 신중히 분석했다.", tip: "명사 analysis, 사람 analyst" },
+  { w: "surpass", p: "동사", m: "뛰어넘다, 능가하다", ex: "Sales surpassed the annual goal this year.", tr: "올해 매출이 연간 목표를 뛰어넘었다.", tip: "exceed와 의미가 비슷" },
+  { w: "explore", p: "동사", m: "탐구하다, 알아보다", ex: "The board will explore new market options.", tr: "이사회는 새로운 시장 선택지를 알아볼 것이다.", tip: "명사 exploration" },
+  { w: "name", p: "동사", m: "임명하다, 지명하다", ex: "The CEO will name a successor next week.", tr: "CEO는 다음 주에 후임자를 지명할 것이다.", tip: "appoint와 유사 / name A (as) B" },
+  { w: "redeem", p: "동사", m: "(상품·현금으로) 교환하다", ex: "Points can be redeemed for store products.", tr: "포인트는 매장 상품으로 교환될 수 있다.", tip: "be redeemed for A" },
+  { w: "excel", p: "동사", m: "뛰어나다, 잘하다", ex: "She excels at analyzing research data.", tr: "그녀는 연구 데이터를 분석하는 데 뛰어나다.", tip: "excel at/in A" },
+  { w: "optimize", p: "동사", m: "최적화하다", ex: "The update optimizes the security system.", tr: "이 업데이트는 보안 시스템을 최적화한다.", tip: "형용사 optimal" },
+  { w: "differ", p: "동사", m: "다르다", ex: "The new model differs from earlier versions.", tr: "새 모델은 이전 버전들과 다르다.", tip: "differ from: ~과 다르다" },
+  { w: "conform", p: "동사", m: "(규정에) 따르다, 일치하다", ex: "The café renovated its patio to conform to new rules.", tr: "그 카페는 새 규정에 맞추기 위해 테라스를 개조했다.", tip: "conform to/with A" },
+  { w: "resolve", p: "동사", m: "(문제를) 해결하다", ex: "The technician resolved the printer issue quickly.", tr: "기술자가 프린터 문제를 빠르게 해결했다.", tip: "명사 resolution" },
+  { w: "suspend", p: "동사", m: "중단하다, 정지하다", ex: "The project was suspended until funding is secured.", tr: "그 프로젝트는 자금이 확보될 때까지 중단되었다.", tip: "명사 suspension" },
+  { w: "resume", p: "동사", m: "재개하다, 다시 시작하다", ex: "The seminar will resume after a short break.", tr: "세미나는 짧은 휴식 후에 다시 시작될 것이다.", tip: "cf. résumé(이력서)와 철자 유사" },
+  { w: "extend", p: "동사", m: "연장하다, 늘이다", ex: "The manager extended the deadline by a week.", tr: "관리자는 마감을 일주일 연장했다.", tip: "extend an invitation: 초대하다 / 명사 extension" },
+  { w: "commence", p: "동사", m: "시작되다, 개시하다", ex: "The board meeting commenced with a sales review.", tr: "이사회는 매출 검토로 시작되었다.", tip: "initiate와 의미가 같음" },
+  { w: "specify", p: "동사", m: "구체적으로 명시하다", ex: "Please specify your payment method on the form.", tr: "양식에 결제 수단을 명시해 주세요.", tip: "형용사 specific" },
+  { w: "commend", p: "동사", m: "칭찬하다, 추천하다", ex: "Her supervisor commended her on the presentation.", tr: "그녀의 상사는 발표에 대해 그녀를 칭찬했다.", tip: "commend A on/for B" },
+  { w: "consult", p: "동사", m: "상담하다, 참조하다", ex: "Operators may consult the technicians for tips.", tr: "작업자들은 조언을 얻기 위해 기술자에게 문의할 수 있다.", tip: "consult + 사람 / consult + 자료" },
+  { w: "reserve", p: "동사", m: "예약하다, 보유하다", ex: "Attendees must reserve their own accommodations.", tr: "참석자들은 각자 숙소를 예약해야 한다.", tip: "명사 reservation" },
+  { w: "deliberate", p: "동사", m: "심사숙고하다, 심의하다", ex: "The board deliberated over the merger all afternoon.", tr: "이사회는 오후 내내 합병을 숙고했다.", tip: "'신중한'이라는 형용사로도 쓰임" },
+  { w: "exceed", p: "동사", m: "(수·양)을 넘다, 초과하다", ex: "Carry-on baggage must not exceed 10 kilograms.", tr: "기내 수하물은 10킬로그램을 초과해서는 안 된다.", tip: "명사 excess" },
+  { w: "address", p: "동사", m: "다루다, 제기하다", ex: "Officials will address the recent benefit changes.", tr: "관계자들은 최근 복리후생 변경 사항을 다룰 것이다.", tip: "address issues / '주소, 연설'의 명사로도 쓰임" },
+  { w: "represent", p: "동사", m: "나타내다, 의미하다", ex: "These figures represent a rise in profits.", tr: "이 수치들은 수익 증가를 나타낸다.", tip: "명사 representative(대표)" },
+  { w: "retain", p: "동사", m: "유지하다, 보관하다", ex: "Developers must retain the historic features.", tr: "개발자들은 역사적 특징을 보존해야 한다.", tip: "maintain과 의미가 같음" },
+  { w: "hesitate", p: "동사", m: "주저하다", ex: "Do not hesitate to contact our staff for help.", tr: "도움이 필요하면 주저하지 말고 직원에게 연락하세요.", tip: "do not hesitate to + 동사원형" },
+  { w: "relocate", p: "동사", m: "(회사·주민 등이) 이전하다", ex: "The firm announced plans to relocate its office.", tr: "그 회사는 사무실을 이전할 계획을 발표했다.", tip: "move와 유사 / 명사 relocation" },
+  { w: "accommodate", p: "동사", m: "수용하다, 부응하다", ex: "The rooms can accommodate up to seven guests.", tr: "그 방들은 최대 일곱 명의 손님을 수용할 수 있다.", tip: "accommodate guests / demand" },
+  { w: "implement", p: "동사", m: "시행하다, 이행하다", ex: "The company implemented an updated policy.", tr: "그 회사는 개정된 정책을 시행했다.", tip: "carry out과 의미가 같음" },
+  { w: "indicate", p: "동사", m: "보여주다, 나타내다", ex: "Research indicates a link between performance and satisfaction.", tr: "연구는 성과와 만족도 사이의 연관성을 보여준다.", tip: "명사 indication" },
+  { w: "undergo", p: "동사", m: "겪다, 받다", ex: "The firm will undergo structural changes.", tr: "그 회사는 구조적 변화를 겪을 것이다.", tip: "undergo transitions: 변화를 겪다" },
+  { w: "assure", p: "동사", m: "~라고 확실히 말하다, 보장하다", ex: "The chair assured investors the value would hold.", tr: "의장은 투자자들에게 가치가 유지될 것이라고 확언했다.", tip: "assure A that / 명사 assurance" },
+  { w: "waive", p: "동사", m: "적용하지 않다, 면제하다", ex: "The bank will waive fees for premium account holders.", tr: "그 은행은 프리미엄 계좌 보유자에게 수수료를 면제할 것이다.", tip: "명사 waiver" },
 ];
 const VOCAB_V2 = [
-  { w: "objective", p: "명사", m: "목표, 목적", ex: "The main objective this quarter is to expand overseas.", tip: "형용사 '객관적인'으로도 / object(물건)와 구별" },
-  { w: "precaution", p: "명사", m: "조심, 예방 조치", ex: "Workers must take precautions when handling chemicals.", tip: "take precautions: 예방 조치를 취하다" },
-  { w: "output", p: "명사", m: "생산(량)", ex: "The factory doubled its output after upgrading machines.", tip: "input(투입)의 반대 개념" },
-  { w: "dimension", p: "명사", m: "치수, 크기", ex: "Please check the dimensions of the box before shipping.", tip: "'차원'이라는 의미로도 쓰임" },
-  { w: "conflict", p: "명사", m: "갈등, 충돌", ex: "A scheduling conflict forced them to postpone the meeting.", tip: "a conflict between A and B" },
-  { w: "influx", p: "명사", m: "쇄도, 유입", ex: "The city saw a huge influx of tourists during the festival.", tip: "an influx of: (사람·물건)의 쇄도" },
-  { w: "presence", p: "명사", m: "존재(감), 영향력", ex: "The brand has a strong presence in the Asian market.", tip: "반의어 absence / '참석'의 뜻도" },
-  { w: "reduction", p: "명사", m: "인하, 감소", ex: "The store announced a price reduction on winter items.", tip: "동사 reduce: 감소시키다" },
-  { w: "access", p: "명사", m: "접근(권), 이용 권한", ex: "Only authorized staff have access to the server room.", tip: "access to A: A로의 접근" },
-  { w: "proximity", p: "명사", m: "근접함, 가까움", ex: "The hotel's proximity to the airport makes it convenient.", tip: "proximity to: ~에 가까움" },
-  { w: "authority", p: "명사", m: "권위자, 권한", ex: "She is a leading authority on international trade law.", tip: "복수형 authorities: 당국 / authorization과 구별" },
-  { w: "dedication", p: "명사", m: "전념, 헌신", ex: "His dedication to service earned him a promotion.", tip: "dedication to: ~에 대한 전념" },
-  { w: "adjustment", p: "명사", m: "조정, 수정", ex: "A few minor adjustments to the schedule solved it.", tip: "make adjustments to: ~을 조정하다" },
-  { w: "distribution", p: "명사", m: "배포, 분배, 유통", ex: "The firm handles the distribution of goods nationwide.", tip: "동사 distribute: 유통시키다" },
-  { w: "shift", p: "명사", m: "전환, 이동, 교대 근무", ex: "There has been a noticeable shift toward remote work.", tip: "'교대 근무(시간)'로도 쓰임" },
-  { w: "priority", p: "명사", m: "우선 사항, 우선권", ex: "Improving safety is the company's top priority.", tip: "top priority: 최우선 사항" },
-  { w: "estimate", p: "명사", m: "견적, 추정", ex: "The contractor provided an estimate for the renovation.", tip: "make an estimate / 동사로도 쓰임" },
-  { w: "recognition", p: "명사", m: "인정, 표창", ex: "The award was given in recognition of her research.", tip: "in recognition of: ~을 인정하여" },
-  { w: "disclosure", p: "명사", m: "공개, 폭로", ex: "Full disclosure of financial data builds investor trust.", tip: "동사 disclose: 공개하다" },
-  { w: "permission", p: "명사", m: "허가, 허락, 승인", ex: "You need written permission to enter the laboratory.", tip: "permit(허가증)과 구별" },
-  { w: "persistence", p: "명사", m: "끈기, 고집", ex: "Her persistence eventually won over the difficult client.", tip: "형용사 persistent: 끈질긴" },
-  { w: "departure", p: "명사", m: "벗어남, 출발", ex: "The new album is a departure from her earlier style.", tip: "departure from: ~에서 벗어남 / 동사 depart" },
-  { w: "initiative", p: "명사", m: "계획, 발안, 결단력", ex: "The city launched a new recycling initiative this year.", tip: "take initiative: 주도권을 잡다" },
-  { w: "challenge", p: "명사", m: "과제, 문제, 도전", ex: "Meeting the deadline was the team's biggest challenge.", tip: "'요구하다'라는 동사로도 쓰임" },
-  { w: "method", p: "명사", m: "방법, 방식", ex: "Customers can choose their preferred payment method.", tip: "method of payment: 지불 방법" },
-  { w: "alternative", p: "명사", m: "대안", ex: "Solar power is a clean alternative to fossil fuels.", tip: "alternative to: ~에 대한 대안" },
-  { w: "shortage", p: "명사", m: "부족, 결핍", ex: "A labor shortage delayed the construction project.", tip: "cf. lack / 형용사 short" },
-  { w: "receipt", p: "명사", m: "수령, 받음, 영수증", ex: "Please keep your receipt in case you need a refund.", tip: "upon receipt of: ~을 수령하는 즉시" },
-  { w: "effort", p: "명사", m: "노력", ex: "The team made every effort to satisfy the client.", tip: "in an effort to + 동사원형" },
-  { w: "advantage", p: "명사", m: "이점, 유리한 점", ex: "Speaking two languages is a real advantage here.", tip: "profit(금전적 이익)과 구별" },
-  { w: "profit", p: "명사", m: "수익, 이윤", ex: "The firm reported a record profit this year.", tip: "net profit: 순이익 / 형용사 profitable" },
-  { w: "issue", p: "명사", m: "(간행물의) 호, 문제", ex: "The latest issue of the magazine features new startups.", tip: "'발표하다'라는 동사로도 쓰임" },
-  { w: "expertise", p: "명사", m: "전문 지식", ex: "Her expertise in marketing made the campaign succeed.", tip: "expertise in: ~에 대한 전문 지식" },
-  { w: "negotiation", p: "명사", m: "협상, 교섭", ex: "The contract negotiations lasted several weeks.", tip: "형용사 negotiable: 협상 여지가 있는" },
-  { w: "subscriber", p: "명사", m: "구독자", ex: "The magazine has millions of subscribers worldwide.", tip: "명사 subscription: 구독(료)" },
-  { w: "asset", p: "명사", m: "자산, 이점, 재산", ex: "Experienced staff are the company's greatest asset.", tip: "be a valuable asset to: ~에 귀중한 자산이다" },
+  { w: "objective", p: "명사", m: "목표, 목적", ex: "The main objective this quarter is to expand overseas.", tr: "이번 분기의 주요 목표는 해외로 확장하는 것이다.", tip: "형용사 '객관적인'으로도 / object(물건)와 구별" },
+  { w: "precaution", p: "명사", m: "조심, 예방 조치", ex: "Workers must take precautions when handling chemicals.", tr: "작업자들은 화학물질을 다룰 때 예방 조치를 취해야 한다.", tip: "take precautions: 예방 조치를 취하다" },
+  { w: "output", p: "명사", m: "생산(량)", ex: "The factory doubled its output after upgrading machines.", tr: "그 공장은 기계를 업그레이드한 후 생산량을 두 배로 늘렸다.", tip: "input(투입)의 반대 개념" },
+  { w: "dimension", p: "명사", m: "치수, 크기", ex: "Please check the dimensions of the box before shipping.", tr: "배송 전에 상자의 치수를 확인해 주세요.", tip: "'차원'이라는 의미로도 쓰임" },
+  { w: "conflict", p: "명사", m: "갈등, 충돌", ex: "A scheduling conflict forced them to postpone the meeting.", tr: "일정 충돌로 그들은 회의를 연기해야 했다.", tip: "a conflict between A and B" },
+  { w: "influx", p: "명사", m: "쇄도, 유입", ex: "The city saw a huge influx of tourists during the festival.", tr: "그 도시는 축제 동안 엄청난 관광객 유입을 보았다.", tip: "an influx of: (사람·물건)의 쇄도" },
+  { w: "presence", p: "명사", m: "존재(감), 영향력", ex: "The brand has a strong presence in the Asian market.", tr: "그 브랜드는 아시아 시장에서 강한 존재감을 지니고 있다.", tip: "반의어 absence / '참석'의 뜻도" },
+  { w: "reduction", p: "명사", m: "인하, 감소", ex: "The store announced a price reduction on winter items.", tr: "그 매장은 겨울 상품의 가격 인하를 발표했다.", tip: "동사 reduce: 감소시키다" },
+  { w: "access", p: "명사", m: "접근(권), 이용 권한", ex: "Only authorized staff have access to the server room.", tr: "승인된 직원만 서버실에 접근할 수 있다.", tip: "access to A: A로의 접근" },
+  { w: "proximity", p: "명사", m: "근접함, 가까움", ex: "The hotel's proximity to the airport makes it convenient.", tr: "공항과의 근접성 덕분에 그 호텔은 편리하다.", tip: "proximity to: ~에 가까움" },
+  { w: "authority", p: "명사", m: "권위자, 권한", ex: "She is a leading authority on international trade law.", tr: "그녀는 국제 무역법의 권위자이다.", tip: "복수형 authorities: 당국 / authorization과 구별" },
+  { w: "dedication", p: "명사", m: "전념, 헌신", ex: "His dedication to service earned him a promotion.", tr: "그의 헌신적인 봉사가 그에게 승진을 안겨주었다.", tip: "dedication to: ~에 대한 전념" },
+  { w: "adjustment", p: "명사", m: "조정, 수정", ex: "A few minor adjustments to the schedule solved it.", tr: "일정에 대한 몇 가지 사소한 조정이 그것을 해결했다.", tip: "make adjustments to: ~을 조정하다" },
+  { w: "distribution", p: "명사", m: "배포, 분배, 유통", ex: "The firm handles the distribution of goods nationwide.", tr: "그 회사는 전국의 상품 유통을 담당한다.", tip: "동사 distribute: 유통시키다" },
+  { w: "shift", p: "명사", m: "전환, 이동, 교대 근무", ex: "There has been a noticeable shift toward remote work.", tr: "원격 근무로의 뚜렷한 변화가 있었다.", tip: "'교대 근무(시간)'로도 쓰임" },
+  { w: "priority", p: "명사", m: "우선 사항, 우선권", ex: "Improving safety is the company's top priority.", tr: "안전 개선이 회사의 최우선 사항이다.", tip: "top priority: 최우선 사항" },
+  { w: "estimate", p: "명사", m: "견적, 추정", ex: "The contractor provided an estimate for the renovation.", tr: "그 도급업체는 개조 공사에 대한 견적을 제공했다.", tip: "make an estimate / 동사로도 쓰임" },
+  { w: "recognition", p: "명사", m: "인정, 표창", ex: "The award was given in recognition of her research.", tr: "그 상은 그녀의 연구를 인정하여 수여되었다.", tip: "in recognition of: ~을 인정하여" },
+  { w: "disclosure", p: "명사", m: "공개, 폭로", ex: "Full disclosure of financial data builds investor trust.", tr: "재무 데이터의 완전한 공개는 투자자 신뢰를 쌓는다.", tip: "동사 disclose: 공개하다" },
+  { w: "permission", p: "명사", m: "허가, 허락, 승인", ex: "You need written permission to enter the laboratory.", tr: "실험실에 들어가려면 서면 허가가 필요하다.", tip: "permit(허가증)과 구별" },
+  { w: "persistence", p: "명사", m: "끈기, 고집", ex: "Her persistence eventually won over the difficult client.", tr: "그녀의 끈기가 결국 까다로운 고객의 마음을 얻었다.", tip: "형용사 persistent: 끈질긴" },
+  { w: "departure", p: "명사", m: "벗어남, 출발", ex: "The new album is a departure from her earlier style.", tr: "새 앨범은 그녀의 이전 스타일에서 벗어난 것이다.", tip: "departure from: ~에서 벗어남 / 동사 depart" },
+  { w: "initiative", p: "명사", m: "계획, 발안, 결단력", ex: "The city launched a new recycling initiative this year.", tr: "그 도시는 올해 새로운 재활용 계획에 착수했다.", tip: "take initiative: 주도권을 잡다" },
+  { w: "challenge", p: "명사", m: "과제, 문제, 도전", ex: "Meeting the deadline was the team's biggest challenge.", tr: "마감을 맞추는 것이 그 팀의 가장 큰 과제였다.", tip: "'요구하다'라는 동사로도 쓰임" },
+  { w: "method", p: "명사", m: "방법, 방식", ex: "Customers can choose their preferred payment method.", tr: "고객은 선호하는 결제 수단을 선택할 수 있다.", tip: "method of payment: 지불 방법" },
+  { w: "alternative", p: "명사", m: "대안", ex: "Solar power is a clean alternative to fossil fuels.", tr: "태양광 발전은 화석 연료의 깨끗한 대안이다.", tip: "alternative to: ~에 대한 대안" },
+  { w: "shortage", p: "명사", m: "부족, 결핍", ex: "A labor shortage delayed the construction project.", tr: "인력 부족이 건설 프로젝트를 지연시켰다.", tip: "cf. lack / 형용사 short" },
+  { w: "receipt", p: "명사", m: "수령, 받음, 영수증", ex: "Please keep your receipt in case you need a refund.", tr: "환불이 필요한 경우를 대비해 영수증을 보관하세요.", tip: "upon receipt of: ~을 수령하는 즉시" },
+  { w: "effort", p: "명사", m: "노력", ex: "The team made every effort to satisfy the client.", tr: "그 팀은 고객을 만족시키기 위해 모든 노력을 기울였다.", tip: "in an effort to + 동사원형" },
+  { w: "advantage", p: "명사", m: "이점, 유리한 점", ex: "Speaking two languages is a real advantage here.", tr: "두 개 언어를 구사하는 것은 여기서 진정한 이점이다.", tip: "profit(금전적 이익)과 구별" },
+  { w: "profit", p: "명사", m: "수익, 이윤", ex: "The firm reported a record profit this year.", tr: "그 회사는 올해 기록적인 수익을 보고했다.", tip: "net profit: 순이익 / 형용사 profitable" },
+  { w: "issue", p: "명사", m: "(간행물의) 호, 문제", ex: "The latest issue of the magazine features new startups.", tr: "그 잡지의 최신 호는 신생 기업들을 다룬다.", tip: "'발표하다'라는 동사로도 쓰임" },
+  { w: "expertise", p: "명사", m: "전문 지식", ex: "Her expertise in marketing made the campaign succeed.", tr: "마케팅에 대한 그녀의 전문성이 캠페인을 성공시켰다.", tip: "expertise in: ~에 대한 전문 지식" },
+  { w: "negotiation", p: "명사", m: "협상, 교섭", ex: "The contract negotiations lasted several weeks.", tr: "계약 협상은 몇 주 동안 이어졌다.", tip: "형용사 negotiable: 협상 여지가 있는" },
+  { w: "subscriber", p: "명사", m: "구독자", ex: "The magazine has millions of subscribers worldwide.", tr: "그 잡지는 전 세계적으로 수백만 명의 구독자를 보유하고 있다.", tip: "명사 subscription: 구독(료)" },
+  { w: "asset", p: "명사", m: "자산, 이점, 재산", ex: "Experienced staff are the company's greatest asset.", tr: "경험 많은 직원이 회사의 가장 큰 자산이다.", tip: "be a valuable asset to: ~에 귀중한 자산이다" },
 ];
 const VOCAB_V3 = [
-  { w: "ongoing", p: "형용사", m: "진행 중인", ex: "The two firms are in ongoing merger discussions.", tip: "계속되고 있는 상태를 나타냄" },
-  { w: "acting", p: "형용사", m: "직무 대행의, 임시의", ex: "She served as acting director while the manager was away.", tip: "cf. temporary, interim" },
-  { w: "budget", p: "형용사", m: "저가의, 예산이 한정된", ex: "The chain is known for its budget hotels near stations.", tip: "'예산(액)'이라는 명사로도 쓰임" },
-  { w: "faulty", p: "형용사", m: "결함이 있는, 불완전한", ex: "The recall was caused by a faulty part in the engine.", tip: "cf. defective / 명사 fault" },
-  { w: "mandatory", p: "형용사", m: "의무적인", ex: "Attendance at the safety training is mandatory.", tip: "반의어 optional: 선택적인" },
-  { w: "immense", p: "형용사", m: "거대한, 엄청난", ex: "The project required an immense amount of funding.", tip: "cf. huge, enormous, massive" },
-  { w: "attentive", p: "형용사", m: "주의를 기울이는", ex: "Good salespeople are attentive to customer needs.", tip: "be attentive to: ~에 주의를 기울이는" },
-  { w: "impending", p: "형용사", m: "곧 닥칠, 임박한", ex: "The impending storm forced the airport to close.", tip: "주로 나쁜 일이 곧 일어날 때" },
-  { w: "compelling", p: "형용사", m: "흥미진진한, 설득력 있는", ex: "The report made a compelling case for the new policy.", tip: "동사 compel: 강요하다" },
-  { w: "primary", p: "형용사", m: "주된, 주요한", ex: "The primary goal of the survey is to gather feedback.", tip: "부사 primarily: 주로" },
-  { w: "adequate", p: "형용사", m: "(목적에) 충분한, 적절한", ex: "The budget is not adequate for a project this large.", tip: "adequate for + 명사" },
-  { w: "thorough", p: "형용사", m: "면밀한, 철저한", ex: "The auditor conducted a thorough review of the accounts.", tip: "부사 thoroughly: 철저히" },
-  { w: "excessive", p: "형용사", m: "과도한, 지나친", ex: "Customers complained about the excessive shipping fees.", tip: "동사 exceed: 초과하다" },
-  { w: "selective", p: "형용사", m: "까다로운, 선별적인", ex: "The agency is highly selective about its clients.", tip: "selective about: ~에 대해 까다로운" },
-  { w: "valid", p: "형용사", m: "유효한, 정당한", ex: "Your ticket is valid for one year from purchase.", tip: "be valid for 기간: ~동안 유효하다" },
-  { w: "elaborate", p: "형용사", m: "공들인, 정교한", ex: "The designer created an elaborate display for the launch.", tip: "'정교하게 설명하다'라는 동사로도" },
-  { w: "appropriate", p: "형용사", m: "적절한, 알맞은", ex: "Please wear appropriate attire for the interview.", tip: "appropriate for: ~에 적절한" },
-  { w: "upcoming", p: "형용사", m: "곧 있을, 다가오는", ex: "The team is preparing for the upcoming trade fair.", tip: "cf. forthcoming" },
-  { w: "established", p: "형용사", m: "인정받는, 확립된", ex: "They chose an established firm with a solid reputation.", tip: "동사 establish: 설립하다" },
-  { w: "practical", p: "형용사", m: "실용적인, 타당한", ex: "The workshop offers practical tips for saving energy.", tip: "practicing(활동 중인)과 구별" },
-  { w: "limited", p: "형용사", m: "한정된, 제한된", ex: "Only a limited number of seats are available.", tip: "a limited time: 한정된 시간" },
-  { w: "detailed", p: "형용사", m: "상세한, 세부에 걸친", ex: "The manual gives detailed instructions for each step.", tip: "detailed descriptions: 상세한 설명" },
-  { w: "promising", p: "형용사", m: "유망한, 촉망되는", ex: "The startup showed promising signs of rapid growth.", tip: "a promising youth: 전도유망한 청년" },
-  { w: "tentative", p: "형용사", m: "잠정적인, 임시의", ex: "The launch date is still tentative and may change.", tip: "cf. provisional" },
-  { w: "defective", p: "형용사", m: "결함이 있는", ex: "The customer returned the defective product for a refund.", tip: "명사 defect: 결함" },
-  { w: "exceptional", p: "형용사", m: "뛰어난, 예외적인", ex: "The convention center offers exceptional facilities.", tip: "부사 exceptionally: 유난히" },
-  { w: "affordable", p: "형용사", m: "가격이 알맞은", ex: "The store sells quality furniture at affordable prices.", tip: "명사 affordability" },
-  { w: "available", p: "형용사", m: "이용할 수 있는", ex: "The new offer is available only to existing members.", tip: "available to: ~가 이용 가능한" },
-  { w: "consecutive", p: "형용사", m: "연속적인, 계속되는", ex: "Sales have risen for the fifth consecutive year.", tip: "for the + 서수 + consecutive year" },
-  { w: "latest", p: "형용사", m: "최신의, 최근의", ex: "Marco reprinted its latest catalog after finding errors.", tip: "cf. up-to-date" },
-  { w: "substantial", p: "형용사", m: "(양·크기가) 상당한", ex: "The firm invested a substantial portion of its budget.", tip: "양이 상당함을 나타냄" },
-  { w: "confidential", p: "형용사", m: "기밀의", ex: "Keep all confidential documents in a locked cabinet.", tip: "cf. secret" },
-  { w: "temporary", p: "형용사", m: "임시의", ex: "A temporary entrance is open during the renovations.", tip: "a temporary office: 임시 영업소" },
-  { w: "subsequent", p: "형용사", m: "다음의, 그 후의", ex: "Sales were slow at first but rose in subsequent months.", tip: "subsequent to: ~ 후에" },
-  { w: "eligible", p: "형용사", m: "(사람이) 자격이 있는", ex: "Employees are eligible for compensation after one year.", tip: "be eligible for + 명사 / to + 동사원형" },
-  { w: "additional", p: "형용사", m: "추가의, 부가적인", ex: "The accountant found additional ways to cut costs.", tip: "additional charge: 추가 요금 / 명사 addition" },
+  { w: "ongoing", p: "형용사", m: "진행 중인", ex: "The two firms are in ongoing merger discussions.", tr: "두 회사는 진행 중인 합병 논의를 하고 있다.", tip: "계속되고 있는 상태를 나타냄" },
+  { w: "acting", p: "형용사", m: "직무 대행의, 임시의", ex: "She served as acting director while the manager was away.", tr: "그녀는 관리자가 부재중일 때 대행 이사로 근무했다.", tip: "cf. temporary, interim" },
+  { w: "budget", p: "형용사", m: "저가의, 예산이 한정된", ex: "The chain is known for its budget hotels near stations.", tr: "그 체인은 역 근처의 저가 호텔로 알려져 있다.", tip: "'예산(액)'이라는 명사로도 쓰임" },
+  { w: "faulty", p: "형용사", m: "결함이 있는, 불완전한", ex: "The recall was caused by a faulty part in the engine.", tr: "그 리콜은 엔진의 결함 부품 때문에 발생했다.", tip: "cf. defective / 명사 fault" },
+  { w: "mandatory", p: "형용사", m: "의무적인", ex: "Attendance at the safety training is mandatory.", tr: "안전 교육 참석은 의무이다.", tip: "반의어 optional: 선택적인" },
+  { w: "immense", p: "형용사", m: "거대한, 엄청난", ex: "The project required an immense amount of funding.", tr: "그 프로젝트는 막대한 자금을 필요로 했다.", tip: "cf. huge, enormous, massive" },
+  { w: "attentive", p: "형용사", m: "주의를 기울이는", ex: "Good salespeople are attentive to customer needs.", tr: "훌륭한 영업사원은 고객의 요구에 세심하다.", tip: "be attentive to: ~에 주의를 기울이는" },
+  { w: "impending", p: "형용사", m: "곧 닥칠, 임박한", ex: "The impending storm forced the airport to close.", tr: "임박한 폭풍으로 공항이 폐쇄되어야 했다.", tip: "주로 나쁜 일이 곧 일어날 때" },
+  { w: "compelling", p: "형용사", m: "흥미진진한, 설득력 있는", ex: "The report made a compelling case for the new policy.", tr: "그 보고서는 새 정책에 대한 설득력 있는 근거를 제시했다.", tip: "동사 compel: 강요하다" },
+  { w: "primary", p: "형용사", m: "주된, 주요한", ex: "The primary goal of the survey is to gather feedback.", tr: "그 설문의 주요 목표는 피드백을 수집하는 것이다.", tip: "부사 primarily: 주로" },
+  { w: "adequate", p: "형용사", m: "(목적에) 충분한, 적절한", ex: "The budget is not adequate for a project this large.", tr: "그 예산은 이렇게 큰 프로젝트에는 충분하지 않다.", tip: "adequate for + 명사" },
+  { w: "thorough", p: "형용사", m: "면밀한, 철저한", ex: "The auditor conducted a thorough review of the accounts.", tr: "감사관은 계정에 대한 철저한 검토를 수행했다.", tip: "부사 thoroughly: 철저히" },
+  { w: "excessive", p: "형용사", m: "과도한, 지나친", ex: "Customers complained about the excessive shipping fees.", tr: "고객들은 과도한 배송비에 대해 불평했다.", tip: "동사 exceed: 초과하다" },
+  { w: "selective", p: "형용사", m: "까다로운, 선별적인", ex: "The agency is highly selective about its clients.", tr: "그 에이전시는 고객 선정에 매우 까다롭다.", tip: "selective about: ~에 대해 까다로운" },
+  { w: "valid", p: "형용사", m: "유효한, 정당한", ex: "Your ticket is valid for one year from purchase.", tr: "귀하의 티켓은 구매일로부터 1년간 유효하다.", tip: "be valid for 기간: ~동안 유효하다" },
+  { w: "elaborate", p: "형용사", m: "공들인, 정교한", ex: "The designer created an elaborate display for the launch.", tr: "그 디자이너는 출시를 위해 정교한 전시물을 만들었다.", tip: "'정교하게 설명하다'라는 동사로도" },
+  { w: "appropriate", p: "형용사", m: "적절한, 알맞은", ex: "Please wear appropriate attire for the interview.", tr: "면접에 적절한 복장을 착용해 주세요.", tip: "appropriate for: ~에 적절한" },
+  { w: "upcoming", p: "형용사", m: "곧 있을, 다가오는", ex: "The team is preparing for the upcoming trade fair.", tr: "그 팀은 다가오는 무역 박람회를 준비하고 있다.", tip: "cf. forthcoming" },
+  { w: "established", p: "형용사", m: "인정받는, 확립된", ex: "They chose an established firm with a solid reputation.", tr: "그들은 탄탄한 평판을 지닌 자리 잡은 회사를 선택했다.", tip: "동사 establish: 설립하다" },
+  { w: "practical", p: "형용사", m: "실용적인, 타당한", ex: "The workshop offers practical tips for saving energy.", tr: "그 워크숍은 에너지 절약을 위한 실용적인 팁을 제공한다.", tip: "practicing(활동 중인)과 구별" },
+  { w: "limited", p: "형용사", m: "한정된, 제한된", ex: "Only a limited number of seats are available.", tr: "한정된 수의 좌석만 이용 가능하다.", tip: "a limited time: 한정된 시간" },
+  { w: "detailed", p: "형용사", m: "상세한, 세부에 걸친", ex: "The manual gives detailed instructions for each step.", tr: "그 설명서는 각 단계에 대한 상세한 지침을 제공한다.", tip: "detailed descriptions: 상세한 설명" },
+  { w: "promising", p: "형용사", m: "유망한, 촉망되는", ex: "The startup showed promising signs of rapid growth.", tr: "그 신생 기업은 빠른 성장의 유망한 조짐을 보였다.", tip: "a promising youth: 전도유망한 청년" },
+  { w: "tentative", p: "형용사", m: "잠정적인, 임시의", ex: "The launch date is still tentative and may change.", tr: "출시일은 아직 잠정적이며 바뀔 수 있다.", tip: "cf. provisional" },
+  { w: "defective", p: "형용사", m: "결함이 있는", ex: "The customer returned the defective product for a refund.", tr: "그 고객은 환불을 위해 결함 제품을 반품했다.", tip: "명사 defect: 결함" },
+  { w: "exceptional", p: "형용사", m: "뛰어난, 예외적인", ex: "The convention center offers exceptional facilities.", tr: "그 컨벤션 센터는 뛰어난 시설을 제공한다.", tip: "부사 exceptionally: 유난히" },
+  { w: "affordable", p: "형용사", m: "가격이 알맞은", ex: "The store sells quality furniture at affordable prices.", tr: "그 매장은 질 좋은 가구를 저렴한 가격에 판매한다.", tip: "명사 affordability" },
+  { w: "available", p: "형용사", m: "이용할 수 있는", ex: "The new offer is available only to existing members.", tr: "새 혜택은 기존 회원에게만 제공된다.", tip: "available to: ~가 이용 가능한" },
+  { w: "consecutive", p: "형용사", m: "연속적인, 계속되는", ex: "Sales have risen for the fifth consecutive year.", tr: "매출이 5년 연속 증가했다.", tip: "for the + 서수 + consecutive year" },
+  { w: "latest", p: "형용사", m: "최신의, 최근의", ex: "Marco reprinted its latest catalog after finding errors.", tr: "Marco는 오류를 발견한 후 최신 카탈로그를 재인쇄했다.", tip: "cf. up-to-date" },
+  { w: "substantial", p: "형용사", m: "(양·크기가) 상당한", ex: "The firm invested a substantial portion of its budget.", tr: "그 회사는 예산의 상당 부분을 투자했다.", tip: "양이 상당함을 나타냄" },
+  { w: "confidential", p: "형용사", m: "기밀의", ex: "Keep all confidential documents in a locked cabinet.", tr: "모든 기밀 문서를 잠긴 캐비닛에 보관하세요.", tip: "cf. secret" },
+  { w: "temporary", p: "형용사", m: "임시의", ex: "A temporary entrance is open during the renovations.", tr: "개조 공사 동안 임시 출입구가 열려 있다.", tip: "a temporary office: 임시 영업소" },
+  { w: "subsequent", p: "형용사", m: "다음의, 그 후의", ex: "Sales were slow at first but rose in subsequent months.", tr: "매출은 처음엔 부진했지만 이후 몇 달간 증가했다.", tip: "subsequent to: ~ 후에" },
+  { w: "eligible", p: "형용사", m: "(사람이) 자격이 있는", ex: "Employees are eligible for compensation after one year.", tr: "직원들은 1년 후 보상을 받을 자격이 있다.", tip: "be eligible for + 명사 / to + 동사원형" },
+  { w: "additional", p: "형용사", m: "추가의, 부가적인", ex: "The accountant found additional ways to cut costs.", tr: "그 회계사는 비용을 줄일 추가적인 방법을 찾아냈다.", tip: "additional charge: 추가 요금 / 명사 addition" },
 ];
 const VOCAB_V4 = [
-  { w: "punctually", p: "부사", m: "시간을 엄수하여, 정각에", ex: "Applicants are asked to arrive punctually for interviews.", tip: "cf. on time" },
-  { w: "independently", p: "부사", m: "따로, 독립하여", ex: "Each department operates independently of the others.", tip: "independently of: ~과 별개로" },
-  { w: "approximately", p: "부사", m: "대략, 거의", ex: "The project will take approximately three months.", tip: "cf. nearly, about" },
-  { w: "anonymously", p: "부사", m: "익명으로", ex: "Employees can submit feedback anonymously.", tip: "형용사 anonymous: 익명의" },
-  { w: "rapidly", p: "부사", m: "급속히, 빠르게", ex: "The company's user base is growing rapidly.", tip: "cf. swiftly, quickly" },
-  { w: "previously", p: "부사", m: "이전에", ex: "The site had previously been used as a warehouse.", tip: "형용사 previous: 이전의" },
-  { w: "generally", p: "부사", m: "일반적으로, 보통", ex: "International shipping generally takes one to two weeks.", tip: "형용사 general: 일반적인" },
-  { w: "precisely", p: "부사", m: "정확하게, 바로", ex: "The manual explains precisely how to install the unit.", tip: "cf. accurately, correctly" },
-  { w: "incrementally", p: "부사", m: "점진적으로, 꾸준하게", ex: "Prices have risen incrementally over the past year.", tip: "조금씩 꾸준히 변하는 것을 나타냄" },
-  { w: "closely", p: "부사", m: "면밀히, 긴밀히", ex: "Investors watched the stock price closely all week.", tip: "work closely with: ~와 긴밀히 협력하다" },
-  { w: "typically", p: "부사", m: "일반적으로, 전형적으로", ex: "New hires typically complete a three-week course.", tip: "형용사 typical: 전형적인" },
-  { w: "necessarily", p: "부사", m: "반드시, 필연적으로", ex: "A high price does not necessarily mean high quality.", tip: "not necessarily: 반드시 ~은 아닌" },
-  { w: "steadily", p: "부사", m: "꾸준히, 견실하게", ex: "The firm has grown steadily since it was founded.", tip: "형용사 steady: 꾸준한" },
-  { w: "regularly", p: "부사", m: "정기적으로", ex: "Employees should review the safety rules regularly.", tip: "형용사 regular: 정기적인" },
-  { w: "relatively", p: "부사", m: "상대적으로, 비교적", ex: "Attendance was relatively low compared to last year.", tip: "동일 종류를 비교할 때 사용" },
-  { w: "mutually", p: "부사", m: "상호 간에, 서로", ex: "The two firms formed a mutually beneficial partnership.", tip: "mutually exclusive: 상호 배타적인" },
-  { w: "consistently", p: "부사", m: "일관되게, 시종일관", ex: "The team has consistently met its monthly targets.", tip: "항상 동일한 방식·성과를 나타낼 때" },
-  { w: "momentarily", p: "부사", m: "순간적으로, 잠깐", ex: "The screen went dark momentarily during the outage.", tip: "짧은 순간을 나타냄" },
-  { w: "significantly", p: "부사", m: "상당히", ex: "Government grants for students have increased significantly.", tip: "cf. considerably, remarkably" },
-  { w: "currently", p: "부사", m: "현재", ex: "The gallery's new exhibit is currently open to the public.", tip: "형용사 current: 현재의" },
-  { w: "immediately", p: "부사", m: "즉시", ex: "Please report any errors to the IT team immediately.", tip: "immediately after + 절: ~하자마자" },
-  { w: "exclusively", p: "부사", m: "독점적으로, 전적으로", ex: "The discount is available exclusively to members.", tip: "cf. solely: 오로지" },
-  { w: "occasionally", p: "부사", m: "때때로, 가끔", ex: "The CEO occasionally visits the regional branches.", tip: "cf. sometimes / 명사 occasion" },
-  { w: "promptly", p: "부사", m: "즉시, 정각에", ex: "The presentation began promptly at nine o'clock.", tip: "형용사 prompt: 즉각적인" },
+  { w: "punctually", p: "부사", m: "시간을 엄수하여, 정각에", ex: "Applicants are asked to arrive punctually for interviews.", tr: "지원자들은 면접에 정확히 시간에 맞춰 도착하도록 요청받는다.", tip: "cf. on time" },
+  { w: "independently", p: "부사", m: "따로, 독립하여", ex: "Each department operates independently of the others.", tr: "각 부서는 다른 부서와 독립적으로 운영된다.", tip: "independently of: ~과 별개로" },
+  { w: "approximately", p: "부사", m: "대략, 거의", ex: "The project will take approximately three months.", tr: "그 프로젝트는 대략 세 달이 걸릴 것이다.", tip: "cf. nearly, about" },
+  { w: "anonymously", p: "부사", m: "익명으로", ex: "Employees can submit feedback anonymously.", tr: "직원들은 익명으로 피드백을 제출할 수 있다.", tip: "형용사 anonymous: 익명의" },
+  { w: "rapidly", p: "부사", m: "급속히, 빠르게", ex: "The company's user base is growing rapidly.", tr: "그 회사의 사용자 기반이 빠르게 성장하고 있다.", tip: "cf. swiftly, quickly" },
+  { w: "previously", p: "부사", m: "이전에", ex: "The site had previously been used as a warehouse.", tr: "그 부지는 이전에 창고로 사용되었다.", tip: "형용사 previous: 이전의" },
+  { w: "generally", p: "부사", m: "일반적으로, 보통", ex: "International shipping generally takes one to two weeks.", tr: "국제 배송은 일반적으로 1~2주가 걸린다.", tip: "형용사 general: 일반적인" },
+  { w: "precisely", p: "부사", m: "정확하게, 바로", ex: "The manual explains precisely how to install the unit.", tr: "그 설명서는 기기를 설치하는 방법을 정확히 설명한다.", tip: "cf. accurately, correctly" },
+  { w: "incrementally", p: "부사", m: "점진적으로, 꾸준하게", ex: "Prices have risen incrementally over the past year.", tr: "가격이 지난 한 해 동안 점진적으로 올랐다.", tip: "조금씩 꾸준히 변하는 것을 나타냄" },
+  { w: "closely", p: "부사", m: "면밀히, 긴밀히", ex: "Investors watched the stock price closely all week.", tr: "투자자들은 한 주 내내 주가를 면밀히 지켜봤다.", tip: "work closely with: ~와 긴밀히 협력하다" },
+  { w: "typically", p: "부사", m: "일반적으로, 전형적으로", ex: "New hires typically complete a three-week course.", tr: "신입 사원들은 보통 3주 과정을 이수한다.", tip: "형용사 typical: 전형적인" },
+  { w: "necessarily", p: "부사", m: "반드시, 필연적으로", ex: "A high price does not necessarily mean high quality.", tr: "높은 가격이 반드시 높은 품질을 의미하지는 않는다.", tip: "not necessarily: 반드시 ~은 아닌" },
+  { w: "steadily", p: "부사", m: "꾸준히, 견실하게", ex: "The firm has grown steadily since it was founded.", tr: "그 회사는 설립 이후 꾸준히 성장해 왔다.", tip: "형용사 steady: 꾸준한" },
+  { w: "regularly", p: "부사", m: "정기적으로", ex: "Employees should review the safety rules regularly.", tr: "직원들은 안전 수칙을 정기적으로 검토해야 한다.", tip: "형용사 regular: 정기적인" },
+  { w: "relatively", p: "부사", m: "상대적으로, 비교적", ex: "Attendance was relatively low compared to last year.", tr: "참석률은 작년에 비해 상대적으로 낮았다.", tip: "동일 종류를 비교할 때 사용" },
+  { w: "mutually", p: "부사", m: "상호 간에, 서로", ex: "The two firms formed a mutually beneficial partnership.", tr: "두 회사는 상호 이익이 되는 파트너십을 맺었다.", tip: "mutually exclusive: 상호 배타적인" },
+  { w: "consistently", p: "부사", m: "일관되게, 시종일관", ex: "The team has consistently met its monthly targets.", tr: "그 팀은 월간 목표를 꾸준히 달성해 왔다.", tip: "항상 동일한 방식·성과를 나타낼 때" },
+  { w: "momentarily", p: "부사", m: "순간적으로, 잠깐", ex: "The screen went dark momentarily during the outage.", tr: "화면이 정전 동안 잠깐 어두워졌다.", tip: "짧은 순간을 나타냄" },
+  { w: "significantly", p: "부사", m: "상당히", ex: "Government grants for students have increased significantly.", tr: "학생을 위한 정부 보조금이 상당히 증가했다.", tip: "cf. considerably, remarkably" },
+  { w: "currently", p: "부사", m: "현재", ex: "The gallery's new exhibit is currently open to the public.", tr: "그 갤러리의 새 전시는 현재 대중에게 공개되어 있다.", tip: "형용사 current: 현재의" },
+  { w: "immediately", p: "부사", m: "즉시", ex: "Please report any errors to the IT team immediately.", tr: "오류가 있으면 즉시 IT 팀에 알려 주세요.", tip: "immediately after + 절: ~하자마자" },
+  { w: "exclusively", p: "부사", m: "독점적으로, 전적으로", ex: "The discount is available exclusively to members.", tr: "그 할인은 회원에게만 독점적으로 제공된다.", tip: "cf. solely: 오로지" },
+  { w: "occasionally", p: "부사", m: "때때로, 가끔", ex: "The CEO occasionally visits the regional branches.", tr: "CEO는 가끔 지역 지점들을 방문한다.", tip: "cf. sometimes / 명사 occasion" },
+  { w: "promptly", p: "부사", m: "즉시, 정각에", ex: "The presentation began promptly at nine o'clock.", tr: "그 발표는 9시 정각에 시작되었다.", tip: "형용사 prompt: 즉각적인" },
 ];
 const VOCAB_V5 = [
-  { w: "be enthusiastic about", p: "어구", m: "~에 대해 열광하다", ex: "The staff are enthusiastic about the new project.", tip: "about 대신 over도 가능" },
-  { w: "be skeptical of", p: "어구", m: "~에 회의적이다", ex: "Analysts remain skeptical of the company's forecast.", tip: "of 대신 about도 가능" },
-  { w: "be ideal for", p: "어구", m: "~에 이상적이다", ex: "This apartment is ideal for a single commuter.", tip: "for 뒤에 대상·목적이 온다" },
-  { w: "be eligible for", p: "어구", m: "~의 자격이 있다", ex: "Full-time employees are eligible for the annual bonus.", tip: "be eligible to + 동사원형" },
-  { w: "be exempt from", p: "어구", m: "~이 면제되다", ex: "Members are exempt from the registration fee.", tip: "~을 하지 않아도 된다" },
-  { w: "be proficient in", p: "어구", m: "~에 능통하다", ex: "The candidate is proficient in three languages.", tip: "어떤 일에 능숙함을 의미" },
-  { w: "be devoted to", p: "어구", m: "~에 헌신하다", ex: "The clinic is devoted to treating rare diseases.", tip: "to는 전치사, 뒤에 명사나 -ing" },
-  { w: "be encouraged to", p: "어구", m: "~하도록 권장되다", ex: "Visitors are encouraged to wear safety gear.", tip: "뒤에 동사원형이 온다" },
-  { w: "be known to A as B", p: "어구", m: "A에게 B로 알려지다", ex: "He is known to the staff as a fair manager.", tip: "to 뒤 대상, as 뒤 신분·직책" },
-  { w: "be superior to", p: "어구", m: "~보다 뛰어나다", ex: "The new model is superior to last year's version.", tip: "to 자리에 than을 쓸 수 없다" },
-  { w: "be likely to", p: "어구", m: "~할 것 같다", ex: "Prices are likely to rise before the holidays.", tip: "뒤에 동사원형이 온다" },
-  { w: "be reliant on", p: "어구", m: "~에 의존하다", ex: "The firm is heavily reliant on overseas suppliers.", tip: "rely on과 의미가 같다" },
-  { w: "be familiar with", p: "어구", m: "~에 익숙하다", ex: "The guide is familiar with the city's history.", tip: "~에 대해 잘 알다" },
-  { w: "be reflective of", p: "어구", m: "~을 반영하다", ex: "The results are reflective of current market trends.", tip: "특정 상황을 반영한다는 의미" },
-  { w: "be comparable to", p: "어구", m: "~에 필적하다", ex: "The city's size is comparable to that of Boston.", tip: "to 뒤에 비교 대상이 온다" },
-  { w: "be responsive to", p: "어구", m: "~에 빠르게 대응하다", ex: "The staff are responsive to customer requests.", tip: "to 뒤에 명사가 온다" },
-  { w: "be compatible with", p: "어구", m: "~과 호환되다", ex: "The cable is compatible with most devices.", tip: "work well together와 의미가 같다" },
-  { w: "be honored for", p: "어구", m: "~으로 상을 받다", ex: "She was honored for her contribution to research.", tip: "for 뒤에 업적이 온다" },
-  { w: "be uncertain about", p: "어구", m: "~에 대해 확신하지 못하다", ex: "The board is uncertain about the merger's outcome.", tip: "about 대신 of도 가능" },
-  { w: "be concerned about", p: "어구", m: "~에 대해 걱정하다", ex: "Organizers are concerned about the seating capacity.", tip: "be worried about과 의미가 같다" },
-  { w: "be suitable for", p: "어구", m: "~에 적절하다, 알맞다", ex: "These films are suitable for viewers of all ages.", tip: "for 뒤에 대상·목적이 온다" },
-  { w: "be concerned with", p: "어구", m: "~과 관련되다", ex: "The report is concerned with product safety.", tip: "about과 달리 '관련'의 의미" },
-  { w: "be responsible for", p: "어구", m: "~에 대해 책임이 있다", ex: "The manager is responsible for hiring decisions.", tip: "be in charge of와 의미가 같다" },
-  { w: "be subject to", p: "어구", m: "~의 영향을 받다, 받아야 한다", ex: "All prices are subject to change without notice.", tip: "to 뒤에 명사가 온다" },
+  { w: "be enthusiastic about", p: "어구", m: "~에 대해 열광하다", ex: "The staff are enthusiastic about the new project.", tr: "직원들은 새 프로젝트에 대해 열정적이다.", tip: "about 대신 over도 가능" },
+  { w: "be skeptical of", p: "어구", m: "~에 회의적이다", ex: "Analysts remain skeptical of the company's forecast.", tr: "분석가들은 그 회사의 예측에 회의적이다.", tip: "of 대신 about도 가능" },
+  { w: "be ideal for", p: "어구", m: "~에 이상적이다", ex: "This apartment is ideal for a single commuter.", tr: "이 아파트는 1인 통근자에게 이상적이다.", tip: "for 뒤에 대상·목적이 온다" },
+  { w: "be eligible for", p: "어구", m: "~의 자격이 있다", ex: "Full-time employees are eligible for the annual bonus.", tr: "정규직 직원은 연간 상여금을 받을 자격이 있다.", tip: "be eligible to + 동사원형" },
+  { w: "be exempt from", p: "어구", m: "~이 면제되다", ex: "Members are exempt from the registration fee.", tr: "회원은 등록비가 면제된다.", tip: "~을 하지 않아도 된다" },
+  { w: "be proficient in", p: "어구", m: "~에 능통하다", ex: "The candidate is proficient in three languages.", tr: "그 지원자는 세 개 언어에 능숙하다.", tip: "어떤 일에 능숙함을 의미" },
+  { w: "be devoted to", p: "어구", m: "~에 헌신하다", ex: "The clinic is devoted to treating rare diseases.", tr: "그 병원은 희귀 질환 치료에 전념하고 있다.", tip: "to는 전치사, 뒤에 명사나 -ing" },
+  { w: "be encouraged to", p: "어구", m: "~하도록 권장되다", ex: "Visitors are encouraged to wear safety gear.", tr: "방문객들은 안전 장비를 착용하도록 권장된다.", tip: "뒤에 동사원형이 온다" },
+  { w: "be known to A as B", p: "어구", m: "A에게 B로 알려지다", ex: "He is known to the staff as a fair manager.", tr: "그는 직원들에게 공정한 관리자로 알려져 있다.", tip: "to 뒤 대상, as 뒤 신분·직책" },
+  { w: "be superior to", p: "어구", m: "~보다 뛰어나다", ex: "The new model is superior to last year's version.", tr: "새 모델은 작년 버전보다 우수하다.", tip: "to 자리에 than을 쓸 수 없다" },
+  { w: "be likely to", p: "어구", m: "~할 것 같다", ex: "Prices are likely to rise before the holidays.", tr: "가격은 연휴 전에 오를 가능성이 높다.", tip: "뒤에 동사원형이 온다" },
+  { w: "be reliant on", p: "어구", m: "~에 의존하다", ex: "The firm is heavily reliant on overseas suppliers.", tr: "그 회사는 해외 공급업체에 크게 의존하고 있다.", tip: "rely on과 의미가 같다" },
+  { w: "be familiar with", p: "어구", m: "~에 익숙하다", ex: "The guide is familiar with the city's history.", tr: "그 가이드는 그 도시의 역사에 정통하다.", tip: "~에 대해 잘 알다" },
+  { w: "be reflective of", p: "어구", m: "~을 반영하다", ex: "The results are reflective of current market trends.", tr: "그 결과는 현재 시장 동향을 반영한다.", tip: "특정 상황을 반영한다는 의미" },
+  { w: "be comparable to", p: "어구", m: "~에 필적하다", ex: "The city's size is comparable to that of Boston.", tr: "그 도시의 규모는 보스턴과 비슷하다.", tip: "to 뒤에 비교 대상이 온다" },
+  { w: "be responsive to", p: "어구", m: "~에 빠르게 대응하다", ex: "The staff are responsive to customer requests.", tr: "직원들은 고객 요청에 민감하게 반응한다.", tip: "to 뒤에 명사가 온다" },
+  { w: "be compatible with", p: "어구", m: "~과 호환되다", ex: "The cable is compatible with most devices.", tr: "그 케이블은 대부분의 기기와 호환된다.", tip: "work well together와 의미가 같다" },
+  { w: "be honored for", p: "어구", m: "~으로 상을 받다", ex: "She was honored for her contribution to research.", tr: "그녀는 연구에 대한 공헌으로 표창받았다.", tip: "for 뒤에 업적이 온다" },
+  { w: "be uncertain about", p: "어구", m: "~에 대해 확신하지 못하다", ex: "The board is uncertain about the merger's outcome.", tr: "이사회는 합병 결과에 대해 확신하지 못한다.", tip: "about 대신 of도 가능" },
+  { w: "be concerned about", p: "어구", m: "~에 대해 걱정하다", ex: "Organizers are concerned about the seating capacity.", tr: "주최 측은 좌석 수용 인원에 대해 우려하고 있다.", tip: "be worried about과 의미가 같다" },
+  { w: "be suitable for", p: "어구", m: "~에 적절하다, 알맞다", ex: "These films are suitable for viewers of all ages.", tr: "이 영화들은 모든 연령의 관객에게 적합하다.", tip: "for 뒤에 대상·목적이 온다" },
+  { w: "be concerned with", p: "어구", m: "~과 관련되다", ex: "The report is concerned with product safety.", tr: "그 보고서는 제품 안전을 다룬다.", tip: "about과 달리 '관련'의 의미" },
+  { w: "be responsible for", p: "어구", m: "~에 대해 책임이 있다", ex: "The manager is responsible for hiring decisions.", tr: "그 관리자는 채용 결정을 책임진다.", tip: "be in charge of와 의미가 같다" },
+  { w: "be subject to", p: "어구", m: "~의 영향을 받다, 받아야 한다", ex: "All prices are subject to change without notice.", tr: "모든 가격은 예고 없이 변경될 수 있다.", tip: "to 뒤에 명사가 온다" },
 ];
 const GRAMMAR_G1 = {
   rules: [
@@ -533,6 +544,9 @@ const READING = [
     vq: null,            // 현재 예문 문제 객체
     vphase: "ask",       // ask(고르기) | reveal(정답·학습)
     vpick: null,         // 고른 보기 인덱스
+    showTr: false,       // 해석 보기 토글
+    nbActive: false,     // 오답노트 복습 중인지
+    nbq: null, nbphase: "ask", nbpick: null,
     session: { done: 0, correct: 0 },
     reviewAll: false,    // true면 '익힘' 단어까지 다시 포함
     open: {}, answers: {},
@@ -583,15 +597,16 @@ const READING = [
   function boxOf(w) { var r = state.progress.vocab[w]; return r ? r.box : -1; } // -1 = 신규
   function levelOf(w) { var b = boxOf(w); if (b < 0) return "new"; if (b <= 0) return "due"; if (b >= MAXBOX) return "known"; return "learn"; }
 
-  // 현재 챕터에서 다음에 낼 단어를 우선순위대로 뽑는다: 모름(box0) → 신규 → 학습중(box 오름차순). 익힘 제외(reviewAll이면 포함)
+  // 메인 학습 큐: 오답노트(box0)와 익힘(box>=MAX)은 제외. 우선순위 = 신규 → 학습중(낮은 box 먼저)
   function pickNext(words, avoidWord) {
     var pool = words.filter(function (v) {
       var b = boxOf(v.w);
-      if (!state.reviewAll && b >= MAXBOX) return false; // 익힌 단어는 스킵
+      if (b === 0) return false;                          // box0 = 오답노트로 분리 → 메인 큐 제외
+      if (!state.reviewAll && b >= MAXBOX) return false;  // 익힌 단어는 스킵
       return true;
     });
     if (!pool.length) return null;
-    function rank(v) { var b = boxOf(v.w); if (b < 0) return 1; if (b === 0) return 0; return b + 1; } // 0=모름 최우선, 1=신규, 그다음 학습중
+    function rank(v) { var b = boxOf(v.w); if (b < 0) return 1; return b + 1; } // 1=신규, 2=box1, ...
     var minRank = Math.min.apply(null, pool.map(rank));
     var top = pool.filter(function (v) { return rank(v) === minRank; });
     if (top.length > 1 && avoidWord) { var f = top.filter(function (v) { return v.w !== avoidWord; }); if (f.length) top = f; }
@@ -606,6 +621,7 @@ const READING = [
       word: target.w,
       blank: blank,                 // {b,m,a} 또는 null
       ex: target.ex,
+      tr: target.tr || "",          // 예문 한글 해석
       opts: opts.map(function (o) { return { w: o.w, label: optForm(o.w) }; }),
       answer: opts.map(function (o) { return o.w; }).indexOf(target.w),
       meaning: target.m, pos: target.p, tip: target.tip,
@@ -619,15 +635,35 @@ const READING = [
     state.vq = target ? buildQuestion(ch.words, target) : null;
     state.vphase = "ask";
     state.vpick = null;
+    state.showTr = false;
+  }
+
+  // ===== 오답노트 (box0 단어만) =====
+  function box0List() {
+    var res = [];
+    VOCAB_CHAPTERS.forEach(function (c) {
+      c.words.forEach(function (w) { if (boxOf(w.w) === 0) res.push({ item: w, ch: c }); });
+    });
+    return res;
+  }
+  function nextNotebook() {
+    var pool = box0List();
+    if (!pool.length) { state.nbq = null; state.nbphase = "ask"; state.nbpick = null; state.showTr = false; return; }
+    var avoid = state.nbq ? state.nbq.word : null;
+    var choices = pool.filter(function (p) { return p.item.w !== avoid; });
+    if (!choices.length) choices = pool;
+    var pk = choices[Math.floor(Math.random() * choices.length)];
+    state.nbq = buildQuestion(pk.ch.words, pk.item);
+    state.nbphase = "ask"; state.nbpick = null; state.showTr = false;
   }
 
   // 자가평가 + 정답 여부 → 박스 갱신
   function gradeWord(word, correct, rate) {
     var v = state.progress.vocab, cur = v[word] || { box: 0, seen: 0, right: 0 };
     var box = cur.box;
-    if (rate === "no" || !correct) box = 0;              // 모른다 or 오답 → 최우선 복습
-    else if (rate === "fuzzy") box = Math.max(1, box);   // 애매 → 학습중 유지
-    else box = Math.min(MAXBOX, box + 1);                // 안다 & 정답 → 한 단계 승급
+    if (rate === "no") box = 0;                                   // 모른다 → 오답노트로
+    else if (correct && rate === "know") box = Math.min(MAXBOX, box + 1); // 안다 & 정답 → 승급
+    else box = Math.max(1, box);                                  // 애매 or 오답(모름 아님) → 학습중(오답노트 탈출)
     v[word] = { box: box, seen: cur.seen + 1, right: cur.right + (correct ? 1 : 0) };
     saveNow();
   }
@@ -688,7 +724,8 @@ const READING = [
   }
 
   function tabsView() {
-    var t = [["vocab", "단어 · " + TOTAL_VOCAB], ["grammar", "문법 · " + GRAMMAR_CHAPTERS.length], ["reading", "독해 · Part 6"]];
+    var nb = box0List().length;
+    var t = [["vocab", "단어 · " + TOTAL_VOCAB], ["notebook", "오답노트" + (nb ? " · " + nb : "")], ["grammar", "문법 · " + GRAMMAR_CHAPTERS.length], ["reading", "독해 · Part 6"]];
     return '<div class="tabs">' + t.map(function (x) {
       return '<button class="tab' + (state.tab === x[0] ? " active" : "") + '" data-action="tab" data-tab="' + x[0] + '">' + esc(x[1]) + '</button>';
     }).join("") + '</div>';
@@ -704,6 +741,7 @@ const READING = [
 
   function bodyView() {
     if (state.tab === "vocab") return vocabTab();
+    if (state.tab === "notebook") return notebookTab();
     if (state.tab === "grammar") return grammarTab();
     return readingTab();
   }
@@ -728,34 +766,75 @@ const READING = [
     if (!state.vq && state.vphase === "ask") nextQuestion();
 
     if (!state.vq) {
-      h += '<div class="empty">이 챕터는 다 익혔어요. 👍<br>다른 챕터로 넘어가거나, 전체를 다시 복습할 수 있어요.' +
-        '<br><button class="eb" data-action="reviewall">이 챕터 전체 다시 복습</button></div>';
+      var nbHere = words.filter(function (v) { return boxOf(v.w) === 0; }).length;
+      h += '<div class="empty">이 챕터에서 학습할 단어를 다 봤어요. 👍' +
+        (nbHere ? '<br>“모른다”로 넘긴 ' + nbHere + '개는 <b>오답노트</b>에 있어요.' : '') +
+        '<br><button class="eb" data-action="reviewall">' + (state.reviewAll ? "익힘 단어까지 다시 복습 중" : "익힌 단어까지 전체 다시 복습") + '</button></div>';
       return '<section>' + h + '</section>';
     }
 
-    h += stepView(state.vq);
+    h += stepView(state.vq, state.vphase, state.vpick);
     return '<section>' + h + '</section>';
   }
 
-  function stepView(q) {
+  // ---- 오답노트 (box0 단어) ----
+  function notebookTab() {
+    var list = box0List();
+    var h = "";
+    if (!list.length) {
+      h += '<div class="empty">오답노트가 비어 있어요.<br>단어 학습 중 “모른다”로 넘긴 단어가 여기 모입니다.</div>';
+      state.nbActive = false;
+      return '<section>' + h + '</section>';
+    }
+
+    if (state.nbActive) {
+      if (!state.nbq && state.nbphase === "ask") nextNotebook();
+      if (!state.nbq) { // 방금 마지막 단어를 처리해 비워짐
+        state.nbActive = false;
+        h += '<div class="empty">오답노트를 다 정리했어요! 🎉<br>다시 “모른다”로 넘긴 단어가 생기면 여기 모여요.</div>';
+        return '<section>' + h + '</section>';
+      }
+      h += '<div class="vprog">' +
+        '<span class="pn">오답노트 복습 · 남은 단어 ' + list.length + '개</span>' +
+        '<span class="pbar"><span class="pfill" style="width:0%"></span></span>' +
+        '<button class="minibtn" data-action="nbstop">목록으로</button>' +
+        '</div>';
+      h += stepView(state.nbq, state.nbphase, state.nbpick);
+      return '<section>' + h + '</section>';
+    }
+
+    // 목록 화면
+    h += '<div class="vprog">' +
+      '<span class="pn">오답노트 · ' + list.length + '개</span>' +
+      '<span class="pbar"></span>' +
+      '<button class="minibtn on" data-action="nbstart">복습 시작</button>' +
+      '</div>';
+    h += '<div class="nblist">' + list.map(function (p) {
+      return '<div class="nbrow"><span class="nbw serif">' + esc(p.item.w) + '</span>' +
+        '<span class="nbm">' + esc(p.item.m) + '</span>' +
+        '<span class="nbc mono">' + esc(p.ch.label) + '</span></div>';
+    }).join("") + '</div>';
+    return '<section>' + h + '</section>';
+  }
+
+  function stepView(q, phase, pick) {
     var lvl = levelOf(q.word);
-    var lvlLabel = { "new": "처음 보는 단어", "learn": "학습 중", "due": "복습", "known": "익힘" }[lvl];
+    var lvlLabel = { "new": "처음 보는 단어", "learn": "학습 중", "due": "오답노트", "known": "익힘" }[lvl];
     var lvlCls = lvl === "new" ? "new" : lvl === "due" ? "due" : "learn";
     var rec = state.progress.vocab[q.word];
     var seen = rec ? "· " + rec.seen + "회 봄" : "";
+    var reveal = phase === "reveal";
+    var correct = pick === q.answer;
 
     // 빈칸 문장
     var b = q.blank;
-    var blankFilled = state.vphase === "reveal";
-    var picked = state.vpick;
-    var correct = picked === q.answer;
     var blankHtml;
     if (b) {
       var inner = "______";
-      if (blankFilled) inner = correct ? esc(b.m) : (picked != null ? esc(q.opts[picked].label) : "______");
-      blankHtml = esc(b.b) + '<span class="blank' + (blankFilled ? " filled" + (correct ? "" : " bad") : "") + '">' + inner + '</span>' + esc(b.a);
+      if (reveal) inner = correct ? esc(b.m) : (pick != null ? esc(q.opts[pick].label) : "______");
+      blankHtml = esc(b.b) + '<span class="blank' + (reveal ? " filled" + (correct ? "" : " bad") : "") + '">' + inner + '</span>' + esc(b.a);
     } else {
-      blankHtml = esc(q.ex); // 이론상 도달 안 함
+      blankHtml = esc(q.ex);
     }
 
     var h = '<div class="vstep">' +
@@ -766,26 +845,24 @@ const READING = [
     h += '<div class="vopts">';
     q.opts.forEach(function (o, oi) {
       var cls = "vopt";
-      if (state.vphase === "reveal") {
-        if (oi === q.answer) cls += " correct";
-        else if (oi === picked) cls += " wrong";
-        else cls += " dim";
-      }
-      h += '<button class="' + cls + '"' + (state.vphase === "reveal" ? " disabled" : "") +
+      if (reveal) { if (oi === q.answer) cls += " correct"; else if (oi === pick) cls += " wrong"; else cls += " dim"; }
+      h += '<button class="' + cls + '"' + (reveal ? " disabled" : "") +
         ' data-action="vanswer" data-oi="' + oi + '">' +
         '<span class="ol">' + String.fromCharCode(65 + oi) + '</span>' + esc(o.label) + '</button>';
     });
     h += '</div>';
 
-    // 정답 공개 + 학습 + 자가평가
-    if (state.vphase === "reveal") {
+    // 정답 공개 + 학습 + 해석 + 자가평가
+    if (reveal) {
       h += '<div class="vreveal">' +
         '<p><span class="rvmean">' + esc(q.word) + '</span><span class="rvpos">' + esc(q.pos) + ' · ' + esc(q.meaning) + '</span></p>' +
         '<p class="rvsent">“' + sentenceWithBold(q) + '”</p>' +
+        (q.tr ? '<button class="trbtn" data-action="toggletr">' + (state.showTr ? "해석 숨기기 ▲" : "해석 보기 ▼") + '</button>' +
+          (state.showTr ? '<p class="rvtr">' + esc(q.tr) + '</p>' : '') : '') +
         '<p class="rvtip"><span class="k">출제 포인트</span>' + esc(q.tip) + '</p>' +
         '<p class="srq">이 단어, 얼마나 확실했나요?</p>' +
         '<div class="srate">' +
-          '<button class="srbtn no" data-action="vrate" data-rate="no">모른다<span class="srsub">자주 복습</span></button>' +
+          '<button class="srbtn no" data-action="vrate" data-rate="no">모른다<span class="srsub">오답노트</span></button>' +
           '<button class="srbtn fuzzy" data-action="vrate" data-rate="fuzzy">애매<span class="srsub">유지</span></button>' +
           '<button class="srbtn know" data-action="vrate" data-rate="know">안다<span class="srsub">승급</span></button>' +
         '</div></div>';
@@ -887,22 +964,32 @@ const READING = [
     var el = e.target.closest("[data-action]");
     if (!el) return;
     var a = el.dataset.action;
-    if (a === "tab") state.tab = el.dataset.tab;
-    else if (a === "vchap") { state.vc = el.dataset.id; state.vq = null; state.vphase = "ask"; state.vpick = null; }
+    if (a === "tab") { state.tab = el.dataset.tab; if (state.tab !== "notebook") state.nbActive = false; }
+    else if (a === "vchap") { state.vc = el.dataset.id; state.vq = null; state.vphase = "ask"; state.vpick = null; state.showTr = false; }
     else if (a === "gchap") state.gc = el.dataset.id;
-    else if (a === "reviewall") { state.reviewAll = !state.reviewAll; state.vq = null; state.vphase = "ask"; state.vpick = null; }
+    else if (a === "reviewall") { state.reviewAll = !state.reviewAll; state.vq = null; state.vphase = "ask"; state.vpick = null; state.showTr = false; }
+    else if (a === "toggletr") state.showTr = !state.showTr;
+    else if (a === "nbstart") { state.nbActive = true; state.nbq = null; state.nbphase = "ask"; state.nbpick = null; state.showTr = false; }
+    else if (a === "nbstop") { state.nbActive = false; state.nbq = null; state.nbphase = "ask"; state.nbpick = null; }
     else if (a === "vanswer") {
-      if (state.vphase === "reveal" || !state.vq) return;
-      state.vpick = +el.dataset.oi;
-      state.vphase = "reveal";
-      recordAnswer(state.vpick === state.vq.answer);
+      var inNb = state.tab === "notebook" && state.nbActive;
+      var q = inNb ? state.nbq : state.vq;
+      var ph = inNb ? state.nbphase : state.vphase;
+      if (ph === "reveal" || !q) return;
+      if (inNb) { state.nbpick = +el.dataset.oi; state.nbphase = "reveal"; }
+      else { state.vpick = +el.dataset.oi; state.vphase = "reveal"; }
+      recordAnswer(+el.dataset.oi === q.answer);
     }
     else if (a === "vrate") {
-      if (state.vphase !== "reveal" || !state.vq) return;
-      var ok = state.vpick === state.vq.answer;
-      gradeWord(state.vq.word, ok, el.dataset.rate);
+      var inNb2 = state.tab === "notebook" && state.nbActive;
+      var q2 = inNb2 ? state.nbq : state.vq;
+      var ph2 = inNb2 ? state.nbphase : state.vphase;
+      var pk2 = inNb2 ? state.nbpick : state.vpick;
+      if (ph2 !== "reveal" || !q2) return;
+      var ok = pk2 === q2.answer;
+      gradeWord(q2.word, ok, el.dataset.rate);
       state.session = { done: state.session.done + 1, correct: state.session.correct + (ok ? 1 : 0) };
-      nextQuestion();
+      if (inNb2) nextNotebook(); else nextQuestion();
     }
     else if (a === "rule") { var k = el.dataset.key; state.open[k] = !state.open[k]; }
     else if (a === "answer") {
@@ -913,7 +1000,7 @@ const READING = [
     }
     else if (a === "reset-ask") state.confirm = true;
     else if (a === "reset-no") state.confirm = false;
-    else if (a === "reset-yes") { state.progress = empty(); state.answers = {}; state.vq = null; state.vphase = "ask"; state.vpick = null; state.session = { done: 0, correct: 0 }; saveNow(); state.confirm = false; }
+    else if (a === "reset-yes") { state.progress = empty(); state.answers = {}; state.vq = null; state.vphase = "ask"; state.vpick = null; state.nbActive = false; state.nbq = null; state.nbphase = "ask"; state.nbpick = null; state.showTr = false; state.session = { done: 0, correct: 0 }; saveNow(); state.confirm = false; }
     render();
   });
 
