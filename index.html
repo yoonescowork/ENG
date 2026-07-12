@@ -140,7 +140,8 @@ p{margin:0}
 .opt.wrong{border-color:var(--ro-bd); background:var(--ro-bg); color:var(--ro-l)}
 .opt.dim{border-color:var(--border); background:var(--surface); color:var(--t4)}
 .expl{margin-top:12px; border:1px solid var(--border); background:var(--inner); border-radius:10px; padding:10px 12px; font-size:14px; line-height:1.55; color:var(--t2)}
-.vchips{display:flex; flex-wrap:wrap; gap:8px; margin-top:10px}
+.vchips{display:flex; flex-wrap:wrap; align-items:center; gap:8px; margin-top:10px}
+.vchip-picked{border:1px solid rgba(245,158,11,.5)}
 .vchip{background:var(--border); border-radius:8px; padding:6px 8px; font-size:12px; color:rgba(253,230,138,.9)}
 
 /* reading */
@@ -1376,6 +1377,41 @@ const CS = {
     return '<section>' + h + '</section>';
   }
 
+  // ===== 선지 → 수록 단어 복원 =====
+  // 오답 선지도 전부 수록 단어(활용형)이므로, 정답 확정 후 뜻을 보여 학습 기회로 전환
+  var CORE_STOP = { be: 1, a: 1, an: 1, the: 1, of: 1, to: 1, "for": 1, "with": 1, from: 1, "in": 1, on: 1, at: 1, by: 1, into: 1, over: 1, out: 1, off: 1, within: 1, up: 1, as: 1, oneself: 1, yourself: 1, its: 1, every: 1, A: 1, B: 1, "-ing": 1 };
+  var CORE_IDX = (function () {
+    var idx = {}, cnt = {};
+    ALL_VOCAB.forEach(function (v) {
+      if (v.w.indexOf(" ") < 0) return; // 구 표현만
+      v.w.split(/\s+/).forEach(function (tk) {
+        tk = tk.toLowerCase();
+        if (CORE_STOP[tk] || tk.length < 3) return;
+        cnt[tk] = (cnt[tk] || 0) + 1;
+        idx[tk] = v.w;
+      });
+    });
+    Object.keys(cnt).forEach(function (tk) { if (cnt[tk] > 1) delete idx[tk]; }); // 다의적 핵심어는 제외 (틀린 뜻 방지)
+    return idx;
+  })();
+  var IRREGULAR = { underwent: "undergo", undergone: "undergo" };
+  function optForms(t) {
+    var c = [t];
+    if (IRREGULAR[t]) c.push(IRREGULAR[t]);
+    if (t.slice(-3) === "ies" || t.slice(-3) === "ied") c.push(t.slice(0, -3) + "y");
+    if (t.slice(-2) === "es") c.push(t.slice(0, -2));
+    if (t.slice(-1) === "s") c.push(t.slice(0, -1));
+    if (t.slice(-2) === "ed") { c.push(t.slice(0, -2)); c.push(t.slice(0, -1)); c.push(t.slice(0, -3)); }
+    if (t.slice(-3) === "ing") { c.push(t.slice(0, -3)); c.push(t.slice(0, -3) + "e"); c.push(t.slice(0, -4)); }
+    return c;
+  }
+  function resolveVocab(text) {
+    var forms = optForms(String(text).toLowerCase()), i;
+    for (i = 0; i < forms.length; i++) if (VOCAB_MAP[forms[i]]) return VOCAB_MAP[forms[i]];
+    for (i = 0; i < forms.length; i++) if (CORE_IDX[forms[i]]) return VOCAB_MAP[CORE_IDX[forms[i]]];
+    return null;
+  }
+
   // 콜로케이션·유의어 (카드 뒷면·오답 카드 공용)
   function csLines(w) {
     var cs = typeof CS !== "undefined" ? CS[w] : null;
@@ -1564,6 +1600,20 @@ const CS = {
         } else {
           h += '<p class="expl">' + (picked === q.a ? "정답! " : "오답 · ") + esc(q.e) + "</p>";
           h += trBlock(key, q.tr);
+        }
+        if (q.w) {
+          // 오답 선지도 전부 수록 단어 — 유일하게 복원되는 것만 뜻 표시
+          var others = [];
+          q.o.forEach(function (opt, oi2) {
+            if (oi2 === q.a) return;
+            var rv = resolveVocab(opt);
+            if (rv && rv.w !== q.w) others.push({ v: rv, picked: oi2 === picked });
+          });
+          if (others.length) {
+            h += '<div class="vchips"><span class="vcs-l">다른 보기</span>' + others.map(function (o) {
+              return '<span class="vchip mono' + (o.picked ? " vchip-picked" : "") + '">' + (o.picked ? "내 선택 · " : "") + esc(o.v.w) + " · " + esc(o.v.m) + '</span>';
+            }).join("") + '</div>';
+          }
         }
       }
       if (opts.links && done && Array.isArray(q.words)) {
