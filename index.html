@@ -151,6 +151,30 @@ footer{margin-top:36px; text-align:center; font-size:11px; color:var(--t4); font
 .tabs::-webkit-scrollbar{display:none}
 .tab{white-space:nowrap}
 .wmeta{font-size:11px; color:var(--t4); margin-bottom:8px}
+.trbtn{display:inline-block;margin-top:8px;font-size:11px;color:var(--amber,#f59e0b);text-decoration:underline;cursor:pointer}
+.trx{margin-top:6px;font-size:13px;line-height:1.6;color:var(--t2,#d6d3d1);background:rgba(245,158,11,.06);border-left:2px solid rgba(245,158,11,.4);padding:8px 10px;border-radius:0 8px 8px 0}
+.mockbar{display:flex;justify-content:space-between;align-items:center;gap:8px}
+.seg{display:inline-flex;border:1px solid rgba(255,255,255,.14);border-radius:999px;overflow:hidden}
+.segbtn{padding:9px 14px;background:transparent;border:0;color:var(--t3,#a8a29e);font-size:13px;cursor:pointer;min-height:40px}
+.segbtn.active{background:var(--amber,#f59e0b);color:#141110;font-weight:600}
+.segbtn+.segbtn{border-left:1px solid rgba(255,255,255,.14)}
+.chip{position:relative;overflow:hidden}
+.chipbar{position:absolute;left:12px;right:12px;bottom:4px;height:2px;background:rgba(255,255,255,.10);border-radius:2px;pointer-events:none}
+.chipbar span{position:absolute;left:0;top:0;bottom:0;background:var(--amber,#f59e0b);border-radius:2px}
+.vbadge{margin-top:10px;font-size:11px;line-height:1.5;color:var(--amber-l,#fcd34d);background:rgba(245,158,11,.08);border:1px solid rgba(245,158,11,.25);border-radius:8px;padding:6px 8px}
+.qvcard{margin-top:10px;border:1px solid rgba(159,18,57,.5);background:var(--inner,#0c0a09);border-radius:10px;padding:12px}
+.qvw{font-size:20px;font-weight:600;color:#fafaf9;line-height:1.2}
+.qvp{font-size:11px;font-weight:400;color:var(--t3,#78716c);margin-left:6px}
+.qvm{margin-top:4px;font-size:16px;font-weight:500;color:var(--amber-l,#fcd34d)}
+.qvnote{margin-top:8px;font-size:11px;color:var(--t4,#57534e)}
+.vcs{margin-top:7px;font-size:11.5px;line-height:1.55;color:var(--t2,#a8a29e)}
+.vcs-l{display:inline-block;margin-right:6px;padding:1px 5px;border-radius:5px;font-size:10px;color:var(--amber-l,#fcd34d);background:rgba(245,158,11,.1)}
+.io{display:flex;flex-wrap:wrap;align-items:center;gap:8px;margin-top:12px;font-size:11px}
+.iobtn{cursor:pointer;border:1px solid var(--border2,#44403c);background:transparent;color:var(--t2,#a8a29e);border-radius:8px;padding:5px 9px;font-size:11px;font-family:inherit}
+.iobtn.warn{border-color:rgba(245,158,11,.5);color:var(--amber-l,#fcd34d)}
+.io-confirm,.io-msg{color:var(--t3,#78716c);display:inline-flex;align-items:center;gap:6px}
+.undobar{display:flex;align-items:center;justify-content:space-between;gap:8px;border:1px solid var(--border2,#44403c);background:var(--surface,#1c1917);border-radius:10px;padding:8px 10px;margin-bottom:12px;font-size:12px;color:var(--t2,#a8a29e)}
+@media (max-width:389px){.segbtn{padding:8px 10px;font-size:12px}.minibtn{font-size:11px;padding:6px 9px}}
 </style>
 </head>
 <body>
@@ -564,6 +588,40 @@ const GRAMMAR_G18 = {
     { q: "You may borrow ------ equipment is available in the storage room.", o: ["whichever", "whoever", "those", "if"], a: 0, e: "뒤의 명사(equipment)를 꾸미며 '어느 ~든지'를 뜻하는 복합관계형용사 whichever.", words: [] },
   ],
 };
+const BQ = {"determine": {"s": "A survey can help the company ------- customer needs.", "c": "determine", "o": ["excel", "hesitate", "undergo"]}, "withdraw": {"s": "She had to ------- from the negotiation due to illness.", "c": "withdraw", "o": ["resolve", "anticipate", "resume"]}, "anticipate": {"s": "Managers ------- strong demand next quarter.", "c": "anticipate", "o": ["excel", "relocate", "withdraw"]}, "monitor": {"s": "The team ------- social media trends closely.", "c": "monitors", "o": ["suspends", "analyzes", "represents"]}, "analyze": {"s": "Analysts carefully ------- the quarterly sales data.", "c": "analyzed", "o": ["retained", "addressed", "assured"]}, "surpass": {"s": "Sales ------- the annual goal this year.", "c": "surpassed", "o": ["relocated", "specified", "underwent"]}, "explore": {"s": "The board will ------- new market options.", "c": "explore", "o": ["extend", "monitor", "implement"]}, "name": {"s": "The CEO will ------- a successor next week.", "c": "name", "o": ["relocate", "determine", "surpass"]}, "redeem": {"s": "Points can be ------- for store products.", "c": "redeemed", "o": ["suspended", "explored", "relocated"]}, "excel": {"s": "She ------- at analyzing research data.", "c": "excels", "o": ["relocates", "surpass", "consults"]}, "optimize": {"s": "The update ------- the security system.", "c": "optimizes", "o": ["indicates", "anticipates", "consults"]}, "differ": {"s": "The new model ------- from earlier versions.", "c": "differs", "o": ["surpass", "address", "deliberates"]}, "conform": {"s": "The café renovated its patio to ------- to new rules.", "c": "conform", "o": ["retain", "reserve", "withdraw"]}, "resolve": {"s": "The technician ------- the printer issue quickly.", "c": "resolved", "o": ["excelled", "deliberated", "indicated"]}, "suspend": {"s": "The project was ------- until funding is secured.", "c": "suspended", "o": ["hesitated", "excelled", "specified"]}, "resume": {"s": "The seminar will ------- after a short break.", "c": "resume", "o": ["analyze", "implement", "explore"]}, "extend": {"s": "The manager ------- the deadline by a week.", "c": "extended", "o": ["anticipated", "conformed", "explored"]}, "commence": {"s": "The board meeting ------- with a sales review.", "c": "commenced", "o": ["surpassed", "monitored", "underwent"]}, "specify": {"s": "Please ------- your payment method on the form.", "c": "specify", "o": ["hesitate", "redeem", "suspend"]}, "commend": {"s": "Her supervisor ------- her on the presentation.", "c": "commended", "o": ["explored", "resumed", "optimized"]}, "consult": {"s": "Operators may ------- the technicians for tips.", "c": "consult", "o": ["excel", "monitor", "hesitate"]}, "reserve": {"s": "Attendees must ------- their own accommodations.", "c": "reserve", "o": ["excel", "commence", "differ"]}, "deliberate": {"s": "The board ------- over the merger all afternoon.", "c": "deliberated", "o": ["anticipated", "conformed", "named"]}, "exceed": {"s": "Carry-on baggage must not ------- 10 kilograms.", "c": "exceed", "o": ["name", "analyze", "commend"]}, "address": {"s": "Officials will ------- the recent benefit changes.", "c": "address", "o": ["differ", "reserve", "explore"]}, "represent": {"s": "These figures ------- a rise in profits.", "c": "represent", "o": ["resume", "specify", "reserve"]}, "retain": {"s": "Developers must ------- the historic features.", "c": "retain", "o": ["excel", "consult", "determine"]}, "hesitate": {"s": "Do not ------- to contact our staff for help.", "c": "hesitate", "o": ["commence", "represent", "withdraw"]}, "relocate": {"s": "The firm announced plans to ------- its office.", "c": "relocate", "o": ["suspend", "represent", "deliberate"]}, "accommodate": {"s": "The rooms can ------- up to seven guests.", "c": "accommodate", "o": ["consult", "differ", "conform"]}, "implement": {"s": "The company ------- an updated policy.", "c": "implemented", "o": ["differed", "consulted", "analyzed"]}, "indicate": {"s": "Research ------- a link between performance and satisfaction.", "c": "indicates", "o": ["resumes", "surpass", "monitors"]}, "undergo": {"s": "The firm will ------- structural changes.", "c": "undergo", "o": ["assure", "surpass", "retain"]}, "assure": {"s": "The chair ------- investors the value would hold.", "c": "assured", "o": ["retained", "monitored", "extended"]}, "waive": {"s": "The bank will ------- fees for premium account holders.", "c": "waive", "o": ["optimize", "extend", "assure"]}, "objective": {"s": "The main ------- this quarter is to expand overseas.", "c": "objective", "o": ["asset", "authority", "departure"]}, "precaution": {"s": "Workers must take ------- when handling chemicals.", "c": "precautions", "o": ["adjustments", "departures", "methods"]}, "output": {"s": "The factory doubled its ------- after upgrading machines.", "c": "output", "o": ["issue", "objective", "authority"]}, "dimension": {"s": "Please check the ------- of the box before shipping.", "c": "dimensions", "o": ["estimates", "shifts", "recognitions"]}, "conflict": {"s": "A scheduling ------- forced them to postpone the meeting.", "c": "conflict", "o": ["dimension", "negotiation", "authority"]}, "influx": {"s": "The city saw a huge ------- of tourists during the festival.", "c": "influx", "o": ["issue", "distribution", "reduction"]}, "presence": {"s": "The brand has a strong ------- in the Asian market.", "c": "presence", "o": ["distribution", "precaution", "reduction"]}, "reduction": {"s": "The store announced a price ------- on winter items.", "c": "reduction", "o": ["dimension", "negotiation", "alternative"]}, "access": {"s": "Only authorized staff have ------- to the server room.", "c": "access", "o": ["receipt", "shortage", "effort"]}, "proximity": {"s": "The hotel's ------- to the airport makes it convenient.", "c": "proximity", "o": ["estimate", "asset", "method"]}, "authority": {"s": "She is a leading ------- on international trade law.", "c": "authority", "o": ["distribution", "conflict", "profit"]}, "dedication": {"s": "His ------- to service earned him a promotion.", "c": "dedication", "o": ["access", "permission", "output"]}, "adjustment": {"s": "A few minor ------- to the schedule solved it.", "c": "adjustments", "o": ["estimates", "priorities", "negotiations"]}, "distribution": {"s": "The firm handles the ------- of goods nationwide.", "c": "distribution", "o": ["effort", "expertise", "advantage"]}, "shift": {"s": "There has been a noticeable ------- toward remote work.", "c": "shift", "o": ["permission", "issue", "conflict"]}, "priority": {"s": "Improving safety is the company's top -------.", "c": "priority", "o": ["distribution", "expertise", "alternative"]}, "estimate": {"s": "The contractor provided an ------- for the renovation.", "c": "estimate", "o": ["influx", "authority", "output"]}, "recognition": {"s": "The award was given in ------- of her research.", "c": "recognition", "o": ["precaution", "reduction", "shift"]}, "disclosure": {"s": "Full ------- of financial data builds investor trust.", "c": "disclosure", "o": ["estimate", "challenge", "shift"]}, "permission": {"s": "You need written ------- to enter the laboratory.", "c": "permission", "o": ["disclosure", "proximity", "estimate"]}, "persistence": {"s": "Her ------- eventually won over the difficult client.", "c": "persistence", "o": ["conflict", "objective", "departure"]}, "departure": {"s": "The new album is a ------- from her earlier style.", "c": "departure", "o": ["presence", "negotiation", "dedication"]}, "initiative": {"s": "The city launched a new recycling ------- this year.", "c": "initiative", "o": ["influx", "profit", "output"]}, "challenge": {"s": "Meeting the deadline was the team's biggest -------.", "c": "challenge", "o": ["recognition", "priority", "subscriber"]}, "method": {"s": "Customers can choose their preferred payment -------.", "c": "method", "o": ["reduction", "subscriber", "persistence"]}, "alternative": {"s": "Solar power is a clean ------- to fossil fuels.", "c": "alternative", "o": ["precaution", "subscriber", "distribution"]}, "shortage": {"s": "A labor ------- delayed the construction project.", "c": "shortage", "o": ["disclosure", "dedication", "effort"]}, "receipt": {"s": "Please keep your ------- in case you need a refund.", "c": "receipt", "o": ["dedication", "output", "reduction"]}, "effort": {"s": "The team made every ------- to satisfy the client.", "c": "effort", "o": ["estimate", "advantage", "shift"]}, "advantage": {"s": "Speaking two languages is a real ------- here.", "c": "advantage", "o": ["reduction", "shortage", "disclosure"]}, "profit": {"s": "The firm reported a record ------- this year.", "c": "profit", "o": ["precaution", "method", "presence"]}, "issue": {"s": "The latest ------- of the magazine features new startups.", "c": "issue", "o": ["reduction", "output", "precaution"]}, "expertise": {"s": "Her ------- in marketing made the campaign succeed.", "c": "expertise", "o": ["initiative", "effort", "negotiation"]}, "negotiation": {"s": "The contract ------- lasted several weeks.", "c": "negotiations", "o": ["departures", "receipts", "conflicts"]}, "subscriber": {"s": "The magazine has millions of ------- worldwide.", "c": "subscribers", "o": ["objectives", "precautions", "recognitions"]}, "asset": {"s": "Experienced staff are the company's greatest -------.", "c": "asset", "o": ["conflict", "estimate", "recognition"]}, "ongoing": {"s": "The two firms are in ------- merger discussions.", "c": "ongoing", "o": ["excessive", "consecutive", "primary"]}, "acting": {"s": "She served as ------- director while the manager was away.", "c": "acting", "o": ["affordable", "valid", "primary"]}, "budget": {"s": "The chain is known for its ------- hotels near stations.", "c": "budget", "o": ["available", "mandatory", "practical"]}, "faulty": {"s": "The recall was caused by a ------- part in the engine.", "c": "faulty", "o": ["subsequent", "limited", "valid"]}, "mandatory": {"s": "Attendance at the safety training is -------.", "c": "mandatory", "o": ["upcoming", "budget", "limited"]}, "immense": {"s": "The project required an ------- amount of funding.", "c": "immense", "o": ["impending", "eligible", "ongoing"]}, "attentive": {"s": "Good salespeople are ------- to customer needs.", "c": "attentive", "o": ["temporary", "promising", "subsequent"]}, "impending": {"s": "The ------- storm forced the airport to close.", "c": "impending", "o": ["selective", "substantial", "consecutive"]}, "compelling": {"s": "The report made a ------- case for the new policy.", "c": "compelling", "o": ["valid", "faulty", "defective"]}, "primary": {"s": "The ------- goal of the survey is to gather feedback.", "c": "primary", "o": ["defective", "promising", "valid"]}, "adequate": {"s": "The budget is not ------- for a project this large.", "c": "adequate", "o": ["primary", "temporary", "eligible"]}, "thorough": {"s": "The auditor conducted a ------- review of the accounts.", "c": "thorough", "o": ["temporary", "faulty", "tentative"]}, "excessive": {"s": "Customers complained about the ------- shipping fees.", "c": "excessive", "o": ["temporary", "elaborate", "primary"]}, "selective": {"s": "The agency is highly ------- about its clients.", "c": "selective", "o": ["appropriate", "substantial", "upcoming"]}, "valid": {"s": "Your ticket is ------- for one year from purchase.", "c": "valid", "o": ["adequate", "latest", "impending"]}, "elaborate": {"s": "The designer created an ------- display for the launch.", "c": "elaborate", "o": ["upcoming", "eligible", "impending"]}, "appropriate": {"s": "Please wear ------- attire for the interview.", "c": "appropriate", "o": ["promising", "primary", "faulty"]}, "upcoming": {"s": "The team is preparing for the ------- trade fair.", "c": "upcoming", "o": ["immense", "acting", "consecutive"]}, "established": {"s": "They chose an ------- firm with a solid reputation.", "c": "established", "o": ["upcoming", "impending", "acting"]}, "practical": {"s": "The workshop offers ------- tips for saving energy.", "c": "practical", "o": ["ongoing", "upcoming", "valid"]}, "limited": {"s": "Only a ------- number of seats are available.", "c": "limited", "o": ["subsequent", "detailed", "budget"]}, "detailed": {"s": "The manual gives ------- instructions for each step.", "c": "detailed", "o": ["budget", "ongoing", "temporary"]}, "promising": {"s": "The startup showed ------- signs of rapid growth.", "c": "promising", "o": ["upcoming", "excessive", "primary"]}, "tentative": {"s": "The launch date is still ------- and may change.", "c": "tentative", "o": ["confidential", "elaborate", "latest"]}, "defective": {"s": "The customer returned the ------- product for a refund.", "c": "defective", "o": ["elaborate", "compelling", "adequate"]}, "exceptional": {"s": "The convention center offers ------- facilities.", "c": "exceptional", "o": ["mandatory", "tentative", "faulty"]}, "affordable": {"s": "The store sells quality furniture at ------- prices.", "c": "affordable", "o": ["practical", "latest", "limited"]}, "available": {"s": "The new offer is ------- only to existing members.", "c": "available", "o": ["latest", "promising", "upcoming"]}, "consecutive": {"s": "Sales have risen for the fifth ------- year.", "c": "consecutive", "o": ["ongoing", "attentive", "affordable"]}, "latest": {"s": "Marco reprinted its ------- catalog after finding errors.", "c": "latest", "o": ["elaborate", "consecutive", "acting"]}, "substantial": {"s": "The firm invested a ------- portion of its budget.", "c": "substantial", "o": ["practical", "selective", "tentative"]}, "confidential": {"s": "Keep all ------- documents in a locked cabinet.", "c": "confidential", "o": ["impending", "upcoming", "practical"]}, "temporary": {"s": "A ------- entrance is open during the renovations.", "c": "temporary", "o": ["limited", "faulty", "practical"]}, "subsequent": {"s": "Sales were slow at first but rose in ------- months.", "c": "subsequent", "o": ["practical", "eligible", "latest"]}, "eligible": {"s": "Employees are ------- for compensation after one year.", "c": "eligible", "o": ["promising", "budget", "tentative"]}, "additional": {"s": "The accountant found ------- ways to cut costs.", "c": "additional", "o": ["impending", "promising", "budget"]}, "punctually": {"s": "Applicants are asked to arrive ------- for interviews.", "c": "punctually", "o": ["independently", "generally", "relatively"]}, "independently": {"s": "Each department operates ------- of the others.", "c": "independently", "o": ["anonymously", "promptly", "typically"]}, "approximately": {"s": "The project will take ------- three months.", "c": "approximately", "o": ["occasionally", "generally", "anonymously"]}, "anonymously": {"s": "Employees can submit feedback -------.", "c": "anonymously", "o": ["precisely", "steadily", "rapidly"]}, "rapidly": {"s": "The company's user base is growing -------.", "c": "rapidly", "o": ["promptly", "punctually", "currently"]}, "previously": {"s": "The site had ------- been used as a warehouse.", "c": "previously", "o": ["rapidly", "incrementally", "independently"]}, "generally": {"s": "International shipping ------- takes one to two weeks.", "c": "generally", "o": ["previously", "precisely", "independently"]}, "precisely": {"s": "The manual explains ------- how to install the unit.", "c": "precisely", "o": ["promptly", "regularly", "immediately"]}, "incrementally": {"s": "Prices have risen ------- over the past year.", "c": "incrementally", "o": ["punctually", "exclusively", "anonymously"]}, "closely": {"s": "Investors watched the stock price ------- all week.", "c": "closely", "o": ["relatively", "promptly", "independently"]}, "typically": {"s": "New hires ------- complete a three-week course.", "c": "typically", "o": ["precisely", "momentarily", "independently"]}, "necessarily": {"s": "A high price does not ------- mean high quality.", "c": "necessarily", "o": ["significantly", "promptly", "closely"]}, "steadily": {"s": "The firm has grown ------- since it was founded.", "c": "steadily", "o": ["precisely", "relatively", "necessarily"]}, "regularly": {"s": "Employees should review the safety rules -------.", "c": "regularly", "o": ["necessarily", "punctually", "incrementally"]}, "relatively": {"s": "Attendance was ------- low compared to last year.", "c": "relatively", "o": ["punctually", "anonymously", "mutually"]}, "mutually": {"s": "The two firms formed a ------- beneficial partnership.", "c": "mutually", "o": ["currently", "relatively", "precisely"]}, "consistently": {"s": "The team has ------- met its monthly targets.", "c": "consistently", "o": ["immediately", "mutually", "necessarily"]}, "momentarily": {"s": "The screen went dark ------- during the outage.", "c": "momentarily", "o": ["anonymously", "precisely", "punctually"]}, "significantly": {"s": "Government grants for students have increased -------.", "c": "significantly", "o": ["independently", "necessarily", "approximately"]}, "currently": {"s": "The gallery's new exhibit is ------- open to the public.", "c": "currently", "o": ["precisely", "mutually", "closely"]}, "immediately": {"s": "Please report any errors to the IT team -------.", "c": "immediately", "o": ["incrementally", "closely", "anonymously"]}, "exclusively": {"s": "The discount is available ------- to members.", "c": "exclusively", "o": ["promptly", "typically", "relatively"]}, "occasionally": {"s": "The CEO ------- visits the regional branches.", "c": "occasionally", "o": ["punctually", "incrementally", "promptly"]}, "promptly": {"s": "The presentation began ------- at nine o'clock.", "c": "promptly", "o": ["previously", "necessarily", "exclusively"]}, "be enthusiastic about": {"s": "The staff are ------- about the new project.", "c": "enthusiastic", "o": ["suitable", "responsive", "superior"]}, "be skeptical of": {"s": "Analysts remain ------- of the company's forecast.", "c": "skeptical", "o": ["comparable", "eligible", "known"]}, "be ideal for": {"s": "This apartment is ------- for a single commuter.", "c": "ideal", "o": ["subject", "honored", "likely"]}, "be eligible for": {"s": "Full-time employees are ------- for the annual bonus.", "c": "eligible", "o": ["skeptical", "reflective", "devoted"]}, "be exempt from": {"s": "Members are ------- from the registration fee.", "c": "exempt", "o": ["enthusiastic", "suitable", "concerned"]}, "be proficient in": {"s": "The candidate is ------- in three languages.", "c": "proficient", "o": ["encouraged", "enthusiastic", "suitable"]}, "be devoted to": {"s": "The clinic is ------- to treating rare diseases.", "c": "devoted", "o": ["familiar", "suitable", "concerned"]}, "be encouraged to": {"s": "Visitors are ------- to wear safety gear.", "c": "encouraged", "o": ["exempt", "familiar", "concerned"]}, "be known to A as B": {"s": "He is ------- to the staff as a fair manager.", "c": "known", "o": ["concerned", "reliant", "likely"]}, "be superior to": {"s": "The new model is ------- to last year's version.", "c": "superior", "o": ["responsible", "concerned", "subject"]}, "be likely to": {"s": "Prices are ------- to rise before the holidays.", "c": "likely", "o": ["reliant", "suitable", "ideal"]}, "be reliant on": {"s": "The firm is heavily ------- on overseas suppliers.", "c": "reliant", "o": ["ideal", "comparable", "likely"]}, "be familiar with": {"s": "The guide is ------- with the city's history.", "c": "familiar", "o": ["encouraged", "ideal", "responsible"]}, "be reflective of": {"s": "The results are ------- of current market trends.", "c": "reflective", "o": ["likely", "comparable", "enthusiastic"]}, "be comparable to": {"s": "The city's size is ------- to that of Boston.", "c": "comparable", "o": ["ideal", "reliant", "responsive"]}, "be responsive to": {"s": "The staff are ------- to customer requests.", "c": "responsive", "o": ["eligible", "reflective", "comparable"]}, "be compatible with": {"s": "The cable is ------- with most devices.", "c": "compatible", "o": ["enthusiastic", "skeptical", "responsible"]}, "be honored for": {"s": "She was ------- for her contribution to research.", "c": "honored", "o": ["exempt", "subject", "encouraged"]}, "be uncertain about": {"s": "The board is ------- about the merger's outcome.", "c": "uncertain", "o": ["responsible", "known", "superior"]}, "be concerned about": {"s": "Organizers are ------- about the seating capacity.", "c": "concerned", "o": ["compatible", "responsible", "known"]}, "be suitable for": {"s": "These films are ------- for viewers of all ages.", "c": "suitable", "o": ["honored", "exempt", "eligible"]}, "be concerned with": {"s": "The report is ------- with product safety.", "c": "concerned", "o": ["comparable", "subject", "superior"]}, "be responsible for": {"s": "The manager is ------- for hiring decisions.", "c": "responsible", "o": ["exempt", "likely", "skeptical"]}, "be subject to": {"s": "All prices are ------- to change without notice.", "c": "subject", "o": ["proficient", "compatible", "reliant"]}, "equip A with B": {"s": "Each meeting room is ------- with a video system.", "c": "equipped", "o": ["specialized", "aimed", "collaborated"]}, "evolve from": {"s": "The startup ------- from a two-person garage project.", "c": "evolved", "o": ["divided", "restricted", "discouraged"]}, "coincide with": {"s": "The product launch ------- with the trade fair.", "c": "coincided", "o": ["replaced", "appealed", "specialized"]}, "specialize in": {"s": "The firm ------- in eco-friendly packaging.", "c": "specializes", "o": ["aims", "commits", "prevents"]}, "conclude with": {"s": "The ceremony ------- with an award presentation.", "c": "concluded", "o": ["qualified", "attributed", "committed"]}, "prevent A from B": {"s": "Regular checkups ------- machines from breaking down.", "c": "prevent", "o": ["compensate", "differentiate", "contribute"]}, "appeal to": {"s": "The new menu ------- to health-conscious diners.", "c": "appeals", "o": ["coincides", "collaborates", "specializes"]}, "collaborate on": {"s": "Two universities ------- on the climate study.", "c": "collaborated", "o": ["coincided", "discouraged", "attributed"]}, "familiarize oneself with": {"s": "New hires should ------- themselves with the safety manual.", "c": "familiarize", "o": ["prevent", "collaborate", "replace"]}, "replace A with B": {"s": "The hotel ------- its old keys with digital cards.", "c": "replaced", "o": ["complied", "aimed", "discouraged"]}, "differentiate A from B": {"s": "Its long warranty ------- the brand from competitors.", "c": "differentiates", "o": ["aims", "familiarizes", "attributes"]}, "commit oneself to": {"s": "The mayor ------- herself to reducing traffic downtown.", "c": "committed", "o": ["responded", "coincided", "prevented"]}, "be divided into": {"s": "The workshop was ------- into three smaller sessions.", "c": "divided", "o": ["restricted", "disposed", "prevented"]}, "attribute A to B": {"s": "Analysts ------- the recent growth to online sales.", "c": "attribute", "o": ["replace", "respond", "contribute"]}, "qualify for": {"s": "Full-time staff ------- for the housing subsidy.", "c": "qualify", "o": ["divide", "restrict", "familiarize"]}, "charge A to B": {"s": "Please ------- the meal to my room account.", "c": "charge", "o": ["respond", "qualify", "prevent"]}, "restrict A to B": {"s": "Parking is ------- to registered vehicles only.", "c": "restricted", "o": ["equipped", "contributed", "discouraged"]}, "discourage A from B": {"s": "The policy ------- staff from printing unnecessarily.", "c": "discourages", "o": ["compensates", "contributes", "complies"]}, "be aimed at": {"s": "The campaign is ------- at first-time home buyers.", "c": "aimed", "o": ["equipped", "responded", "specialized"]}, "dispose of": {"s": "Please ------- of used batteries in the marked bin.", "c": "dispose", "o": ["differentiate", "compensate", "commit"]}, "respond to": {"s": "The support team ------- to inquiries within a day.", "c": "responds", "o": ["restricts", "coincides", "replaces"]}, "contribute to": {"s": "Flexible hours ------- to higher staff morale.", "c": "contributed", "o": ["collaborated", "discouraged", "responded"]}, "compensate A for B": {"s": "The airline ------- passengers for the long delay.", "c": "compensated", "o": ["prevented", "divided", "collaborated"]}, "comply with": {"s": "All vendors must ------- with the safety code.", "c": "comply", "o": ["commit", "conclude", "appeal"]}, "stop by": {"s": "Feel free to ------- by my office after lunch.", "c": "stop", "o": ["turn", "fall", "check"]}, "fall within": {"s": "The request ------- within the manager's authority.", "c": "falls", "o": ["signs", "accounts", "succeeds"]}, "fill out": {"s": "Please ------- out the visitor form at the front desk.", "c": "fill", "o": ["stop", "fall", "succeed"]}, "turn in": {"s": "------- in your expense reports by Friday afternoon.", "c": "Turn", "o": ["Fall", "Account", "Pick"]}, "pick up": {"s": "You can ------- up your badge at the reception desk.", "c": "pick", "o": ["fall", "succeed", "account"]}, "take in": {"s": "Athletes must watch the calories they ------- in daily.", "c": "take", "o": ["account", "pick", "stop"]}, "sign up for": {"s": "Over 80 employees ------- up for the wellness program.", "c": "signed", "o": ["kept", "took", "stopped"]}, "take place": {"s": "The awards dinner will ------- place in the grand hall.", "c": "take", "o": ["check", "pick", "keep"]}, "succeed in -ing": {"s": "The team ------- in cutting delivery times by half.", "c": "succeeded", "o": ["picked", "looked", "filled"]}, "take time off": {"s": "She ------- time off to attend a family event.", "c": "took", "o": ["filled", "accounted", "succeeded"]}, "run the risk of": {"s": "Firms that ignore feedback run the ------- of losing clients.", "c": "risk", "o": ["schedule", "balance", "measure"]}, "take over": {"s": "Ms. Cho will ------- over the vacant director role.", "c": "take", "o": ["succeed", "account", "fall"]}, "call for": {"s": "The new contract ------- for monthly progress reports.", "c": "calls", "o": ["picks", "checks", "turns"]}, "check in": {"s": "Guests may ------- in from 3 P.M. onward.", "c": "check", "o": ["fall", "account", "succeed"]}, "keep up with": {"s": "Read industry blogs to ------- up with new trends.", "c": "keep", "o": ["stop", "turn", "fill"]}, "have every intention of -ing": {"s": "We have every ------- of renewing the lease.", "c": "intention", "o": ["attention", "suggestion", "permission"]}, "keep in touch with": {"s": "The recruiter ------- in touch with former applicants.", "c": "keeps", "o": ["checks", "fills", "succeeds"]}, "look over": {"s": "Could you ------- over the draft before it goes out?", "c": "look", "o": ["fall", "succeed", "account"]}, "keep records of": {"s": "The clinic ------- records of every appointment.", "c": "keeps", "o": ["looks", "picks", "accounts"]}, "look into": {"s": "The committee will ------- into the billing complaints.", "c": "look", "o": ["call", "stop", "fall"]}, "keep track of": {"s": "Use the app to ------- track of your work hours.", "c": "keep", "o": ["look", "pick", "take"]}, "look upon A as B": {"s": "Colleagues ------- upon her as a natural leader.", "c": "look", "o": ["take", "stop", "fill"]}, "account for": {"s": "Exports ------- for nearly half of total revenue.", "c": "account", "o": ["pick", "succeed", "keep"]}, "look for": {"s": "We are ------- for a larger warehouse near the port.", "c": "looking", "o": ["succeeding", "turning", "filling"]}, "sales projection": {"s": "The sales ------- for next year looks optimistic.", "c": "projection", "o": ["statement", "audit", "compliance"]}, "outside audit": {"s": "The charity undergoes an outside ------- every spring.", "c": "audit", "o": ["shift", "means", "opening"]}, "in its entirety": {"s": "The recording is available online in its -------.", "c": "entirety", "o": ["commitment", "audit", "appraisal"]}, "an assortment of": {"s": "The gift box contains an ------- of teas.", "c": "assortment", "o": ["inspector", "obligation", "entirety"]}, "by means of": {"s": "Visitors enter the lab by ------- of a keycard.", "c": "means", "o": ["obligation", "statement", "compliance"]}, "work shift": {"s": "Night work ------- rotate every two weeks.", "c": "shifts", "o": ["plans", "commitments", "means"]}, "sales figure": {"s": "March sales ------- exceeded every forecast.", "c": "figures", "o": ["appraisals", "inspectors", "openings"]}, "office supplies": {"s": "Order office ------- through the internal portal.", "c": "supplies", "o": ["inspector", "confidence", "entirety"]}, "employee productivity": {"s": "Shorter meetings boosted employee -------.", "c": "productivity", "o": ["appraisal", "preference", "entirety"]}, "safety inspector": {"s": "A safety ------- visits the site every quarter.", "c": "inspector", "o": ["preference", "projection", "terms"]}, "time constraint": {"s": "Due to time -------, questions were limited to five.", "c": "constraints", "o": ["obligations", "terms", "allowances"]}, "contingency plan": {"s": "The event team prepared a contingency ------- for rain.", "c": "plan", "o": ["figure", "inspector", "commitment"]}, "press release": {"s": "The merger was announced in a press ------- this morning.", "c": "release", "o": ["commitment", "confidence", "obligation"]}, "terms of agreement": {"s": "Read the ------- of agreement before signing.", "c": "terms", "o": ["means", "commitment", "assortment"]}, "billing statement": {"s": "An error appeared on last month's billing -------.", "c": "statement", "o": ["allowance", "inspector", "release"]}, "obligation to": {"s": "Tenants have an ------- to report leaks promptly.", "c": "obligation", "o": ["assortment", "audit", "appraisal"]}, "job opening": {"s": "The clinic posted two job ------- for nurses.", "c": "openings", "o": ["commitments", "assortments", "contributions"]}, "contribution to": {"s": "Her ------- to the project were widely praised.", "c": "contributions", "o": ["inspectors", "constraints", "means"]}, "baggage allowance": {"s": "The baggage ------- on this fare is one checked bag.", "c": "allowance", "o": ["projection", "opening", "figure"]}, "performance appraisal": {"s": "Annual performance ------- begin next week.", "c": "appraisals", "o": ["releases", "inspectors", "means"]}, "compliance with": {"s": "The plant operates in full ------- with emission rules.", "c": "compliance", "o": ["opening", "commitment", "plan"]}, "confidence in": {"s": "Investors expressed ------- in the new leadership.", "c": "confidence", "o": ["statement", "assortment", "shift"]}, "commitment to": {"s": "The bakery is known for its ------- to local ingredients.", "c": "commitment", "o": ["confidence", "terms", "preference"]}, "preference for": {"s": "Surveys show a clear ------- for morning deliveries.", "c": "preference", "o": ["contribution", "productivity", "projection"]}};
+const TRS = {"v:determine": "설문 조사는 회사가 고객의 요구를 파악하는 데 도움이 될 수 있다.", "v:withdraw": "그녀는 병 때문에 협상에서 물러나야 했다.", "v:anticipate": "관리자들은 다음 분기에 수요가 높을 것으로 예상한다.", "v:monitor": "그 팀은 소셜 미디어 동향을 면밀히 관찰한다.", "v:analyze": "분석가들은 분기 판매 데이터를 꼼꼼히 분석했다.", "v:surpass": "매출이 올해 연간 목표를 뛰어넘었다.", "v:explore": "이사회는 새로운 시장 선택지를 검토할 것이다.", "v:name": "CEO는 다음 주에 후임자를 지명할 것이다.", "v:redeem": "포인트는 매장 상품으로 교환할 수 있다.", "v:excel": "그녀는 연구 데이터 분석에 뛰어나다.", "v:optimize": "이번 업데이트는 보안 시스템을 최적화한다.", "v:differ": "새 모델은 이전 버전들과 다르다.", "v:conform": "그 카페는 새 규정에 맞추기 위해 테라스를 개조했다.", "v:resolve": "기술자가 프린터 문제를 신속히 해결했다.", "v:suspend": "그 프로젝트는 자금이 확보될 때까지 중단되었다.", "v:resume": "세미나는 짧은 휴식 후에 재개될 것이다.", "v:extend": "매니저는 마감일을 일주일 연장했다.", "v:commence": "이사회 회의는 매출 검토로 시작되었다.", "v:specify": "양식에 결제 방법을 명시해 주세요.", "v:commend": "상사는 발표에 대해 그녀를 칭찬했다.", "v:consult": "작업자들은 팁을 얻기 위해 기술자들에게 문의할 수 있다.", "v:reserve": "참석자들은 각자 숙소를 예약해야 한다.", "v:deliberate": "이사회는 오후 내내 합병을 숙고했다.", "v:exceed": "기내 수하물은 10킬로그램을 초과해서는 안 된다.", "v:address": "관계자들이 최근 복지 제도 변경 사항을 다룰 것이다.", "v:represent": "이 수치들은 수익 증가를 나타낸다.", "v:retain": "개발업체는 역사적 특징들을 보존해야 한다.", "v:hesitate": "도움이 필요하면 주저하지 말고 직원에게 연락하세요.", "v:relocate": "그 회사는 사무실 이전 계획을 발표했다.", "v:accommodate": "이 객실들은 최대 7명의 손님을 수용할 수 있다.", "v:implement": "그 회사는 개정된 정책을 시행했다.", "v:indicate": "연구는 성과와 만족도 사이의 연관성을 보여 준다.", "v:undergo": "그 회사는 구조적 변화를 겪을 것이다.", "v:assure": "의장은 투자자들에게 가치가 유지될 것이라고 확언했다.", "v:waive": "은행은 프리미엄 계좌 고객의 수수료를 면제할 것이다.", "v:objective": "이번 분기의 주요 목표는 해외로 확장하는 것이다.", "v:precaution": "작업자들은 화학 물질을 다룰 때 예방 조치를 취해야 한다.", "v:output": "그 공장은 기계를 업그레이드한 후 생산량을 두 배로 늘렸다.", "v:dimension": "배송 전에 상자의 치수를 확인해 주세요.", "v:conflict": "일정 충돌로 그들은 회의를 연기해야 했다.", "v:influx": "그 도시는 축제 기간에 관광객이 대거 유입되었다.", "v:presence": "그 브랜드는 아시아 시장에서 강한 입지를 갖고 있다.", "v:reduction": "그 매장은 겨울 상품 가격 인하를 발표했다.", "v:access": "승인된 직원만 서버실에 접근할 수 있다.", "v:proximity": "그 호텔은 공항과 가까워서 편리하다.", "v:authority": "그녀는 국제 무역법 분야의 최고 권위자이다.", "v:dedication": "봉사에 대한 그의 헌신이 승진으로 이어졌다.", "v:adjustment": "일정을 조금만 조정하니 문제가 해결되었다.", "v:distribution": "그 회사는 전국적인 상품 유통을 담당한다.", "v:shift": "원격 근무로의 뚜렷한 변화가 있어 왔다.", "v:priority": "안전 개선이 회사의 최우선 과제이다.", "v:estimate": "시공업체가 보수 공사 견적서를 제공했다.", "v:recognition": "그 상은 그녀의 연구를 인정하여 수여되었다.", "v:disclosure": "재무 정보의 완전한 공개는 투자자의 신뢰를 쌓는다.", "v:permission": "실험실에 들어가려면 서면 허가가 필요하다.", "v:persistence": "그녀의 끈기가 결국 까다로운 고객의 마음을 얻었다.", "v:departure": "새 앨범은 그녀의 이전 스타일에서 벗어난 것이다.", "v:initiative": "그 시는 올해 새로운 재활용 계획을 시작했다.", "v:challenge": "마감일을 맞추는 것이 팀의 가장 큰 과제였다.", "v:method": "고객은 선호하는 결제 방법을 선택할 수 있다.", "v:alternative": "태양광 발전은 화석 연료의 깨끗한 대안이다.", "v:shortage": "인력 부족으로 건설 프로젝트가 지연되었다.", "v:receipt": "환불이 필요할 경우를 대비해 영수증을 보관하세요.", "v:effort": "그 팀은 고객을 만족시키기 위해 온갖 노력을 다했다.", "v:advantage": "두 개의 언어를 구사하는 것은 이곳에서 큰 이점이다.", "v:profit": "그 회사는 올해 기록적인 수익을 보고했다.", "v:issue": "잡지 최신 호는 신생 기업들을 다룬다.", "v:expertise": "마케팅에 대한 그녀의 전문 지식이 캠페인을 성공시켰다.", "v:negotiation": "계약 협상은 몇 주 동안 계속되었다.", "v:subscriber": "그 잡지는 전 세계에 수백만 명의 구독자를 두고 있다.", "v:asset": "경험 많은 직원들은 회사의 가장 큰 자산이다.", "v:ongoing": "두 회사는 현재 진행 중인 합병 논의를 하고 있다.", "v:acting": "그녀는 매니저가 자리를 비운 동안 임시 이사로 일했다.", "v:budget": "그 체인은 역 근처의 저가 호텔로 유명하다.", "v:faulty": "리콜은 엔진의 결함 있는 부품 때문에 발생했다.", "v:mandatory": "안전 교육 참석은 의무이다.", "v:immense": "그 프로젝트에는 막대한 자금이 필요했다.", "v:attentive": "훌륭한 판매원은 고객의 요구에 세심하다.", "v:impending": "임박한 폭풍으로 공항이 폐쇄되었다.", "v:compelling": "그 보고서는 새 정책에 대한 설득력 있는 근거를 제시했다.", "v:primary": "설문의 주된 목적은 피드백을 수집하는 것이다.", "v:adequate": "그 예산은 이 정도 규모의 프로젝트에 충분하지 않다.", "v:thorough": "감사관은 회계 장부를 철저히 검토했다.", "v:excessive": "고객들은 과도한 배송비에 대해 불평했다.", "v:selective": "그 에이전시는 고객을 매우 까다롭게 고른다.", "v:valid": "귀하의 티켓은 구매일로부터 1년간 유효합니다.", "v:elaborate": "디자이너는 출시 행사를 위해 정교한 진열을 만들었다.", "v:appropriate": "면접에는 적절한 복장을 착용해 주세요.", "v:upcoming": "그 팀은 다가오는 무역 박람회를 준비하고 있다.", "v:established": "그들은 탄탄한 평판을 지닌 자리 잡은 회사를 선택했다.", "v:practical": "그 워크숍은 에너지 절약을 위한 실용적인 팁을 제공한다.", "v:limited": "제한된 수의 좌석만 이용 가능하다.", "v:detailed": "그 설명서는 각 단계에 대한 상세한 지침을 제공한다.", "v:promising": "그 스타트업은 빠른 성장의 유망한 조짐을 보였다.", "v:tentative": "출시일은 아직 잠정적이며 변경될 수 있다.", "v:defective": "그 고객은 결함 있는 제품을 반품하고 환불받았다.", "v:exceptional": "그 컨벤션 센터는 뛰어난 시설을 제공한다.", "v:affordable": "그 매장은 합리적인 가격에 좋은 가구를 판매한다.", "v:available": "새 혜택은 기존 회원에게만 제공된다.", "v:consecutive": "매출이 5년 연속으로 증가해 왔다.", "v:latest": "Marco사는 오류를 발견한 후 최신 카탈로그를 다시 인쇄했다.", "v:substantial": "그 회사는 예산의 상당 부분을 투자했다.", "v:confidential": "모든 기밀 문서는 잠금 캐비닛에 보관하세요.", "v:temporary": "보수 공사 기간에는 임시 출입구가 열려 있다.", "v:subsequent": "매출은 처음에는 부진했지만 그 후 몇 달간 증가했다.", "v:eligible": "직원들은 1년 후에 보상을 받을 자격이 된다.", "v:additional": "회계사는 비용을 절감할 추가적인 방법들을 찾아냈다.", "v:punctually": "지원자들은 면접에 시간을 엄수해 도착하도록 요청받는다.", "v:independently": "각 부서는 서로 독립적으로 운영된다.", "v:approximately": "그 프로젝트는 대략 3개월이 걸릴 것이다.", "v:anonymously": "직원들은 익명으로 피드백을 제출할 수 있다.", "v:rapidly": "그 회사의 사용자 기반이 빠르게 성장하고 있다.", "v:previously": "그 부지는 이전에 창고로 사용되었다.", "v:generally": "국제 배송은 보통 1~2주가 걸린다.", "v:precisely": "설명서는 장치 설치 방법을 정확하게 설명한다.", "v:incrementally": "가격이 지난 1년간 점진적으로 올랐다.", "v:closely": "투자자들은 일주일 내내 주가를 면밀히 지켜봤다.", "v:typically": "신입 사원은 보통 3주짜리 과정을 이수한다.", "v:necessarily": "높은 가격이 반드시 높은 품질을 의미하지는 않는다.", "v:steadily": "그 회사는 설립 이래 꾸준히 성장해 왔다.", "v:regularly": "직원들은 안전 수칙을 정기적으로 검토해야 한다.", "v:relatively": "참석률은 작년에 비해 상대적으로 낮았다.", "v:mutually": "두 회사는 상호 이익이 되는 파트너십을 맺었다.", "v:consistently": "그 팀은 월간 목표를 한결같이 달성해 왔다.", "v:momentarily": "정전 중에 화면이 잠깐 어두워졌다.", "v:significantly": "학생 대상 정부 보조금이 상당히 증가했다.", "v:currently": "그 갤러리의 새 전시는 현재 대중에게 공개 중이다.", "v:immediately": "오류가 있으면 IT팀에 즉시 보고해 주세요.", "v:exclusively": "그 할인은 회원에게만 독점적으로 제공된다.", "v:occasionally": "CEO는 가끔 지역 지사들을 방문한다.", "v:promptly": "발표는 9시 정각에 시작되었다.", "v:be enthusiastic about": "직원들은 새 프로젝트에 대해 열의가 있다.", "v:be skeptical of": "분석가들은 그 회사의 전망에 여전히 회의적이다.", "v:be ideal for": "이 아파트는 1인 통근자에게 이상적이다.", "v:be eligible for": "정규직 직원들은 연간 보너스를 받을 자격이 있다.", "v:be exempt from": "회원들은 등록비가 면제된다.", "v:be proficient in": "그 지원자는 3개 언어에 능통하다.", "v:be devoted to": "그 병원은 희귀 질환 치료에 전념한다.", "v:be encouraged to": "방문객들은 안전 장비를 착용하도록 권장된다.", "v:be known to A as B": "그는 직원들에게 공정한 관리자로 알려져 있다.", "v:be superior to": "새 모델은 작년 버전보다 우수하다.", "v:be likely to": "가격은 연휴 전에 오를 가능성이 크다.", "v:be reliant on": "그 회사는 해외 공급업체에 크게 의존하고 있다.", "v:be familiar with": "그 가이드는 도시의 역사에 정통하다.", "v:be reflective of": "그 결과는 현재 시장 동향을 반영한다.", "v:be comparable to": "그 도시의 규모는 보스턴에 필적한다.", "v:be responsive to": "직원들은 고객 요청에 신속히 대응한다.", "v:be compatible with": "그 케이블은 대부분의 기기와 호환된다.", "v:be honored for": "그녀는 연구에 대한 공헌으로 표창을 받았다.", "v:be uncertain about": "이사회는 합병의 결과에 대해 확신하지 못한다.", "v:be concerned about": "주최 측은 좌석 수용 인원을 걱정하고 있다.", "v:be suitable for": "이 영화들은 전 연령 관람객에게 적합하다.", "v:be concerned with": "그 보고서는 제품 안전에 관한 것이다.", "v:be responsible for": "그 매니저는 채용 결정을 책임지고 있다.", "v:be subject to": "모든 가격은 예고 없이 변경될 수 있습니다.", "v:equip A with B": "각 회의실에는 화상 시스템이 갖춰져 있다.", "v:evolve from": "그 스타트업은 두 명이 차고에서 시작한 프로젝트에서 발전했다.", "v:coincide with": "제품 출시가 무역 박람회와 동시에 이루어졌다.", "v:specialize in": "그 회사는 친환경 포장을 전문으로 한다.", "v:conclude with": "행사는 시상식으로 마무리되었다.", "v:prevent A from B": "정기 점검은 기계가 고장 나는 것을 막아 준다.", "v:appeal to": "새 메뉴는 건강을 생각하는 손님들의 관심을 끈다.", "v:collaborate on": "두 대학이 기후 연구에 대해 협력했다.", "v:familiarize oneself with": "신입 사원들은 안전 매뉴얼에 익숙해져야 한다.", "v:replace A with B": "그 호텔은 낡은 열쇠를 디지털 카드로 교체했다.", "v:differentiate A from B": "긴 보증 기간이 그 브랜드를 경쟁사와 차별화한다.", "v:commit oneself to": "시장은 도심 교통 혼잡을 줄이는 데 전념하기로 했다.", "v:be divided into": "워크숍은 세 개의 소규모 세션으로 나뉘었다.", "v:attribute A to B": "분석가들은 최근의 성장을 온라인 판매 덕분으로 본다.", "v:qualify for": "정규직 직원들은 주거 보조금을 받을 자격이 있다.", "v:charge A to B": "식사비는 제 객실 앞으로 달아 주세요.", "v:restrict A to B": "주차는 등록된 차량으로만 제한된다.", "v:discourage A from B": "그 정책은 직원들이 불필요하게 인쇄하는 것을 막는다.", "v:be aimed at": "그 캠페인은 생애 첫 주택 구매자를 겨냥한 것이다.", "v:dispose of": "다 쓴 배터리는 표시된 통에 버려 주세요.", "v:respond to": "지원팀은 하루 안에 문의에 응답한다.", "v:contribute to": "유연 근무제가 직원 사기 향상에 기여했다.", "v:compensate A for B": "항공사는 승객들에게 긴 지연에 대해 보상했다.", "v:comply with": "모든 납품업체는 안전 규정을 준수해야 한다.", "v:stop by": "점심 후에 제 사무실에 편하게 들르세요.", "v:fall within": "그 요청은 매니저의 권한 범위에 든다.", "v:fill out": "안내 데스크에서 방문객 양식을 작성해 주세요.", "v:turn in": "금요일 오후까지 경비 보고서를 제출하세요.", "v:pick up": "접수처에서 출입증을 찾아가실 수 있습니다.", "v:take in": "운동선수들은 매일 섭취하는 칼로리를 잘 살펴야 한다.", "v:sign up for": "80명이 넘는 직원이 건강 프로그램에 등록했다.", "v:take place": "시상식 만찬은 대연회장에서 열릴 것이다.", "v:succeed in -ing": "그 팀은 배송 시간을 절반으로 줄이는 데 성공했다.", "v:take time off": "그녀는 가족 행사에 참석하기 위해 휴가를 냈다.", "v:run the risk of": "피드백을 무시하는 회사는 고객을 잃을 위험을 무릅쓴다.", "v:take over": "Ms. Cho가 공석인 이사직을 인계받을 것이다.", "v:call for": "새 계약은 월간 진행 보고서를 요구한다.", "v:check in": "투숙객은 오후 3시부터 체크인할 수 있다.", "v:keep up with": "새로운 트렌드에 뒤처지지 않으려면 업계 블로그를 읽으세요.", "v:have every intention of -ing": "우리는 기꺼이 임대 계약을 갱신할 의사가 있다.", "v:keep in touch with": "그 채용 담당자는 예전 지원자들과 계속 연락한다.", "v:look over": "발송 전에 초안을 검토해 주시겠어요?", "v:keep records of": "그 병원은 모든 예약 기록을 남긴다.", "v:look into": "위원회는 청구서 관련 불만을 조사할 것이다.", "v:keep track of": "앱으로 근무 시간을 기록·관리하세요.", "v:look upon A as B": "동료들은 그녀를 타고난 리더로 여긴다.", "v:account for": "수출이 총매출의 거의 절반을 차지한다.", "v:look for": "우리는 항구 근처의 더 큰 창고를 찾고 있다.", "v:sales projection": "내년 판매 전망은 낙관적으로 보인다.", "v:outside audit": "그 자선 단체는 매년 봄 외부 감사를 받는다.", "v:in its entirety": "그 녹음본은 온라인에서 전체를 들을 수 있다.", "v:an assortment of": "그 선물 상자에는 다양한 차가 들어 있다.", "v:by means of": "방문객은 키카드를 이용해 실험실에 들어간다.", "v:work shift": "야간 근무 교대는 2주마다 순환된다.", "v:sales figure": "3월 판매 수치는 모든 예측을 넘어섰다.", "v:office supplies": "사무용품은 내부 포털을 통해 주문하세요.", "v:employee productivity": "회의 시간을 줄이자 직원 생산성이 높아졌다.", "v:safety inspector": "안전 검사관이 분기마다 현장을 방문한다.", "v:time constraint": "시간 제약 때문에 질문은 5개로 제한되었다.", "v:contingency plan": "행사팀은 우천에 대비한 비상 대책을 준비했다.", "v:press release": "그 합병은 오늘 아침 보도 자료로 발표되었다.", "v:terms of agreement": "서명하기 전에 계약 조건을 읽어 보세요.", "v:billing statement": "지난달 대금 청구서에 오류가 있었다.", "v:obligation to": "세입자들은 누수를 즉시 신고할 의무가 있다.", "v:job opening": "그 병원은 간호사 채용 공고 두 건을 올렸다.", "v:contribution to": "프로젝트에 대한 그녀의 공헌은 널리 칭찬받았다.", "v:baggage allowance": "이 운임의 수하물 허용량은 위탁 수하물 1개이다.", "v:performance appraisal": "연간 업무 수행 평가가 다음 주에 시작된다.", "v:compliance with": "그 공장은 배출 규정을 완전히 준수하며 운영된다.", "v:confidence in": "투자자들은 새 경영진에 대한 신뢰를 표했다.", "v:commitment to": "그 빵집은 지역 재료에 대한 고집으로 유명하다.", "v:preference for": "설문 조사는 오전 배송에 대한 뚜렷한 선호를 보여 준다.", "g1:0": "새 안전 정책의 시행은 작업장 사고를 크게 줄였다.", "g1:1": "본사를 더 큰 도시로 이전하는 것이 필수적이다.", "g1:2": "우리의 늘어난 수요를 감당할 수 있는 공급업체가 여럿 있다.", "g1:3": "판매업체에 연락할 때는 주문서에 정확한 배송 날짜를 명시하세요.", "g1:4": "이사회는 결정을 내리기 전에 모든 주요 합병 제안을 숙고한다.", "g1:5": "관리 수수료는 작년에 프리미엄 계좌 고객에게 면제되었다.", "g1:6": "안전 관련 우려는 현장 관리자에게 직접 전달해 주세요.", "g1:7": "최근 연구는 유연 근무제가 생산성을 높인다는 것을 보여 준다.", "g1:8": "분기 매출이 지난달 회사의 연간 목표를 넘어섰다.", "g1:9": "그 회사는 내년에 대대적인 구조 조정을 겪을 것으로 예상된다.", "g2:0": "매니저는 프로젝트를 제때 끝내려는 팀의 헌신을 칭찬했다.", "g2:1": "새 규정은 전 직원의 안전 교육 이수를 의무로 만들었다.", "g2:2": "감사관의 회계 장부 검토는 매우 철저했다.", "g2:3": "그 회사는 경험 많은 직원을 귀중한 자산으로 여긴다.", "g2:4": "높은 수요 때문에 그 매장은 영업시간을 연장했다.", "g2:5": "보수 공사로 로비에 더 많은 손님을 수용할 수 있게 될 것이다.", "g2:6": "새 정책은 직원들에게 온라인 교육 자료에 대한 접근 권한을 제공한다.", "g2:7": "매니저가 휴가 중인 동안 비서가 모든 결정을 처리했다.", "g2:8": "그 회사는 본사를 고객과 더 가까운 곳으로 옮기는 것이 이득이라고 판단했다.", "g2:9": "고객들은 그 매장의 폭넓고 저렴한 상품 구성을 높이 평가했다.", "g3:0": "그 기업의 확장 계획은 이사회 승인을 받으면 진행될 것이다.", "g3:1": "모든 신청서는 이번 주말까지 제출되어야 한다.", "g3:2": "이사회는 그 공장이 폐기물 처리 설비를 업그레이드할 것을 권고한다.", "g3:3": "회의에서 이사가 최근의 정책 변경 사항을 다룰 것이다.", "g3:4": "드라이브가 손상되어 기술자는 파일을 복구할 수 없었다.", "g3:5": "모든 방문객은 항상 보안 출입증을 착용하는 것이 필수적이다.", "g3:6": "연구 결과는 다음 달 Dr. Kim에 의해 발표될 예정이다.", "g3:7": "노조 대표는 양측의 분쟁을 해결하려고 시도했다.", "g3:8": "회사는 직원들이 매달 진행 보고서를 제출할 것을 요청한다.", "g3:9": "컨설턴트의 보고서는 운영비를 줄일 여러 방법을 제시해 왔다.", "g4:0": "회사 야유회 관련 세부 사항이 어제 전 직원에게 이메일로 발송되었다.", "g4:1": "제품이 리콜되면 다수의 환불 요청이 발생한다.", "g4:2": "모든 직원은 개정된 행동 강령을 검토해야 한다.", "g4:3": "그 헬스 센터의 시설에는 스파와 라운지가 포함된다.", "g4:4": "본사에 보관되어 있던 파일들은 기록 보관소로 옮겨졌다.", "g4:5": "예산의 절반이 이미 마케팅에 쓰였다.", "g4:6": "그 매니저와 비서는 함께 콘퍼런스에 참석할 예정이다.", "g4:7": "공급업체들 또는 유통업체가 지연에 책임이 있다.", "g4:8": "감사관들이 서명한 그 보고서는 회계상의 여러 오류를 지적한다.", "g4:9": "자동화를 통한 비용 절감은 기업들의 흔한 전략이다.", "g5:0": "새 시설을 위해 계좌에서 거액이 막 인출되었다.", "g5:1": "일등석 좌석에는 승객 편의를 위한 인터넷 연결이 갖춰져 있다.", "g5:2": "매니저는 이번 분기에 매출이 두 배가 되었다는 것을 알고 기뻐했다.", "g5:3": "위원회는 행사를 다음 달로 미루는 것을 고려하고 있다.", "g5:4": "새로 채용된 전 직원은 오리엔테이션 프로그램을 이수해야 한다.", "g5:5": "그 다큐멘터리는 다음 주 화요일에 전국 방송망에서 방영될 것이다.", "g5:6": "직원들은 갑작스러운 합병 발표에 놀랐다.", "g5:7": "소비자 수요는 계절별 날씨 패턴과 밀접하게 관련되어 있다.", "g5:8": "연구팀은 모든 데이터의 백업본을 만들라는 상기를 받았다.", "g5:9": "새 안전 조치들은 지난주 검사관들에 의해 승인되었다.", "g6:0": "그 병원은 더 많은 환자를 받기 위해 지난달 진료 시간을 연장했다.", "g6:1": "배송품이 도착하면 창고팀이 재고를 업데이트할 것이다.", "g6:2": "Ms. Park은 회사가 부산 지사를 연 이래로 그곳에서 일해 왔다.", "g6:3": "새 프린터가 설치될 때쯤이면 직원들은 교육 과정을 마쳤을 것이다.", "g6:4": "그 서비스 패키지에는 무료 배송과 월간 장비 점검이 포함된다.", "g6:5": "행사장이 더 크다면 지점 전체를 기념식에 초대할 텐데.", "g6:6": "배송 기사가 더 일찍 출발했더라면 소포가 제시간에 도착했을 것이다.", "g6:7": "추가 도움이 필요하시면 언제든 안내 데스크에 연락해 주세요.", "g6:8": "자원봉사자들의 도움이 없었다면 축제는 예정대로 열리지 못했을 것이다.", "g6:9": "검사관들이 도착했을 때쯤 정비팀은 모든 안전 점검을 이미 마친 상태였다.", "g7:0": "도서관은 시험 기간에 학생들을 수용하기 위해 운영 시간을 연장했다.", "g7:1": "Aria Motors는 소형 모델을 전기차 버전으로 교체하기로 결정했다.", "g7:2": "방문객은 기록 보관실에 들어가기 위해 사진이 있는 신분증을 제시해야 한다.", "g7:3": "환불을 요청할 권리는 계약 조건에 명확히 명시되어 있다.", "g7:4": "신입 인턴들은 전체 생산 과정에 대해 몹시 배우고 싶어 한다.", "g7:5": "감독관은 기술자에게 결함 있는 센서를 즉시 교체하게 했다.", "g7:6": "그 모니터링 소프트웨어는 시스템 위협을 조기에 탐지하는 것을 가능하게 한다.", "g7:7": "월요일 아침까지 케이터링 업체가 최종 인원을 알게 해 주세요.", "g7:8": "Mr. Doyle은 신입 사원이 문서 정리 시스템에 익숙해지도록 도왔다.", "g7:9": "위원회는 노후한 주민 센터를 개조할 계획을 발표했다.", "g18:0": "공지는 엘리베이터가 수리를 위해 정지될 것이라고 확인해 주었다.", "g18:1": "그 카페가 영업시간을 연장할지 여부는 주말 수요에 달려 있다.", "g18:2": "통로 쪽 좌석과 창가 좌석 중 어느 것을 선호하시는지 알려 주세요.", "g18:3": "심사위원들에게 가장 깊은 인상을 준 것은 디자인의 단순함이었다.", "g18:4": "관리자들은 남은 예산을 어떻게 배분할지 결정해야 한다.", "g18:5": "인사 책임자는 지원자들이 추천서를 제출했는지 물었다.", "g18:6": "고객 설문을 완료하는 사람은 누구든 할인 쿠폰을 받게 된다.", "g18:7": "Ms. Gray는 이사회가 최종적으로 누구의 제안을 승인했는지 듣지 못했다.", "g18:8": "그 팀은 마감일이 연장될 수 없다는 것을 잘 알고 있다.", "g18:9": "창고에 있는 어느 장비든 빌려 가셔도 됩니다."};
+// 어형(품사 자리) 문제: 같은 어근의 다른 품사 3개가 오답 보기
+const WF = {
+"punctually": { o: ["punctual", "punctuality", "punctuated"], e: "동사 arrive를 꾸미는 부사 자리" },
+"independently": { o: ["independent", "independence", "independents"], e: "동사 operates를 꾸미는 부사 자리" },
+"approximately": { o: ["approximate", "approximation", "approximated"], e: "수 표현(three months) 앞에서 정도를 나타내는 부사 자리" },
+"anonymously": { o: ["anonymous", "anonymity", "anonymize"], e: "동사 submit을 꾸미는 부사 자리" },
+"rapidly": { o: ["rapid", "rapidity", "rapids"], e: "동사 is growing을 꾸미는 부사 자리" },
+"generally": { o: ["general", "generality", "generalize"], e: "동사 takes를 꾸미는 부사 자리" },
+"precisely": { o: ["precise", "precision", "preciseness"], e: "동사 explains를 꾸미는 부사 자리" },
+"incrementally": { o: ["incremental", "increment", "incremented"], e: "동사 have risen을 꾸미는 부사 자리" },
+"typically": { o: ["typical", "typicality", "typified"], e: "동사 complete를 꾸미는 부사 자리" },
+"necessarily": { o: ["necessary", "necessity", "necessitate"], e: "not과 동사 mean 사이 → 부사 자리" },
+"regularly": { o: ["regular", "regularity", "regulate"], e: "동사 review를 꾸미는 부사 자리(문미)" },
+"consistently": { o: ["consistent", "consistency", "consist"], e: "has와 p.p.(met) 사이 → 부사 자리" },
+"momentarily": { o: ["momentary", "moment", "momentous"], e: "동사구 went dark를 꾸미는 부사 자리" },
+"significantly": { o: ["significant", "significance", "signify"], e: "동사 have increased를 꾸미는 부사 자리" },
+"currently": { o: ["current", "currency", "currents"], e: "be동사와 형용사(open) 사이 → 부사 자리" },
+"immediately": { o: ["immediate", "immediacy", "immediateness"], e: "동사 report를 꾸미는 부사 자리(문미)" },
+"exclusively": { o: ["exclusiveness", "exclusion", "exclude"], e: "형용사 available을 꾸미는 부사 자리" },
+"occasionally": { o: ["occasional", "occasion", "occasioned"], e: "동사 visits를 꾸미는 부사 자리" },
+"promptly": { o: ["prompt", "promptness", "prompted"], e: "동사 began을 꾸미는 부사 자리" },
+"steadily": { o: ["steady", "steadiness", "steadied"], e: "동사 has grown을 꾸미는 부사 자리" },
+"mandatory": { o: ["mandate", "mandating", "mandatorily"], e: "be동사의 보어 자리 → 형용사" },
+"attentive": { o: ["attention", "attentively", "attend"], e: "be동사의 보어 자리(to와 어울림) → 형용사" },
+"confidential": { o: ["confidence", "confidentiality", "confidentially"], e: "명사 documents를 꾸미는 형용사 자리" },
+"additional": { o: ["addition", "additionally", "add"], e: "명사 ways를 꾸미는 형용사 자리" },
+"exceptional": { o: ["exception", "exceptionally", "except"], e: "명사 facilities를 꾸미는 형용사 자리" },
+"substantial": { o: ["substance", "substantially", "substantiate"], e: "명사 portion을 꾸미는 형용사 자리" },
+"valid": { o: ["validity", "validate", "validation"], e: "be동사의 보어 자리 → 형용사" },
+"excessive": { o: ["excessively", "exceed", "exceedingly"], e: "명사 shipping fees를 꾸미는 형용사 자리" },
+"selective": { o: ["selection", "selectively", "selecting"], e: "부사 highly의 꾸밈을 받는 형용사 자리" },
+};
 const READING = [
   {
     title: "사내 공지 (Notice)",
@@ -595,12 +653,241 @@ const READING = [
     ],
   },
 ];
+const CS = {
+"determine": ["determine the cause (원인을 규명하다)", "identify, decide"],
+"withdraw": ["withdraw an offer (제안을 철회하다)", "retract, pull out"],
+"anticipate": ["anticipate demand (수요를 예상하다)", "expect, foresee"],
+"monitor": ["monitor progress (진행 상황을 점검하다)", "observe, track"],
+"analyze": ["analyze data (자료를 분석하다)", "examine, evaluate"],
+"surpass": ["surpass expectations (기대를 뛰어넘다)", "exceed, outdo"],
+"explore": ["explore options (선택지를 검토하다)", "examine, investigate"],
+"name": ["name a successor (후임자를 지명하다)", "appoint, designate"],
+"redeem": ["redeem a coupon (쿠폰을 상품으로 교환하다)", "exchange, cash in"],
+"excel": ["excel at negotiation (협상에 뛰어나다)", "stand out, shine"],
+"optimize": ["optimize performance (성능을 최적화하다)", "improve, enhance"],
+"differ": ["differ from the original (원본과 다르다)", "vary, diverge"],
+"conform": ["conform to regulations (규정을 따르다)", "comply, adhere"],
+"resolve": ["resolve a dispute (분쟁을 해결하다)", "settle, solve"],
+"suspend": ["suspend operations (운영을 중단하다)", "halt, pause"],
+"resume": ["resume service (서비스를 재개하다)", "restart, continue"],
+"extend": ["extend a deadline (마감을 연장하다)", "prolong, lengthen"],
+"commence": ["commence construction (공사를 시작하다)", "begin, start"],
+"specify": ["specify requirements (요건을 명시하다)", "state, detail"],
+"commend": ["commend an employee (직원을 칭찬하다)", "praise, applaud"],
+"consult": ["consult an expert (전문가와 상의하다)", "confer, seek advice"],
+"reserve": ["reserve a table (자리를 예약하다)", "book, secure"],
+"deliberate": ["deliberate over a proposal (제안을 숙고하다)", "consider, ponder"],
+"exceed": ["exceed the limit (한도를 초과하다)", "surpass, go beyond"],
+"address": ["address an issue (문제를 다루다)", "deal with, tackle"],
+"represent": ["represent the company (회사를 대표하다)", "stand for, act for"],
+"retain": ["retain customers (고객을 유지하다)", "keep, preserve"],
+"hesitate": ["hesitate to ask (묻기를 주저하다)", "waver, hold back"],
+"relocate": ["relocate headquarters (본사를 이전하다)", "move, transfer"],
+"accommodate": ["accommodate guests (손님을 수용하다)", "house, hold"],
+"implement": ["implement a policy (정책을 시행하다)", "carry out, execute"],
+"indicate": ["indicate a trend (추세를 나타내다)", "show, suggest"],
+"undergo": ["undergo renovation (보수 공사를 거치다)", "experience, go through"],
+"assure": ["assure investors (투자자를 안심시키다)", "reassure, guarantee"],
+"waive": ["waive a fee (수수료를 면제하다)", "exempt, forgo"],
+"objective": ["meet an objective (목표를 달성하다)", "goal, aim"],
+"precaution": ["take precautions (예방 조치를 취하다)", "safeguard, safety measure"],
+"output": ["increase output (생산량을 늘리다)", "production, yield"],
+"dimension": ["check the dimensions (치수를 확인하다)", "measurement, size"],
+"conflict": ["scheduling conflict (일정 충돌)", "clash, disagreement"],
+"influx": ["an influx of tourists (관광객의 유입)", "inflow, arrival"],
+"presence": ["market presence (시장 내 입지)", "footprint, standing"],
+"reduction": ["price reduction (가격 인하)", "cut, decrease"],
+"access": ["gain access to (~에 접근 권한을 얻다)", "entry, admission"],
+"proximity": ["in close proximity to (~에 인접하여)", "closeness, nearness"],
+"authority": ["a leading authority on (~ 분야의 권위자)", "expert, specialist"],
+"dedication": ["dedication to service (서비스에 대한 헌신)", "commitment, devotion"],
+"adjustment": ["make adjustments (조정하다)", "modification, change"],
+"distribution": ["distribution network (유통망)", "delivery, circulation"],
+"shift": ["a shift toward (~로의 전환)", "change, transition"],
+"priority": ["top priority (최우선 과제)", "precedence, first concern"],
+"estimate": ["provide an estimate (견적을 제공하다)", "quote, projection"],
+"recognition": ["in recognition of (~을 인정하여)", "acknowledgment, credit"],
+"disclosure": ["full disclosure (전면 공개)", "release, revelation"],
+"permission": ["written permission (서면 허가)", "consent, authorization"],
+"persistence": ["persistence pays off (끈기가 결실을 맺다)", "perseverance, tenacity"],
+"departure": ["a departure from (~에서의 탈피)", "deviation, break"],
+"initiative": ["launch an initiative (계획에 착수하다)", "program, campaign"],
+"challenge": ["face a challenge (난제에 직면하다)", "difficulty, obstacle"],
+"method": ["payment method (결제 수단)", "way, means"],
+"alternative": ["an alternative to (~의 대안)", "substitute, option"],
+"shortage": ["labor shortage (인력 부족)", "lack, deficit"],
+"receipt": ["keep the receipt (영수증을 보관하다)", "proof of purchase"],
+"effort": ["make every effort (전력을 다하다)", "attempt, endeavor"],
+"advantage": ["take advantage of (~을 활용하다)", "benefit, edge"],
+"profit": ["record profit (기록적인 이익)", "earnings, gain"],
+"issue": ["the latest issue (최신 호)", "edition, copy"],
+"expertise": ["expertise in marketing (마케팅 전문 지식)", "know-how, proficiency"],
+"negotiation": ["contract negotiations (계약 협상)", "talks, bargaining"],
+"subscriber": ["monthly subscribers (월간 구독자)", "member, reader"],
+"asset": ["a valuable asset (귀중한 자산)", "resource, strength"],
+"ongoing": ["ongoing discussions (진행 중인 논의)", "continuing, in progress"],
+"acting": ["acting director (직무 대행 이사)", "interim, temporary"],
+"budget": ["budget hotels (저가형 호텔)", "low-cost, economy"],
+"faulty": ["faulty wiring (결함 있는 배선)", "defective, flawed"],
+"mandatory": ["mandatory training (의무 교육)", "required, compulsory"],
+"immense": ["immense funding (막대한 자금)", "enormous, huge"],
+"attentive": ["attentive to needs (요구에 세심한)", "mindful, considerate"],
+"impending": ["impending storm (임박한 폭풍)", "imminent, approaching"],
+"compelling": ["a compelling case (설득력 있는 논거)", "persuasive, convincing"],
+"primary": ["primary goal (주된 목표)", "main, chief"],
+"adequate": ["adequate funding (충분한 자금)", "sufficient, enough"],
+"thorough": ["thorough review (철저한 검토)", "exhaustive, complete"],
+"excessive": ["excessive fees (과도한 수수료)", "unreasonable, undue"],
+"selective": ["highly selective (매우 까다로운)", "picky, discriminating"],
+"valid": ["valid for one year (1년간 유효한)", "effective, good"],
+"elaborate": ["elaborate display (정교한 진열)", "intricate, detailed"],
+"appropriate": ["appropriate attire (적절한 복장)", "suitable, proper"],
+"upcoming": ["upcoming trade fair (다가오는 박람회)", "forthcoming, approaching"],
+"established": ["established firm (자리 잡은 회사)", "reputable, recognized"],
+"practical": ["practical tips (실용적인 조언)", "useful, hands-on"],
+"limited": ["limited seats (한정된 좌석)", "restricted, finite"],
+"detailed": ["detailed instructions (상세한 설명)", "thorough, specific"],
+"promising": ["promising signs (유망한 조짐)", "encouraging, hopeful"],
+"tentative": ["tentative date (잠정적인 날짜)", "provisional, unconfirmed"],
+"defective": ["defective product (불량품)", "faulty, flawed"],
+"exceptional": ["exceptional facilities (탁월한 시설)", "outstanding, superb"],
+"affordable": ["affordable prices (합리적인 가격)", "reasonable, inexpensive"],
+"available": ["available to members (회원이 이용 가능한)", "accessible, obtainable"],
+"consecutive": ["fifth consecutive year (5년 연속)", "successive, in a row"],
+"latest": ["latest catalog (최신 카탈로그)", "newest, most recent"],
+"substantial": ["substantial portion (상당한 부분)", "considerable, significant"],
+"confidential": ["confidential documents (기밀 문서)", "classified, private"],
+"temporary": ["temporary entrance (임시 출입구)", "interim, short-term"],
+"subsequent": ["subsequent months (그 후 몇 달)", "following, later"],
+"eligible": ["eligible for compensation (보상 대상인)", "entitled, qualified"],
+"additional": ["additional ways (추가적인 방법)", "extra, further"],
+"punctually": ["arrive punctually (제시간에 도착하다)", "on time, promptly"],
+"independently": ["operate independently (독립적으로 운영되다)", "separately, autonomously"],
+"approximately": ["approximately three months (약 3개월)", "about, roughly"],
+"anonymously": ["submit anonymously (익명으로 제출하다)", "namelessly, without a name"],
+"rapidly": ["grow rapidly (빠르게 성장하다)", "quickly, swiftly"],
+"previously": ["previously used as (이전에 ~로 쓰인)", "formerly, before"],
+"generally": ["generally takes a week (보통 일주일 걸리다)", "usually, typically"],
+"precisely": ["explain precisely (정확히 설명하다)", "exactly, accurately"],
+"incrementally": ["rise incrementally (점진적으로 오르다)", "gradually, step by step"],
+"closely": ["watch closely (면밀히 지켜보다)", "carefully, attentively"],
+"typically": ["typically complete a course (보통 과정을 이수하다)", "usually, normally"],
+"necessarily": ["not necessarily (반드시 ~는 아닌)", "inevitably, unavoidably"],
+"steadily": ["grow steadily (꾸준히 성장하다)", "consistently, gradually"],
+"regularly": ["review regularly (정기적으로 검토하다)", "routinely, periodically"],
+"relatively": ["relatively low (비교적 낮은)", "comparatively"],
+"mutually": ["mutually beneficial (상호 이익이 되는)", "reciprocally"],
+"consistently": ["consistently meet targets (꾸준히 목표를 달성하다)", "reliably, steadily"],
+"momentarily": ["went dark momentarily (잠시 꺼졌다)", "briefly, for a moment"],
+"significantly": ["increase significantly (크게 증가하다)", "considerably, substantially"],
+"currently": ["currently open (현재 열려 있는)", "presently, at the moment"],
+"immediately": ["report immediately (즉시 보고하다)", "at once, right away"],
+"exclusively": ["exclusively to members (회원 전용으로)", "only, solely"],
+"occasionally": ["occasionally visits (가끔 방문하다)", "sometimes, from time to time"],
+"promptly": ["begin promptly at nine (9시 정각에 시작하다)", "punctually, immediately"],
+"be enthusiastic about": ["enthusiastic about the project (프로젝트에 열정적인)", "≒ be excited about"],
+"be skeptical of": ["skeptical of the forecast (전망에 회의적인)", "≒ be doubtful of"],
+"be ideal for": ["ideal for commuters (통근자에게 이상적인)", "≒ be perfect for"],
+"be eligible for": ["eligible for a bonus (보너스 대상인)", "≒ qualify for"],
+"be exempt from": ["exempt from the fee (수수료가 면제된)", "≒ be free from"],
+"be proficient in": ["proficient in three languages (3개 언어에 능숙한)", "≒ be skilled in"],
+"be devoted to": ["devoted to research (연구에 전념하는)", "≒ be dedicated to, be committed to"],
+"be encouraged to": ["encouraged to wear safety gear (착용이 권장되는)", "≒ be advised to"],
+"be known to A as B": ["known to the staff as a fair manager (공정한 관리자로 알려진)", "≒ be recognized as"],
+"be superior to": ["superior to last year's model (작년 모델보다 우수한)", "↔ be inferior to"],
+"be likely to": ["likely to rise (오를 가능성이 큰)", "≒ be expected to"],
+"be reliant on": ["heavily reliant on suppliers (공급업체에 크게 의존하는)", "≒ be dependent on"],
+"be familiar with": ["familiar with the history (역사에 정통한)", "≒ be acquainted with"],
+"be reflective of": ["reflective of trends (추세를 반영하는)", "≒ reflect, mirror"],
+"be comparable to": ["comparable to Boston (보스턴에 필적하는)", "≒ be similar to"],
+"be responsive to": ["responsive to requests (요청에 잘 응하는)", "≒ react quickly to"],
+"be compatible with": ["compatible with most devices (대부분 기기와 호환되는)", "≒ work with"],
+"be honored for": ["honored for her contribution (공로로 표창받은)", "≒ be recognized for"],
+"be uncertain about": ["uncertain about the outcome (결과가 불확실한)", "≒ be unsure about"],
+"be concerned about": ["concerned about capacity (수용력을 걱정하는)", "≒ be worried about"],
+"be suitable for": ["suitable for all ages (전 연령에 적합한)", "≒ be appropriate for"],
+"be concerned with": ["concerned with safety (안전을 다루는)", "≒ deal with, be about"],
+"be responsible for": ["responsible for hiring (채용을 담당하는)", "≒ be in charge of"],
+"be subject to": ["subject to change (변경될 수 있는)", "≒ be liable to"],
+"equip A with B": ["equipped with a video system (영상 시스템이 갖춰진)", "≒ furnish A with B"],
+"evolve from": ["evolved from a garage project (차고 프로젝트에서 발전한)", "≒ develop from"],
+"coincide with": ["coincide with the trade fair (박람회와 겹치다)", "≒ occur at the same time as"],
+"specialize in": ["specialize in packaging (포장을 전문으로 하다)", "≒ focus on"],
+"conclude with": ["conclude with an award (시상으로 마무리되다)", "≒ end with"],
+"prevent A from B": ["prevent machines from breaking down (고장을 방지하다)", "≒ keep A from B"],
+"appeal to": ["appeal to diners (식사 손님의 마음을 끌다)", "≒ attract, interest"],
+"collaborate on": ["collaborate on a study (연구에 협력하다)", "≒ work together on"],
+"familiarize oneself with": ["familiarize yourself with the manual (매뉴얼을 숙지하다)", "≒ get to know"],
+"replace A with B": ["replace keys with digital cards (열쇠를 카드로 교체하다)", "≒ substitute B for A"],
+"differentiate A from B": ["differentiate the brand from rivals (경쟁사와 차별화하다)", "≒ distinguish A from B"],
+"commit oneself to": ["commit herself to reducing traffic (감축에 전념하다)", "≒ dedicate oneself to"],
+"be divided into": ["divided into three sessions (세 세션으로 나뉜)", "≒ be split into"],
+"attribute A to B": ["attribute growth to online sales (성장을 온라인 판매 덕으로 보다)", "≒ credit A to B"],
+"qualify for": ["qualify for the subsidy (보조금 자격이 되다)", "≒ be eligible for"],
+"charge A to B": ["charge the meal to my room (식사비를 객실 앞으로 달다)", "≒ bill A to B"],
+"restrict A to B": ["restricted to registered vehicles (등록 차량으로 제한된)", "≒ limit A to B"],
+"discourage A from B": ["discourage staff from printing (인쇄를 자제시키다)", "↔ encourage A to do"],
+"be aimed at": ["aimed at first-time buyers (첫 구매자를 겨냥한)", "≒ target, be intended for"],
+"dispose of": ["dispose of used batteries (다 쓴 배터리를 폐기하다)", "≒ throw away, discard"],
+"respond to": ["respond to inquiries (문의에 답하다)", "≒ reply to, answer"],
+"contribute to": ["contribute to staff morale (사기 진작에 기여하다)", "≒ lead to, add to"],
+"compensate A for B": ["compensate passengers for the delay (지연을 보상하다)", "≒ reimburse A for B"],
+"comply with": ["comply with the safety code (안전 규정을 준수하다)", "≒ conform to, abide by"],
+"stop by": ["stop by my office (사무실에 들르다)", "≒ drop by, drop in"],
+"fall within": ["fall within his authority (권한 범위에 들다)", "≒ be within the scope of"],
+"fill out": ["fill out a form (양식을 작성하다)", "≒ complete"],
+"turn in": ["turn in a report (보고서를 제출하다)", "≒ submit, hand in"],
+"pick up": ["pick up your badge (출입증을 수령하다)", "≒ collect"],
+"take in": ["calories you take in (섭취하는 칼로리)", "≒ consume, absorb"],
+"sign up for": ["sign up for a program (프로그램에 등록하다)", "≒ register for, enroll in"],
+"take place": ["take place in the grand hall (대연회장에서 열리다)", "≒ be held, occur"],
+"succeed in -ing": ["succeed in cutting delivery times (단축에 성공하다)", "≒ manage to do"],
+"take time off": ["take time off for a family event (휴가를 내다)", "≒ take leave"],
+"run the risk of": ["run the risk of losing clients (고객을 잃을 위험을 무릅쓰다)", "≒ risk -ing"],
+"take over": ["take over the director role (직책을 인계받다)", "≒ assume, succeed to"],
+"call for": ["call for monthly reports (월간 보고를 요구하다)", "≒ require, demand"],
+"check in": ["check in from 3 P.M. (오후 3시부터 체크인하다)", "≒ register (at a hotel)"],
+"keep up with": ["keep up with new trends (새 트렌드를 따라가다)", "≒ stay abreast of"],
+"have every intention of -ing": ["every intention of renewing the lease (갱신할 확고한 의사)", "≒ fully intend to do"],
+"keep in touch with": ["keep in touch with applicants (지원자와 연락을 유지하다)", "≒ stay in contact with"],
+"look over": ["look over the draft (초안을 훑어보다)", "≒ review, examine"],
+"keep records of": ["keep records of appointments (예약 기록을 보관하다)", "≒ document, log"],
+"look into": ["look into the complaints (불만을 조사하다)", "≒ investigate, examine"],
+"keep track of": ["keep track of work hours (근무 시간을 기록·관리하다)", "≒ monitor, follow"],
+"look upon A as B": ["look upon her as a leader (그녀를 리더로 여기다)", "≒ regard A as B"],
+"account for": ["account for half of revenue (매출의 절반을 차지하다)", "≒ make up, explain"],
+"look for": ["look for a larger warehouse (더 큰 창고를 물색하다)", "≒ search for, seek"],
+"sales projection": ["optimistic sales projection (낙관적인 매출 전망)", "≒ sales forecast"],
+"outside audit": ["undergo an outside audit (외부 감사를 받다)", "≒ external audit"],
+"in its entirety": ["available in its entirety (전체가 제공되는)", "≒ as a whole, in full"],
+"an assortment of": ["an assortment of teas (다양한 차 모음)", "≒ a variety of"],
+"by means of": ["enter by means of a keycard (키카드로 입장하다)", "≒ by way of, using"],
+"work shift": ["rotate work shifts (근무조를 교대하다)", "≒ duty hours"],
+"sales figure": ["exceed sales figures (매출 수치를 넘어서다)", "≒ sales numbers"],
+"office supplies": ["order office supplies (사무용품을 주문하다)", "≒ stationery"],
+"employee productivity": ["boost employee productivity (직원 생산성을 높이다)", "≒ workforce efficiency"],
+"safety inspector": ["a quarterly safety inspector visit (분기별 안전 검사관 방문)", "≒ safety examiner"],
+"time constraint": ["due to time constraints (시간 제약으로 인해)", "≒ time limitation"],
+"contingency plan": ["prepare a contingency plan (비상 계획을 마련하다)", "≒ backup plan"],
+"press release": ["issue a press release (보도 자료를 내다)", "≒ official announcement"],
+"terms of agreement": ["read the terms of agreement (계약 조건을 읽다)", "≒ contract terms"],
+"billing statement": ["monthly billing statement (월간 청구서)", "≒ invoice"],
+"obligation to": ["an obligation to report leaks (누수를 신고할 의무)", "≒ duty to, responsibility to"],
+"job opening": ["post a job opening (채용 공고를 내다)", "≒ vacancy, position"],
+"contribution to": ["contributions to the project (프로젝트에 대한 기여)", "≒ input, part"],
+"baggage allowance": ["a baggage allowance of one bag (수하물 허용량 1개)", "≒ luggage limit"],
+"performance appraisal": ["annual performance appraisals (연간 인사 평가)", "≒ performance review"],
+"compliance with": ["in full compliance with emission rules (배출 규정을 전면 준수하여)", "≒ conformity with"],
+"confidence in": ["confidence in the new leadership (새 경영진에 대한 신뢰)", "≒ trust in"],
+"commitment to": ["commitment to local ingredients (지역 재료에 대한 헌신)", "≒ dedication to"],
+"preference for": ["a clear preference for morning deliveries (오전 배송 선호)", "≒ liking for"]
+};
 </script>
 <script>
 (function () {
   "use strict";
 
-  // ===== 챕터 구성 (데이터는 index.html 상단 <script>에서 주입됨) =====
+  // ===== 챕터 구성 =====
   var VOCAB_CHAPTERS = [
     { id: "v1", title: "동사", label: "V1", words: VOCAB_V1 },
     { id: "v2", title: "명사", label: "V2", words: VOCAB_V2 },
@@ -625,14 +912,11 @@ const READING = [
   VOCAB_CHAPTERS.forEach(function (c) { c.words.forEach(function (v) { VOCAB_MAP[v.w] = v; ALL_VOCAB.push(v); }); });
   var TOTAL_VOCAB = ALL_VOCAB.length;
 
-  // ===== 날짜 (기기 로컬 기준 — 자정에 정확히 날짜가 바뀜) =====
+  // ===== 날짜 (기기 로컬 기준) =====
   function pad2(n) { return String(n).padStart(2, "0"); }
   function today() { var d = new Date(); return d.getFullYear() + "-" + pad2(d.getMonth() + 1) + "-" + pad2(d.getDate()); }
 
-  // ===== 진도 저장 v2 (localStorage) =====
-  // vocab: { 단어: { s: known|fuzzy|unknown, t: 마지막 표시일, q: 퀴즈 연속 정답 수 } }
-  // quiz:  { total, days, first: { 문제ID: 0|1 (첫 시도 결과) } }
-  // wrong: { 문제ID: { n: 오답 횟수, last: 마지막 오답일, streak: 이후 연속 정답 } }
+  // ===== 진도 저장 v2 =====
   var KEY = "toeic:progress:v2", OLD_KEY = "toeic:progress:v1";
   function empty() { return { version: 2, vocab: {}, quiz: { total: { solved: 0, correct: 0 }, days: {}, first: {} }, wrong: {} }; }
   function migrateV1(old) {
@@ -676,13 +960,16 @@ const READING = [
   var state = {
     progress: loadProgress(),
     tab: "vocab",
-    vc: "v1", gc: "g1",
+    vc: "all", gc: "g1",
     vmode: "cards", review: false,
     seed: 0, rseed: 0, wseed: 0,
-    flips: {}, open: {}, answers: {},
-    vquiz: null, vquizKey: null,
+    flips: {}, open: {}, answers: {}, trOpen: {},
+    vquiz: null, vquizKey: null, vgen: 0,
+    rvq: null, rvgen: 0, lastMark: null,
+    importData: null, ioMsg: null,
     wq: null, wqKey: null,
     rq: null, rqKey: null,
+    mock: null, mockN: 0,
     confirm: false,
   };
   GRAMMAR_CHAPTERS.forEach(function (c) { state.open[c.id + "-0"] = true; });
@@ -692,12 +979,24 @@ const READING = [
   function escA(s) { return esc(s).replace(/"/g, "&quot;"); }
   function shuffle(a) { a = a.slice(); for (var i = a.length - 1; i > 0; i--) { var j = Math.floor(Math.random() * (i + 1)); var t = a[i]; a[i] = a[j]; a[j] = t; } return a; }
   function vs(w) { var e = state.progress.vocab[w]; return e && e.s; }
+  function fmtT(ms) { var s = Math.floor(ms / 1000); return pad2(Math.floor(s / 60)) + ":" + pad2(s % 60); }
+  function daysSince(ds) {
+    if (!ds) return 0;
+    var p = ds.split("-"), d = new Date(+p[0], +p[1] - 1, +p[2]);
+    return Math.floor((Date.now() - d.getTime()) / 86400000);
+  }
+  // '안다' 단어의 재검증 주기: 7일 → 통과 시 21일 → 45일
+  function nextIv(iv) { return iv >= 21 ? 45 : 21; }
+  function isRusty(w) {
+    var e = state.progress.vocab[w];
+    return !!(e && e.s === "known" && daysSince(e.t) >= (e.iv || 7));
+  }
 
-  // ===== 보기 셔플 + 문제 ID 부여 (페이지를 열 때마다 보기 순서가 섞임) =====
+  // ===== 보기 셔플 + 문제 ID + 해석 연결 =====
   var QMAP = {};
   function shuffleQ(q, id, meta) {
     var idx = shuffle(q.o.map(function (_, i) { return i; }));
-    var s = { id: id, meta: meta, q: q.q, o: idx.map(function (i) { return q.o[i]; }), a: idx.indexOf(q.a), e: q.e, words: q.words };
+    var s = { id: id, meta: meta, q: q.q, o: idx.map(function (i) { return q.o[i]; }), a: idx.indexOf(q.a), e: q.e, words: q.words, tr: (typeof TRS !== "undefined" ? TRS[id] : null) };
     QMAP[id] = s;
     return s;
   }
@@ -708,29 +1007,74 @@ const READING = [
     psg.q = psg.q.map(function (q, i) { return shuffleQ(q, "r" + pi + ":" + i, "독해 · " + psg.title); });
   });
 
-  // ===== 단어 퀴즈 (뜻이 겹치는 보기는 제외해 복수 정답을 방지) =====
-  function meaningTokens(m) { return String(m).split(/[,·()\/]/).map(function (s) { return s.trim(); }).filter(function (s) { return s.length > 1; }); }
-  function meaningCollide(a, b) { var ta = meaningTokens(a); return meaningTokens(b).some(function (x) { return ta.indexOf(x) >= 0; }); }
-  function buildVocabQuiz(list) {
-    var n = Math.min(12, list.length);
-    return shuffle(list).slice(0, n).map(function (item) {
-      var pool = list.filter(function (x) { return x.w !== item.w && !meaningCollide(x.m, item.m); });
-      if (pool.length < 3) {
-        ALL_VOCAB.forEach(function (x) {
-          if (x.w !== item.w && pool.indexOf(x) < 0 && !meaningCollide(x.m, item.m)) pool.push(x);
-        });
-      }
-      var d = shuffle(pool).slice(0, 3).map(function (x) { return x.m; });
-      var opts = shuffle([item.m].concat(d));
-      return { id: "v:" + item.w, w: item.w, q: item.w, o: opts, a: opts.indexOf(item.m), e: item.w + ": " + item.m + " · " + item.tip };
+  // ===== 어형(품사) 문제: 같은 어근의 품사 4형태 중 선택 =====
+  var WF_QS = [];
+  if (typeof WF !== "undefined") {
+    Object.keys(WF).forEach(function (w) {
+      var b = BQ[w];
+      if (!b) return;
+      var opts = shuffle([b.c].concat(WF[w].o));
+      var id = "f:" + w;
+      var q = {
+        id: id, meta: "어형 · 품사 자리",
+        q: b.s, o: opts, a: opts.indexOf(b.c),
+        e: WF[w].e + " → " + b.c + ". 나머지 보기는 품사가 달라 빈칸에 올 수 없다.",
+        tr: (typeof TRS !== "undefined" ? TRS["v:" + w] : null),
+      };
+      QMAP[id] = q;
+      WF_QS.push(q);
     });
   }
+  function wfInChapter(q, ch) {
+    var w = q.id.slice(2);
+    return ch.words.some(function (v) { return v.w === w; });
+  }
+
+  // ===== 어휘 문제 (Part 5 형식: 문장 빈칸 + 영어 보기 4개) =====
+  function vocabQ(v) {
+    var b = BQ[v.w];
+    if (!b) return null;
+    var opts = shuffle([b.c].concat(b.o));
+    var id = "v:" + v.w;
+    var q = {
+      id: id, w: v.w, meta: "어휘 · " + v.p,
+      q: b.s, o: opts, a: opts.indexOf(b.c),
+      e: b.c + " (" + v.w + ") · " + v.m + " · " + v.tip,
+      tr: (typeof TRS !== "undefined" ? TRS[id] : null),
+    };
+    QMAP[id] = q;
+    return q;
+  }
+  // 취약 단어(모른다/헷갈린다)를 우선 출제
+  function pickVocab(list, n) {
+    var due = [], rusty = [], rest = [];
+    list.forEach(function (v) {
+      var s = vs(v.w);
+      if (s === "unknown" || s === "fuzzy") due.push(v);
+      else if (isRusty(v.w)) rusty.push(v);
+      else rest.push(v);
+    });
+    return shuffle(due).concat(shuffle(rusty), shuffle(rest)).slice(0, n);
+  }
   function ensureVQuiz() {
+    var all = state.vc === "all";
     var k = state.vc + ":" + state.seed;
     if (state.vquizKey !== k) {
       state.vquizKey = k;
-      var ch = VOCAB_CHAPTERS.find(function (c) { return c.id === state.vc; });
-      state.vquiz = buildVocabQuiz(ch.words);
+      state.vgen++; // 재생성 세대: 이전 세대의 답안 키가 새 문제에 매핑되는 것을 방지
+      var ch = all ? null : VOCAB_CHAPTERS.find(function (c) { return c.id === state.vc; });
+      var pool = all ? ALL_VOCAB : ch.words;
+      var wfPool = all ? WF_QS : WF_QS.filter(function (q) { return wfInChapter(q, ch); });
+      var forms = shuffle(wfPool).slice(0, 3);
+      var inForms = {};
+      forms.forEach(function (q) { inForms[q.id.slice(2)] = 1; });
+      var picks = pickVocab(pool.filter(function (v) { return !inForms[v.w]; }), 10 - forms.length);
+      var qs = picks.map(vocabQ).filter(Boolean);
+      forms.forEach(function (f) { // 취약 단어(앞쪽)를 밀어내지 않도록 3번째 이후에 삽입
+        var at = Math.min(qs.length, 2 + Math.floor(Math.random() * (qs.length - 1)));
+        qs.splice(at, 0, f);
+      });
+      state.vquiz = qs;
     }
     return state.vquiz;
   }
@@ -739,19 +1083,51 @@ const READING = [
   function dueWords() {
     return ALL_VOCAB.filter(function (x) { var s = vs(x.w); return s === "unknown" || s === "fuzzy"; });
   }
+  function rustyWords() { return ALL_VOCAB.filter(function (x) { return isRusty(x.w); }); }
   function ensureRWords() {
     var k = "r:" + state.rseed;
-    if (state.rqKey !== k) { state.rqKey = k; state.rq = shuffle(dueWords()).slice(0, 10); }
+    if (state.rqKey !== k) { state.rqKey = k; state.rq = shuffle(dueWords()).concat(shuffle(rustyWords())).slice(0, 10); }
     return state.rq;
   }
   function ensureWQuiz() {
     var k = "w:" + state.wseed;
     if (state.wqKey !== k) {
       state.wqKey = k;
-      state.wq = shuffle(Object.keys(state.progress.wrong).map(function (id) { return QMAP[id]; }).filter(Boolean));
+      var wr = state.progress.wrong;
+      state.wq = shuffle(Object.keys(wr).map(function (id) {
+        return (id.indexOf("v:") === 0 || wr[id].grad) ? null : QMAP[id];
+      }).filter(Boolean));
     }
     return state.wq;
   }
+
+  // ===== 실전 세트 (오답 우선 + 문법/어휘 혼합 20문제) =====
+  function startMock() {
+    var used = {};
+    var wr = state.progress.wrong;
+    var active = [], gradDue = [];
+    Object.keys(wr).forEach(function (id) {
+      var q = QMAP[id];
+      if (!q || id.indexOf("v:") === 0) return;
+      if (!wr[id].grad) active.push(q);
+      else if (daysSince(wr[id].grad) >= 14) gradDue.push(q);
+    });
+    var wrong = shuffle(active).concat(shuffle(gradDue)).slice(0, 6);
+    wrong.forEach(function (q) { used[q.id] = 1; });
+    var gAll = [];
+    GRAMMAR_CHAPTERS.forEach(function (c) { c.data.q.forEach(function (q) { if (!used[q.id]) gAll.push(q); }); });
+    var gN = Math.ceil((20 - wrong.length) / 2);
+    var g = shuffle(gAll).slice(0, gN);
+    var vN = 20 - wrong.length - g.length;
+    var forms = shuffle(WF_QS.filter(function (q) { return !used[q.id]; })).slice(0, Math.min(3, vN));
+    var inForms = {};
+    forms.forEach(function (q) { inForms[q.id.slice(2)] = 1; });
+    var vPick = pickVocab(ALL_VOCAB.filter(function (v) { return !inForms[v.w]; }), vN - forms.length).map(vocabQ).filter(Boolean);
+    vPick = vPick.concat(forms);
+    state.mockN++;
+    state.mock = { id: state.mockN, qs: shuffle(wrong.concat(g, vPick)), start: Date.now(), n: 0, elapsed: null };
+  }
+  var MOCK_TARGET = 20 * 22 * 1000; // 850 목표: 문항당 22초 → 7분 20초
 
   // ===== 통계 =====
   function stats() {
@@ -764,12 +1140,14 @@ const READING = [
     ids.forEach(function (k) { fc += first[k]; });
     var rate = ids.length ? Math.round((fc / ids.length) * 100) : 0;
     var t = state.progress.quiz.days[today()] || { solved: 0, correct: 0 };
-    return {
-      known: known, fuzzy: fuzzy, unknown: unknown,
-      rate: rate, firstN: ids.length, today: t,
-      wrongN: Object.keys(state.progress.wrong).length,
-      due: fuzzy + unknown,
-    };
+    var wr = state.progress.wrong, wrongN = 0, gradDue = 0;
+    Object.keys(wr).forEach(function (id) {
+      if (id.indexOf("v:") === 0) return;
+      if (!wr[id].grad) wrongN++;
+      else if (daysSince(wr[id].grad) >= 14) gradDue++;
+    });
+    var rusty = rustyWords().length;
+    return { known: known, fuzzy: fuzzy, unknown: unknown, rate: rate, firstN: ids.length, today: t, wrongN: wrongN, gradDue: gradDue, rusty: rusty, due: fuzzy + unknown };
   }
 
   // ===== 기록 =====
@@ -779,24 +1157,30 @@ const READING = [
     q.days[d] = { solved: day.solved + 1, correct: day.correct + (ok ? 1 : 0) };
     q.total = { solved: q.total.solved + 1, correct: q.total.correct + (ok ? 1 : 0) };
     if (q.first[qid] === undefined) q.first[qid] = ok ? 1 : 0;
-    if (qid.indexOf("v:") !== 0) { // 문법·독해만 오답노트에 적재 (단어는 카드 상태로 관리)
+    if (qid.indexOf("v:") !== 0) { // 문법·독해는 오답노트 적재 (어휘 오답은 단어 상태로 순환)
       var wr = state.progress.wrong, e = wr[qid];
-      if (!ok) wr[qid] = { n: (e ? e.n : 0) + 1, last: d, streak: 0 };
-      else if (e) { e.streak = (e.streak || 0) + 1; if (e.streak >= 2) delete wr[qid]; else wr[qid] = e; }
+      if (!ok) wr[qid] = { n: (e ? e.n : 0) + 1, last: d, streak: 0 }; // 졸업했더라도 틀리면 즉시 복귀
+      else if (e) {
+        if (e.grad) delete wr[qid]; // 졸업 후 재검증 통과 → 완전 졸업
+        else { e.streak = (e.streak || 0) + 1; if (e.streak >= 2) { e.grad = d; e.streak = 0; } wr[qid] = e; }
+      }
     }
     saveNow();
   }
-  // 단어 퀴즈 결과 → 카드 상태 자동 연동: 틀리면 강등, 2회 연속 맞히면 승급
   function vocabQuizResult(word, ok) {
     var v = state.progress.vocab, e = v[word] || {};
     if (!ok) {
       var down = e.s === "known" ? "fuzzy" : "unknown";
       v[word] = { s: down, t: today(), q: 0 };
+    } else if (e.s === "known") {
+      // 이미 '안다' 단어: 정답 1회로 검증 갱신, 재검증 통과면 주기 연장
+      var iv = e.iv || 7;
+      v[word] = { s: "known", t: today(), q: 0, iv: isRusty(word) ? nextIv(iv) : iv };
     } else {
       var streak = (e.q || 0) + 1;
       if (streak >= 2) {
         var up = e.s === "unknown" ? "fuzzy" : "known";
-        v[word] = { s: up, t: today(), q: 0 };
+        v[word] = up === "known" ? { s: "known", t: today(), q: 0, iv: 7 } : { s: up, t: today(), q: 0 };
       } else {
         v[word] = { s: e.s, t: e.t || today(), q: streak };
       }
@@ -804,8 +1188,20 @@ const READING = [
   }
   function mark(word, status) {
     var v = state.progress.vocab, e = v[word];
-    if (e && e.s === status) delete v[word];
-    else v[word] = { s: status, t: today(), q: 0 };
+    var prev = e ? { s: e.s, t: e.t, q: e.q, iv: e.iv } : null;
+    if (status === "known" && e && e.s === "known") {
+      // 이미 '안다' 단어의 재확인: 삭제 토글 대신 검증 갱신. 재검증 대상이었다면 주기 연장(7→21→45일)
+      var iv = e.iv || 7;
+      v[word] = { s: "known", t: today(), q: 0, iv: isRusty(word) ? nextIv(iv) : iv };
+    } else if (e && e.s === status) {
+      delete v[word]; // 헷갈린다/모른다 재탭은 기존대로 해제
+    } else if (status === "known") {
+      v[word] = { s: "known", t: today(), q: 0, iv: (e && e.iv) || 7 };
+    } else {
+      v[word] = { s: status, t: today(), q: 0 };
+    }
+    var cur = v[word];
+    state.lastMark = { w: word, prev: prev, msg: cur ? "→ " + STATUS[cur.s].label : "표시 해제" };
     saveNow();
   }
 
@@ -820,9 +1216,9 @@ const READING = [
 
   function header() {
     return '<header class="hd">' +
-      '<p class="mono eyebrow">Hackers TOEIC RC · 어휘 &amp; 문법</p>' +
+      '<p class="mono eyebrow">Hackers TOEIC RC · 목표 850</p>' +
       '<h1 class="serif h1">토익 단어·문법 학습기</h1>' +
-      '<p class="lead">챕터를 골라 외우고 바로 풀어보세요. 틀린 건 복습 탭에서 다시 만나요.</p>' +
+      '<p class="lead">모든 문제는 실전 Part 5 형식. 틀린 건 실전 세트와 복습 탭에서 다시 만나요.</p>' +
       '</header>';
   }
 
@@ -841,8 +1237,12 @@ const READING = [
         stat("오늘 푼 문제", s.today.solved, "정답 " + s.today.correct, "t1") +
       '</div>' +
       '<div class="bar"><div class="bar-fill" style="width:' + s.rate + '%"></div></div>' +
+      '<div class="io mono"><button class="iobtn" data-action="export">진도 내보내기</button>' +
+        '<label class="iobtn" for="importFile">가져오기<input type="file" id="importFile" accept=".json,application/json" hidden></label>' +
+        (state.importData ? '<span class="io-confirm">단어 ' + Object.keys(state.importData.vocab).length + '·오답 ' + Object.keys(state.importData.wrong).length + '건 발견 — 현재 진도를 덮어쓸까요? <button class="iobtn warn" data-action="import-yes">적용</button><button class="iobtn" data-action="import-no">취소</button></span>' : '') +
+        (state.ioMsg ? '<span class="io-msg">' + esc(state.ioMsg) + '</span>' : '') + '</div>' +
       '<p class="mono note">' + (storageOK
-        ? "이 기기에 자동 저장 · 복습 단어 " + s.due + "개 · 오답노트 " + s.wrongN + "문제"
+        ? "이 기기에 자동 저장 · 복습 단어 " + s.due + "개 · 재검증 " + (s.rusty + s.gradDue) + "건 · 오답노트 " + s.wrongN + "문제"
         : "이 브라우저에서 저장이 막혀 있어 진도가 유지되지 않아요 (사파리 개인정보 보호 모드 등).") +
       '</p></section>';
   }
@@ -854,18 +1254,45 @@ const READING = [
 
   function tabsView() {
     var s = stats();
-    var pending = s.wrongN + s.due;
-    var t = [["vocab", "단어"], ["grammar", "문법"], ["reading", "독해"], ["review", "복습" + (pending ? " · " + pending : "")]];
+    var pending = s.wrongN + s.due + s.rusty + s.gradDue;
+    var t = [["vocab", "단어"], ["grammar", "문법"], ["reading", "독해"], ["mock", "실전" + (state.mock && state.mock.elapsed === null ? " •" : "")], ["review", "복습" + (pending ? " · " + pending : "")]];
     return '<div class="tabs">' + t.map(function (x) {
-      return '<button class="tab' + (state.tab === x[0] ? " active" : "") + '" data-action="tab" data-tab="' + x[0] + '">' + esc(x[1]) + '</button>';
+      return '<button class="tab' + (state.tab === x[0] ? " active" : "") + '" aria-pressed="' + (state.tab === x[0]) + '" data-action="tab" data-tab="' + x[0] + '">' + esc(x[1]) + '</button>';
     }).join("") + '</div>';
   }
 
-  function chips(list, currentId, action) {
-    return '<div class="chips">' + list.map(function (c) {
+  function chips(list, currentId, action, pctFn) {
+    return '<div class="chips" data-ck="' + escA(action) + '">' + list.map(function (c) {
       var on = c.id === currentId;
-      return '<button class="chip' + (on ? " active" : "") + '" data-action="' + action + '" data-id="' + c.id + '">' +
-        '<span class="chip-l mono">' + esc(c.label) + '</span> ' + esc(c.title) + '</button>';
+      var pct = pctFn ? pctFn(c) : null;
+      var aria = pct === null ? "" : ' aria-label="' + escA(c.label + " " + c.title + " · 안정 문제 " + pct + "%") + '"';
+      var bar = pct === null ? "" : '<span class="chipbar" aria-hidden="true"><span style="width:' + pct + '%"></span></span>';
+      return '<button class="chip' + (on ? " active" : "") + '" aria-pressed="' + on + '"' + aria + ' data-action="' + action + '" data-id="' + c.id + '">' +
+        '<span class="chip-l mono">' + esc(c.label) + '</span> ' + esc(c.title) + bar + '</button>';
+    }).join("") + '</div>';
+  }
+
+  // 문법 챕터 진도: 안정 문제 비율 — 풀어본 문제 중 현재 오답노트에 없거나 졸업한 비율
+  function gStablePct(c) {
+    var first = state.progress.quiz.first, wr = state.progress.wrong, n = 0;
+    c.data.q.forEach(function (q) {
+      if (first[q.id] === undefined) return; // 미시도 = 미진행
+      var e = wr[q.id];
+      if (!e || e.grad) n++; // 활성 오답노트에 있으면 불안정
+    });
+    return Math.round((n / c.data.q.length) * 100);
+  }
+
+  function vchips() {
+    var items = [{ id: "all", label: "ALL", title: "전체", words: ALL_VOCAB }].concat(VOCAB_CHAPTERS);
+    return '<div class="chips" data-ck="vocab">' + items.map(function (c) {
+      var known = 0;
+      c.words.forEach(function (v) { if (vs(v.w) === "known") known++; });
+      var pct = Math.round((known / c.words.length) * 100);
+      var on = c.id === state.vc;
+      return '<button class="chip' + (on ? " active" : "") + '" aria-pressed="' + on + '" aria-label="' + escA(c.label + " " + c.title + " · 외운 단어 " + pct + "%") + '" data-action="vchap" data-id="' + c.id + '">' +
+        '<span class="chip-l mono">' + esc(c.label) + '</span> ' + esc(c.title) +
+        '<span class="chipbar" aria-hidden="true"><span style="width:' + pct + '%"></span></span></button>';
     }).join("") + '</div>';
   }
 
@@ -873,55 +1300,106 @@ const READING = [
     if (state.tab === "vocab") return vocabTab();
     if (state.tab === "grammar") return grammarTab();
     if (state.tab === "reading") return readingTab();
+    if (state.tab === "mock") return mockTab();
     return reviewTab();
+  }
+
+  // ---- 마킹 되돌리기 바 (카드가 목록에서 사라진 직후 복구 수단) ----
+  function undoBar() {
+    var lm = state.lastMark;
+    if (!lm) return "";
+    return '<div class="undobar mono"><span>“' + esc(lm.w) + '” ' + esc(lm.msg) + '</span>' +
+      '<button class="minibtn" data-action="undo-mark">되돌리기</button></div>';
+  }
+
+  // ---- 해석 토글 (버튼을 눌러야 한국어 노출) ----
+  function trBlock(key, tr) {
+    if (!tr) return "";
+    var open = !!state.trOpen[key];
+    return '<span class="trbtn mono" data-action="tr" data-key="' + escA(key) + '">' + (open ? "해석 숨기기" : "해석 보기") + '</span>' +
+      (open ? '<p class="trx">' + esc(tr) + '</p>' : "");
   }
 
   // ---- 단어 ----
   function vocabTab() {
-    var ch = VOCAB_CHAPTERS.find(function (c) { return c.id === state.vc; });
-    var h = chips(VOCAB_CHAPTERS, state.vc, "vchap");
-    h += '<div class="pills">' +
-      '<button class="pill' + (state.vmode === "cards" ? " active" : "") + '" data-action="vmode" data-mode="cards">카드로 외우기</button>' +
-      '<button class="pill' + (state.vmode === "quiz" ? " active" : "") + '" data-action="vmode" data-mode="quiz">뜻 맞히기 퀴즈</button>';
+    var all = state.vc === "all";
+    var ch = all ? null : VOCAB_CHAPTERS.find(function (c) { return c.id === state.vc; });
+    var h = vchips();
+    h += '<div class="pills"><span class="seg">' +
+      '<button class="segbtn' + (state.vmode === "cards" ? " active" : "") + '" aria-pressed="' + (state.vmode === "cards") + '" data-action="vmode" data-mode="cards">카드로 외우기</button>' +
+      '<button class="segbtn' + (state.vmode === "quiz" ? " active" : "") + '" aria-pressed="' + (state.vmode === "quiz") + '" data-action="vmode" data-mode="quiz">문제 풀기</button></span>';
     if (state.vmode === "cards") {
-      h += '<button class="minibtn right' + (state.review ? " on" : "") + '" data-action="review">' + (state.review ? "복습 큐 보는 중" : "아직 못 외운 것만") + '</button>';
+      if (all) {
+        var dueN = dueWords().length, rustyN = rustyWords().length;
+        h += '<span class="mono chip-l right">복습 단어 ' + dueN + (rustyN ? ' · 재검증 ' + rustyN : '') + '</span>';
+      } else {
+        h += '<button class="minibtn right' + (state.review ? " on" : "") + '" aria-pressed="' + state.review + '" data-action="review">' + (state.review ? "복습 큐 보는 중" : "아직 못 외운 것만") + '</button>';
+      }
     } else {
       h += '<button class="minibtn right" data-action="reseed">새 문제</button>';
     }
     h += '</div>';
 
     if (state.vmode === "cards") {
-      var words = ch.words;
-      var cards = state.review ? words.filter(function (v) { var st = vs(v.w); return st === "unknown" || st === "fuzzy" || st === undefined; }) : words;
-      if (!cards.length) {
-        h += '<div class="empty">이 챕터에서 복습할 단어가 없어요. 전부 “안다”로 표시했네요! 👍</div>';
+      h += undoBar();
+      if (all) {
+        var list = dueWords().concat(rustyWords());
+        if (!list.length) {
+          h += '<div class="empty">아직 복습할 단어가 없어요. 챕터 칩을 골라 카드를 훑거나, 바로 “문제 풀기”로 실력을 확인해 보세요 — 틀린 단어는 자동으로 여기에 쌓입니다.</div>';
+        } else {
+          h += '<div class="vgrid">' + list.map(function (v, i) { return vcard(v, i); }).join("") + '</div>';
+        }
       } else {
-        h += '<div class="vgrid">' + cards.map(function (v) { return vcard(v, words.indexOf(v)); }).join("") + '</div>';
+        var words = ch.words;
+        var cards = state.review ? words.filter(function (v) { var st = vs(v.w); return st === "unknown" || st === "fuzzy" || st === undefined; }) : words;
+        if (!cards.length) {
+          h += '<div class="empty">이 챕터에서 복습할 단어가 없어요. 전부 “안다”로 표시했네요! 👍</div>';
+        } else {
+          h += '<div class="vgrid">' + cards.map(function (v) { return vcard(v, words.indexOf(v)); }).join("") + '</div>';
+        }
       }
     } else {
-      h += quizView("vq:" + state.vc + ":" + state.seed, ensureVQuiz(), {});
+      var vqs = ensureVQuiz(); // quizId보다 먼저 생성해야 vgen이 확정됨
+      var hasWF = vqs.some(function (q) { return q.id.indexOf("f:") === 0; });
+      h += '<p class="mono note" style="margin-bottom:12px">' + (all ? "전 챕터 혼합" : esc(ch.label + " " + ch.title)) + (hasWF ? ' · 어휘 + 어형(품사) 혼합' : ' · 어휘 문제') + ' · 못 외운 단어가 먼저 나와요</p>';
+      h += quizView("vq:" + state.vgen, vqs, {});
     }
     return '<section>' + h + '</section>';
+  }
+
+  // 콜로케이션·유의어 (카드 뒷면·오답 카드 공용)
+  function csLines(w) {
+    var cs = typeof CS !== "undefined" ? CS[w] : null;
+    if (!cs) return "";
+    var h = "";
+    if (cs[0]) h += '<p class="vcs mono"><span class="vcs-l">함께</span>' + esc(cs[0]) + '</p>';
+    if (cs[1]) h += '<p class="vcs mono"><span class="vcs-l">유의어</span>' + esc(cs[1]) + '</p>';
+    return h;
   }
 
   function vcard(v, idx) {
     var st = vs(v.w);
     var meta = st ? STATUS[st] : null;
+    var rusty = isRusty(v.w);
+    var e = state.progress.vocab[v.w];
     var flipped = !!state.flips[v.w];
     var face = flipped
       ? '<p class="vmean">' + esc(v.m) + '</p>' +
         '<p class="vex">“' + esc(v.ex) + '”</p>' +
-        '<p class="vtip mono">출제 포인트 · ' + esc(v.tip) + '</p>'
+        trBlock("c:" + v.w, typeof TRS !== "undefined" ? TRS["v:" + v.w] : null) +
+        '<p class="vtip mono">출제 포인트 · ' + esc(v.tip) + '</p>' +
+        csLines(v.w)
       : '<p class="serif vword">' + esc(v.w) + '</p>' +
         '<p class="vpos mono">' + esc(v.p) + '</p>' +
         '<p class="vhint mono">눌러서 뜻 보기</p>';
     var marks = ["known", "fuzzy", "unknown"].map(function (k) {
-      return '<button class="mark ' + STATUS[k].cls + (st === k ? " on" : "") + '" data-action="mark" data-word="' + escA(v.w) + '" data-status="' + k + '">' + STATUS[k].label + '</button>';
+      return '<button class="mark ' + STATUS[k].cls + (st === k ? " on" : "") + '" aria-pressed="' + (st === k) + '" data-action="mark" data-word="' + escA(v.w) + '" data-status="' + k + '">' + STATUS[k].label + '</button>';
     }).join("");
     return '<div class="vcard' + (meta ? " ring-" + meta.cls : "") + '">' +
       '<span class="vnum mono">' + String(idx + 1).padStart(2, "0") + '</span>' +
       (meta ? '<span class="vdot dot-' + meta.cls + '"></span>' : "") +
       '<button class="vface" data-action="flip" data-word="' + escA(v.w) + '">' + face + '</button>' +
+      (rusty ? '<p class="vbadge mono">재검증 대상 · “안다” 표시 후 ' + daysSince(e.t) + '일 경과 — 뜻을 확인하고 아직 안다면 “안다”를 다시 누르세요 (주기 연장)</p>' : "") +
       '<div class="marks">' + marks + '</div></div>';
   }
 
@@ -929,7 +1407,7 @@ const READING = [
   function grammarTab() {
     var ch = GRAMMAR_CHAPTERS.find(function (c) { return c.id === state.gc; });
     var d = ch.data;
-    var h = chips(GRAMMAR_CHAPTERS, state.gc, "gchap");
+    var h = chips(GRAMMAR_CHAPTERS, state.gc, "gchap", gStablePct);
     h += '<div class="rules">' + d.rules.map(function (r, i) {
       var key = ch.id + "-" + i;
       var open = !!state.open[key];
@@ -941,7 +1419,7 @@ const READING = [
         (open ? '<div class="rule-b"><p class="rb">' + esc(r.b) + '</p><p class="rex mono">' + esc(r.ex) + '</p></div>' : "") +
         '</div>';
     }).join("") + '</div>';
-    h += '<h3 class="serif h3">실전 문제</h3>';
+    h += '<h3 class="serif h3">실전 문제 (Part 5)</h3>';
     h += quizView("gq:" + ch.id, d.q, { links: true });
     return '<section>' + h + '</section>';
   }
@@ -958,26 +1436,73 @@ const READING = [
     return '<section class="reading">' + h + '</section>';
   }
 
-  // ---- 복습 (틀린 단어 + 오답노트) ----
-  function reviewTab() {
-    var due = dueWords();
-    var wrongIds = Object.keys(state.progress.wrong);
-    var h = '<div class="card note-card"><p class="tip-title">복습</p>' +
-      '<p class="tip-body">“모른다·헷갈린다”로 표시한 단어와 틀렸던 문법·독해 문제를 한곳에 모았어요. 오답 문제는 두 번 연속으로 맞히면 목록에서 자동으로 사라집니다.</p></div>';
+  // ---- 실전 세트 ----
+  function mockTab() {
+    var m = state.mock;
+    if (!m) {
+      var s = stats();
+      return '<section class="reading">' +
+        '<div class="card note-card"><p class="tip-title">실전 세트 · 20문제</p>' +
+        '<p class="tip-body">문법과 어휘를 섞은 랜덤 20문제를 실전처럼 풉니다. 오답노트에 쌓인 문제' + (s.wrongN ? "(" + s.wrongN + "개 대기 중)" : "") + '가 우선 편성되고, 못 외운 단어가 먼저 출제돼요.</p>' +
+        '<p class="tip-body">목표 페이스는 <b>7분 20초</b> — 850점 기준 Part 5 문항당 약 22초입니다. 다 풀면 페이스 판정과 함께 오답이 자동으로 복습 탭에 쌓여요.</p></div>' +
+        '<button class="pill active" style="width:100%;text-align:center" data-action="mock-start">세트 시작</button>' +
+        '</section>';
+    }
+    var qid = "mq:" + m.id;
+    var solved = 0, correct = 0;
+    m.qs.forEach(function (q, qi) {
+      var p = state.answers[qid + ":" + qi];
+      if (p !== undefined) { solved++; if (p === q.a) correct++; }
+    });
+    var done = solved === m.qs.length;
+    var h = '<div class="card note-card mockbar">' +
+      '<span class="mono">' + solved + ' / ' + m.qs.length + ' 문제</span>' +
+      '<span class="mono amber" id="mtimer">' + fmtT(m.elapsed !== null ? m.elapsed : Date.now() - m.start) + '</span>' +
+      '<span class="mono">목표 07:20</span></div>';
+    if (done) {
+      var overPace = m.elapsed > MOCK_TARGET;
+      h += '<div class="card note-card"><p class="tip-title">결과 · ' + correct + ' / ' + m.qs.length + '</p>' +
+        '<p class="tip-body">소요 시간 ' + fmtT(m.elapsed) + ' — ' +
+        (overPace ? "목표보다 " + fmtT(m.elapsed - MOCK_TARGET) + " 느렸어요. 다음 세트는 확신이 없어도 22초 안에 결정하는 연습을 해보세요."
+                  : "목표 페이스 안이에요! 이 속도면 실전 Part 5에서 시간이 남습니다.") + '</p>' +
+        '<p class="tip-body">틀린 문법 문제는 오답노트로, 틀린 어휘는 복습 단어로 자동 이동했어요.</p>' +
+        '<button class="pill active" style="width:100%;text-align:center;margin-top:8px" data-action="mock-start">새 세트 시작</button></div>';
+    }
+    h += quizView(qid, m.qs, { links: true, meta: true });
+    return '<section class="reading">' + h + '</section>';
+  }
 
-    h += '<h3 class="serif h3">복습 단어 · ' + due.length + '개</h3>';
-    if (!due.length) {
-      h += '<div class="empty">복습할 단어가 없어요. 카드에서 표시하거나 퀴즈를 풀면 여기에 쌓여요.</div>';
+  // ---- 복습 ----
+  function reviewTab() {
+    var due = dueWords(), rusty = rustyWords();
+    var h = '<div class="card note-card"><p class="tip-title">복습</p>' +
+      '<p class="tip-body">“모른다·헷갈린다” 단어와 틀렸던 문제를 한곳에 모았어요. “안다”가 된 단어도 7일이 지나면 재검증 대상으로 돌아오고(통과 시 21일→45일로 연장), 졸업한 오답 문제는 14일 뒤 실전 세트에 몰래 재투입돼 한 번 더 검증받습니다.</p></div>';
+
+    h += '<h3 class="serif h3">복습 단어 · ' + due.length + '개' + (rusty.length ? ' <span class="mono" style="font-size:11px">+ 재검증 ' + rusty.length + '</span>' : '') + '</h3>';
+    if (!due.length && !rusty.length && !state.rvq) {
+      h += '<div class="empty">복습할 단어가 없어요. 카드에서 표시하거나 문제를 틀리면 여기에 쌓여요.</div>';
     } else {
       var picks = ensureRWords();
       h += '<div class="pills"><span class="mono chip-l">전 챕터에서 최대 10개</span><button class="minibtn right" data-action="rreseed">다시 뽑기</button></div>';
+      h += undoBar();
       h += '<div class="vgrid">' + picks.map(function (v, i) { return vcard(v, i); }).join("") + '</div>';
+      if (!due.length && !rusty.length) {
+        // 검증 퀴즈 도중 큐를 모두 통과한 경우: 진행 중이던 화면을 지우지 않고 완주를 알림
+        h += '<div class="empty" style="margin-top:12px">복습 큐를 모두 통과했어요! 🎉 아래 결과를 확인하고, “다시 뽑기”를 누르면 정리돼요.</div>';
+      }
+      // 카드로 훑은 바로 그 단어들로 즉시 검증 (카드→문제 연결 고리)
+      h += '<button class="pill active" style="width:100%;text-align:center;margin-top:12px" data-action="rquiz">' +
+        (state.rvq ? "이 단어들로 다시 출제" : "이 단어 " + picks.length + "개로 바로 문제 풀기") + '</button>';
+      if (state.rvq) {
+        h += '<p class="mono note" style="margin:12px 0">위 카드의 단어만 출제 · 정답이면 상태가 회복돼요 (2회 연속 정답 시 한 단계)</p>';
+        h += quizView("rvq:" + state.rvgen, state.rvq, {});
+      }
     }
 
-    h += '<h3 class="serif h3" style="margin-top:26px">오답노트 · ' + wrongIds.length + '문제</h3>';
     var qs = ensureWQuiz();
+    h += '<h3 class="serif h3" style="margin-top:26px">오답노트 · ' + qs.length + '문제</h3>';
     if (!qs.length) {
-      h += '<div class="empty">틀린 문제가 없어요. 문법·독해 문제에서 틀리면 자동으로 모여요.</div>';
+      h += '<div class="empty">틀린 문제가 없어요. 문법·독해·실전 세트에서 틀리면 자동으로 모여요.</div>';
     } else {
       h += '<div class="pills"><span class="mono chip-l">2회 연속 정답 시 졸업</span><button class="minibtn right" data-action="wreseed">새로 섞기</button></div>';
       h += quizView("wq:" + state.wseed, qs, { links: true, meta: true });
@@ -985,7 +1510,7 @@ const READING = [
     return '<section class="reading">' + h + '</section>';
   }
 
-  // ---- 공용 퀴즈 ----
+  // ---- 공용 퀴즈 (Part 5 스타일) ----
   function quizView(quizId, questions, opts) {
     opts = opts || {};
     var solved = 0, correct = 0;
@@ -1002,7 +1527,7 @@ const READING = [
       h += '<div class="qcard">';
       if (opts.meta && q.meta) {
         var we = state.progress.wrong[q.id];
-        h += '<p class="wmeta mono">' + esc(q.meta) + (we ? " · 오답 " + we.n + "회 (" + we.last + ")" : " · 방금 맞혔어요") + '</p>';
+        h += '<p class="wmeta mono">' + esc(q.meta) + (we ? " · 오답 " + we.n + "회 (" + we.last + ")" : "") + '</p>';
       }
       h += '<p class="qtext"><span class="mono qn">Q' + (qi + 1) + "</span> " + esc(q.q) + "</p>";
       h += '<div class="opts">';
@@ -1012,10 +1537,26 @@ const READING = [
         h += '<button class="' + cls + '"' + (done ? " disabled" : "") +
           ' data-action="answer" data-quiz="' + escA(quizId) + '" data-qi="' + qi + '" data-oi="' + oi + '" data-correct="' + q.a + '"' +
           ' data-qid="' + escA(q.id) + '"' + (q.w ? ' data-word="' + escA(q.w) + '"' : "") + '>' +
-          '<span class="ol mono">' + String.fromCharCode(65 + oi) + "</span> " + esc(opt) + "</button>";
+          '<span class="ol mono">(' + String.fromCharCode(65 + oi) + ")</span> " + esc(opt) + "</button>";
       });
       h += "</div>";
-      if (done) { h += '<p class="expl">' + (picked === q.a ? "정답! " : "오답 · ") + esc(q.e) + "</p>"; }
+      if (done) {
+        var vv = q.w && picked !== q.a ? VOCAB_MAP[q.w] : null;
+        if (vv) {
+          // 어휘 오답: 압축 해설 대신 그 단어의 카드를 즉석에서 펼쳐 학습 순간으로 전환
+          h += '<p class="expl">오답 · 정답은 “' + esc(q.o[q.a]) + '” — 방금 틀린 단어예요. 지금 바로 외워 두세요.</p>';
+          h += '<div class="qvcard">' +
+            '<p class="serif qvw">' + esc(vv.w) + ' <span class="mono qvp">' + esc(vv.p) + '</span></p>' +
+            '<p class="qvm">' + esc(vv.m) + '</p>' +
+            '<p class="vtip mono">출제 포인트 · ' + esc(vv.tip) + '</p>' +
+            csLines(vv.w) +
+            '<p class="mono qvnote">복습 단어로 등재됨 · 2회 연속 정답이면 한 단계 회복</p></div>';
+          h += trBlock(key, q.tr);
+        } else {
+          h += '<p class="expl">' + (picked === q.a ? "정답! " : "오답 · ") + esc(q.e) + "</p>";
+          h += trBlock(key, q.tr);
+        }
+      }
       if (opts.links && done && Array.isArray(q.words)) {
         var linked = q.words.map(function (w) { return VOCAB_MAP[w]; }).filter(Boolean);
         if (linked.length) {
@@ -1028,34 +1569,136 @@ const READING = [
     return h;
   }
 
-  // ===== 렌더 + 스크롤 유지 =====
+  // ===== 렌더 =====
   var app = document.getElementById("app");
+
+  // 진도 가져오기: 파일 파싱·검증 후 확인 단계로 전달 (즉시 덮어쓰지 않음)
+  // 엔트리 단위 정화 — 겉 형식만 유효한 오염 파일이 stats()/렌더를 죽이고
+  // localStorage에 저장돼 크래시 루프가 되는 것을 방지
+  function sanitizeProgress(p) {
+    var out = empty(), VS = { known: 1, fuzzy: 1, unknown: 1 };
+    Object.keys(p.vocab || {}).forEach(function (w) {
+      var e = p.vocab[w];
+      if (!e || typeof e !== "object" || !VS[e.s] || !VOCAB_MAP[w]) return; // 미상 단어·불량 상태 제거
+      var n = { s: e.s, t: typeof e.t === "string" ? e.t : today(), q: typeof e.q === "number" ? e.q : 0 };
+      if (e.s === "known") n.iv = typeof e.iv === "number" && e.iv > 0 ? e.iv : 7;
+      out.vocab[w] = n;
+    });
+    var f = (p.quiz && p.quiz.first) || {};
+    Object.keys(f).forEach(function (id) { if (f[id] === 0 || f[id] === 1) out.quiz.first[id] = f[id]; });
+    var d = (p.quiz && p.quiz.days) || {};
+    Object.keys(d).forEach(function (k) {
+      var x = d[k];
+      if (x && typeof x.solved === "number" && typeof x.correct === "number") out.quiz.days[k] = { solved: x.solved, correct: x.correct };
+    });
+    var tt = p.quiz && p.quiz.total;
+    out.quiz.total = {
+      solved: tt && typeof tt.solved === "number" ? tt.solved : 0,
+      correct: tt && typeof tt.correct === "number" ? tt.correct : 0
+    };
+    Object.keys(p.wrong || {}).forEach(function (id) {
+      var e = p.wrong[id];
+      if (!e || typeof e !== "object" || typeof e.n !== "number" || !QMAP[id]) return; // 미상 문제 ID 제거
+      var n = { n: e.n, last: typeof e.last === "string" ? e.last : today(), streak: typeof e.streak === "number" ? e.streak : 0 };
+      if (typeof e.grad === "string") n.grad = e.grad;
+      out.wrong[id] = n;
+    });
+    return out;
+  }
+  function parseImport(text) {
+    try {
+      var obj = JSON.parse(text);
+      var p = obj && obj.progress ? obj.progress : obj; // 직접 내보낸 파일·순수 progress 모두 허용
+      if (!p || typeof p !== "object" || !p.vocab || !p.quiz || !p.wrong || !p.quiz.first || !p.quiz.days || !p.quiz.total) {
+        state.ioMsg = "형식이 맞지 않는 파일이에요"; state.importData = null; return;
+      }
+      state.importData = sanitizeProgress(p);
+      state.ioMsg = null;
+    } catch (err) { state.ioMsg = "파일을 읽지 못했어요: " + err.message; state.importData = null; }
+    render();
+  }
+  app.addEventListener("change", function (ev) {
+    var t = ev.target;
+    if (!t || t.id !== "importFile" || !t.files || !t.files[0]) return;
+    var reader = new FileReader();
+    reader.onload = function () { parseImport(String(reader.result)); };
+    reader.onerror = function () { state.ioMsg = "파일을 읽지 못했어요"; render(); };
+    reader.readAsText(t.files[0]);
+  });
+
+  var chipScroll = {}; // 칩 줄 스크롤 위치를 탭(data-ck)별로 분리 저장
   function render() {
     var y = window.scrollY;
     var oldChips = app.querySelector(".chips");
-    var cx = oldChips ? oldChips.scrollLeft : 0;
+    if (oldChips) chipScroll[oldChips.getAttribute("data-ck") || ""] = oldChips.scrollLeft;
     app.innerHTML = view();
     var newChips = app.querySelector(".chips");
-    if (newChips) newChips.scrollLeft = cx;
+    if (newChips) newChips.scrollLeft = chipScroll[newChips.getAttribute("data-ck") || ""] || 0;
     window.scrollTo(0, y);
   }
+
+  // 실전 세트 타이머 (전체 렌더 없이 초 단위 갱신)
+  setInterval(function () {
+    if (!state.mock || state.mock.elapsed !== null) return;
+    var el = document.getElementById("mtimer");
+    if (el) el.textContent = fmtT(Date.now() - state.mock.start);
+  }, 1000);
 
   // ===== 이벤트 위임 =====
   app.addEventListener("click", function (e) {
     var el = e.target.closest("[data-action]");
     if (!el) return;
     var a = el.dataset.action;
-    if (a === "tab") state.tab = el.dataset.tab;
+    // 마킹 직후가 아니면 되돌리기 바 해제 (카드 뒤집기·해석 토글은 유지)
+    if (a !== "mark" && a !== "undo-mark" && a !== "flip" && a !== "tr") state.lastMark = null;
+    if (a === "tab") {
+      state.tab = el.dataset.tab;
+      state.ioMsg = null;
+      // 복습 탭 재진입 시 카드 목록을 최신 풀에서 다시 추출 (검증 퀴즈 진행 중이면 유지)
+      if (state.tab === "review" && !state.rvq) state.rqKey = null;
+    }
     else if (a === "vchap") { state.vc = el.dataset.id; state.review = false; }
     else if (a === "gchap") state.gc = el.dataset.id;
     else if (a === "vmode") state.vmode = el.dataset.mode;
     else if (a === "review") state.review = !state.review;
     else if (a === "reseed") state.seed++;
-    else if (a === "rreseed") state.rseed++;
+    else if (a === "rreseed") { state.rseed++; state.rvq = null; }
+    else if (a === "rquiz") { state.rvq = ensureRWords().map(vocabQ).filter(Boolean); state.rvgen++; }
     else if (a === "wreseed") state.wseed++;
+    else if (a === "tr") { var k = el.dataset.key; state.trOpen[k] = !state.trOpen[k]; }
     else if (a === "flip") { var w = el.dataset.word; state.flips[w] = !state.flips[w]; }
     else if (a === "mark") mark(el.dataset.word, el.dataset.status);
-    else if (a === "rule") { var k = el.dataset.key; state.open[k] = !state.open[k]; }
+    else if (a === "export") {
+      try {
+        var payload = JSON.stringify({ app: "toeic-trainer", exported: today(), progress: state.progress });
+        var blob = new Blob([payload], { type: "application/json" });
+        var url = URL.createObjectURL(blob);
+        var link = document.createElement("a");
+        link.href = url; link.download = "toeic-progress-" + today() + ".json";
+        document.body.appendChild(link); link.click(); document.body.removeChild(link);
+        setTimeout(function () { URL.revokeObjectURL(url); }, 5000);
+        state.ioMsg = "내보냈어요 — 파일을 안전한 곳에 보관하세요";
+      } catch (err) { state.ioMsg = "내보내기 실패: " + err.message; }
+    }
+    else if (a === "import-yes") {
+      if (state.importData) {
+        state.progress = state.importData;
+        state.importData = null; state.ioMsg = "진도를 불러왔어요";
+        state.answers = {}; state.vquizKey = null; state.wqKey = null; state.rqKey = null; state.rvq = null; state.mock = null; state.lastMark = null;
+        saveNow();
+      }
+    }
+    else if (a === "import-no") { state.importData = null; state.ioMsg = null; }
+    else if (a === "undo-mark") {
+      var lm = state.lastMark;
+      if (lm) {
+        if (lm.prev) state.progress.vocab[lm.w] = { s: lm.prev.s, t: lm.prev.t, q: lm.prev.q, iv: lm.prev.iv };
+        else delete state.progress.vocab[lm.w];
+        state.lastMark = null; saveNow();
+      }
+    }
+    else if (a === "rule") { var rk = el.dataset.key; state.open[rk] = !state.open[rk]; }
+    else if (a === "mock-start") startMock();
     else if (a === "answer") {
       var key = el.dataset.quiz + ":" + el.dataset.qi;
       if (state.answers[key] !== undefined) return;
@@ -1063,12 +1706,17 @@ const READING = [
       state.answers[key] = oi;
       if (el.dataset.word) vocabQuizResult(el.dataset.word, ok);
       recordAnswer(el.dataset.qid, ok);
+      if (state.mock && el.dataset.quiz === "mq:" + state.mock.id) {
+        state.mock.n++;
+        if (state.mock.n === state.mock.qs.length) state.mock.elapsed = Date.now() - state.mock.start;
+      }
     }
     else if (a === "reset-ask") state.confirm = true;
     else if (a === "reset-no") state.confirm = false;
     else if (a === "reset-yes") {
-      state.progress = empty(); state.answers = {}; state.flips = {};
-      state.vquizKey = null; state.wqKey = null; state.rqKey = null;
+      state.progress = empty(); state.answers = {}; state.flips = {}; state.trOpen = {};
+      state.vc = "all"; state.gc = "g1"; state.vmode = "cards"; state.review = false; state.lastMark = null;
+      state.vquizKey = null; state.wqKey = null; state.rqKey = null; state.mock = null; state.rvq = null;
       saveNow(); state.confirm = false;
     }
     render();
