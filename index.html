@@ -20,13 +20,16 @@
 }
 *{box-sizing:border-box;-webkit-tap-highlight-color:transparent}
 html{-webkit-text-size-adjust:100%}
+html{-webkit-text-size-adjust:100%}
+*{-webkit-tap-highlight-color:transparent}
+button,label{touch-action:manipulation}
 body{
   margin:0; background:var(--bg); color:var(--t1);
   font-family:-apple-system,BlinkMacSystemFont,system-ui,"Segoe UI",Roboto,sans-serif;
   font-size:16px; line-height:1.55; overflow-wrap:break-word;
   padding:env(safe-area-inset-top) env(safe-area-inset-right) env(safe-area-inset-bottom) env(safe-area-inset-left);
 }
-.wrap{max-width:480px; margin:0 auto; padding:18px 16px 48px}
+.wrap{max-width:480px; margin:0 auto; padding:18px 16px calc(48px + env(safe-area-inset-bottom))}
 .serif{font-family:"Iowan Old Style","Palatino Linotype",Palatino,Georgia,serif}
 .mono{font-family:ui-monospace,"SF Mono",SFMono-Regular,Menlo,Consolas,monospace}
 button{font-family:inherit; color:inherit; background:none; border:none; cursor:pointer; touch-action:manipulation; font-size:16px}
@@ -64,14 +67,16 @@ p{margin:0}
 .note{margin-top:12px; font-size:11px; color:var(--t4)}
 
 /* tabs */
-.tabs{display:flex; gap:8px; margin-bottom:14px}
-.tab{flex:0 0 auto; padding:8px 14px; min-height:40px; border-radius:10px; font-size:14px; font-weight:600; background:var(--surface); color:var(--t2)}
+.tabs{display:grid; grid-template-columns:repeat(5,1fr); gap:6px; position:sticky; top:0; z-index:40; background:var(--bg,#0c0a09); margin:0 -16px 14px; padding:10px 16px}
+.tab{padding:8px 2px; min-height:44px; border-radius:10px; font-size:13px; font-weight:600; background:var(--surface); color:var(--t2); text-align:center; white-space:nowrap; overflow:hidden}
 .tab.active{background:#f5f5f4; color:#0c0a09}
 
 /* chips (가로 스크롤) */
-.chips{display:flex; gap:8px; overflow-x:auto; padding-bottom:6px; margin-bottom:14px; -webkit-overflow-scrolling:touch; scrollbar-width:none}
+.chips{display:grid; grid-template-columns:repeat(3,1fr); gap:8px; margin-bottom:14px}
+.chips[data-ck="gchap"]{grid-template-columns:repeat(2,1fr)}
 .chips::-webkit-scrollbar{display:none}
-.chip{flex:0 0 auto; display:flex; align-items:center; gap:6px; padding:8px 12px; min-height:40px; border:1px solid var(--border); background:var(--surface); border-radius:10px; color:var(--t2); font-size:14px; font-weight:500; white-space:nowrap}
+.chip{display:block; text-align:left; padding:13px 8px 15px; min-height:46px; border:1px solid var(--border); background:var(--surface); border-radius:10px; color:var(--t2); font-size:13px; font-weight:500; white-space:nowrap; overflow:hidden; text-overflow:ellipsis}
+.chip .chip-l{margin-right:5px}
 .chip.active{border-color:#b45309; background:rgba(245,158,11,.1); color:var(--amber-l)}
 .chip-l{font-size:11px; color:var(--t3)}
 
@@ -139,7 +144,10 @@ p{margin:0}
 .reading{display:flex; flex-direction:column; gap:26px}
 .note-card{padding:14px}
 .tip-title{font-size:14px; font-weight:500; color:var(--amber-l)}
-.tip-body{margin-top:8px; font-size:14px; color:var(--t2); line-height:1.55}
+.tip-html{-webkit-text-size-adjust:100%}
+*{-webkit-tap-highlight-color:transparent}
+button,label{touch-action:manipulation}
+body{margin-top:8px; font-size:14px; color:var(--t2); line-height:1.55}
 .passage .ptext{padding:14px; font-size:14px; line-height:1.6; color:#e7e5e4; margin-bottom:14px}
 .passage .ptext p{margin-bottom:8px}
 .passage .ptext p:last-child{margin-bottom:0}
@@ -147,9 +155,7 @@ p{margin:0}
 footer{margin-top:36px; text-align:center; font-size:11px; color:var(--t4); font-family:ui-monospace,Menlo,monospace}
 
 /* v2 additions */
-.tabs{overflow-x:auto; -webkit-overflow-scrolling:touch; scrollbar-width:none}
 .tabs::-webkit-scrollbar{display:none}
-.tab{white-space:nowrap}
 .wmeta{font-size:11px; color:var(--t4); margin-bottom:8px}
 .trbtn{display:inline-block;margin-top:8px;font-size:11px;color:var(--amber,#f59e0b);text-decoration:underline;cursor:pointer}
 .trx{margin-top:6px;font-size:13px;line-height:1.6;color:var(--t2,#d6d3d1);background:rgba(245,158,11,.06);border-left:2px solid rgba(245,158,11,.4);padding:8px 10px;border-radius:0 8px 8px 0}
@@ -1626,14 +1632,11 @@ const CS = {
     reader.readAsText(t.files[0]);
   });
 
-  var chipScroll = {}; // 칩 줄 스크롤 위치를 탭(data-ck)별로 분리 저장
   function render() {
-    var y = window.scrollY;
-    var oldChips = app.querySelector(".chips");
-    if (oldChips) chipScroll[oldChips.getAttribute("data-ck") || ""] = oldChips.scrollLeft;
+    // 탭 전환 = 새 맥락 → 최상단 복귀 / 그 외 액션 = 제자리 유지 (화면 점프 방지)
+    var y = state._toTop ? 0 : window.scrollY;
+    state._toTop = false;
     app.innerHTML = view();
-    var newChips = app.querySelector(".chips");
-    if (newChips) newChips.scrollLeft = chipScroll[newChips.getAttribute("data-ck") || ""] || 0;
     window.scrollTo(0, y);
   }
 
@@ -1654,6 +1657,7 @@ const CS = {
     if (a === "tab") {
       state.tab = el.dataset.tab;
       state.ioMsg = null;
+      state._toTop = true; // 새 맥락은 항상 맨 위에서 시작
       // 복습 탭 재진입 시 카드 목록을 최신 풀에서 다시 추출 (검증 퀴즈 진행 중이면 유지)
       if (state.tab === "review" && !state.rvq) state.rqKey = null;
     }
