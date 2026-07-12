@@ -20,6 +20,9 @@
 }
 *{box-sizing:border-box;-webkit-tap-highlight-color:transparent}
 html{-webkit-text-size-adjust:100%}
+/* 좌우 이동 전역 잠금: ① 가로 오버플로 클리핑 ② 가로 고무줄 차단 ③ 가로 팬 제스처 차단(핀치 줌은 유지) */
+html,body{overflow-x:hidden; overscroll-behavior-x:none; max-width:100%}
+body{touch-action:pan-y pinch-zoom; position:relative; word-break:keep-all; overflow-wrap:break-word}
 html{-webkit-text-size-adjust:100%}
 *{-webkit-tap-highlight-color:transparent}
 button,label{touch-action:manipulation}
