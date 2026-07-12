@@ -1137,7 +1137,7 @@ const CS = {
     state.mockN++;
     state.mock = { id: state.mockN, qs: shuffle(wrong.concat(g, vPick)), start: Date.now(), n: 0, elapsed: null };
   }
-  var MOCK_TARGET = 20 * 22 * 1000; // 850 목표: 문항당 22초 → 7분 20초
+  var MOCK_TARGET = 20 * 22 * 1000; //  문항당 22초 → 7분 20초
 
   // ===== 통계 =====
   function stats() {
@@ -1226,7 +1226,7 @@ const CS = {
 
   function header() {
     return '<header class="hd">' +
-      '<p class="mono eyebrow">Hackers TOEIC RC · 목표 850</p>' +
+      '<p class="mono eyebrow">Hackers TOEIC RC</p>' +
       '<h1 class="serif h1">토익 단어·문법 학습기</h1>' +
       '<p class="lead">모든 문제는 실전 Part 5 형식. 틀린 건 실전 세트와 복습 탭에서 다시 만나요.</p>' +
       '</header>';
@@ -1489,7 +1489,7 @@ const CS = {
       return '<section class="reading">' +
         '<div class="card note-card"><p class="tip-title">실전 세트 · 20문제</p>' +
         '<p class="tip-body">문법과 어휘를 섞은 랜덤 20문제를 실전처럼 풉니다. 오답노트에 쌓인 문제' + (s.wrongN ? "(" + s.wrongN + "개 대기 중)" : "") + '가 우선 편성되고, 못 외운 단어가 먼저 출제돼요.</p>' +
-        '<p class="tip-body">목표 페이스는 <b>7분 20초</b> — 850점 기준 Part 5 문항당 약 22초입니다. 다 풀면 페이스 판정과 함께 오답이 자동으로 복습 탭에 쌓여요.</p></div>' +
+        '<p class="tip-body">목표 페이스는 <b>7분 20초</b> —  Part 5 문항당 약 22초입니다. 다 풀면 페이스 판정과 함께 오답이 자동으로 복습 탭에 쌓여요.</p></div>' +
         '<button class="pill active" style="width:100%;text-align:center" data-action="mock-start">세트 시작</button>' +
         '</section>';
     }
